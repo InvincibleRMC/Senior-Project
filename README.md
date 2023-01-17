@@ -1,1 +1,1 @@
-# Senor Project for ECSE 395 at CWRU
+# Senior Project for ECSE 395 at CWRU
