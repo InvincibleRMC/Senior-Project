@@ -1,1 +1,1 @@
-# Senior Project for ECSE 395 at CWRU
+# Senior Project for CSDS 395 at CWRU
