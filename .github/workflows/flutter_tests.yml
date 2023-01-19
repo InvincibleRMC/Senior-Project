@@ -1,4 +1,4 @@
-name: flutter
+name: flutter tests
 on: [push, workflow_dispatch]
 jobs:
   build:
