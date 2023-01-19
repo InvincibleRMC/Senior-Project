@@ -15,6 +15,7 @@ jobs:
      - run: cd front_end
      - run: flutter --version
      - run: flutter config --enable-linux-desktop
+     - run: flutter pub upgrade
      - run: flutter pub get
      - run: flutter test
      - run: flutter build linux
