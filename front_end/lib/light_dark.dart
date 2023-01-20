@@ -9,14 +9,14 @@ class LightDarkButton extends StatefulWidget {
 }
 
 class _LightDarkButtonState extends State<LightDarkButton> {
-  bool darkMode = false;
+  bool _darkMode = false;
 
   void _pressed() {
     setState(() {
-      darkMode = !darkMode;
+      _darkMode = !_darkMode;
     });
 
-    if (darkMode) {
+    if (_darkMode) {
       AdaptiveTheme.of(context).setDark();
     } else {
       AdaptiveTheme.of(context).setLight();
@@ -26,17 +26,17 @@ class _LightDarkButtonState extends State<LightDarkButton> {
   @override
   void initState() {
     super.initState();
-    darkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
+    _darkMode = AdaptiveTheme.of(context).mode == AdaptiveThemeMode.dark;
   }
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: _pressed,
-      icon: darkMode
+      icon: _darkMode
           ? const Icon(Icons.brightness_2)
           : const Icon(Icons.wb_sunny),
-      tooltip: darkMode ? "Change to dark mode" : "Change to light mode",
+      tooltip: _darkMode ? "Change to dark mode" : "Change to light mode",
     );
   }
 }
