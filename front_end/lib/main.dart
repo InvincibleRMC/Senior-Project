@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:front_end/light_dark.dart';
 
 void main() async {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required mode: AdaptiveThemeMode});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AdaptiveThemeMode current_mode = await AdaptiveTheme.getThemeMode()
-     return AdaptiveTheme(
+    return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
@@ -23,20 +23,20 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         accentColor: Colors.amber,
       ),
-      initial: current_mode,
+      initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
         title: 'Adaptive Theme Demo',
+        debugShowCheckedModeBanner: false,
         theme: theme,
         darkTheme: darkTheme,
-        home: const MyHomePage(title: "CWRU Plan+"),
+        home: MyHomePage(title: "CWRU Plan+"),
       ),
     );
-
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title, required this.initialMode});
+  const MyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -48,7 +48,6 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-  AdaptiveThemeMode initialMode;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -56,9 +55,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  bool _light_dark_initial = false;
-  bool _light_dark_state = false;
 
   void _incrementCounter() {
     setState(() {
@@ -79,44 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    
+
     Icon icon;
 
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-        actions: <Widget>[
-            ToggleButtons(
-                direction: Axis.horizontal,
-                onPressed: (int index) {
-                  setState(() {
-                    if(!_light_dark_initial) {
-                        _light_dark_state = widget._initialState.isDark();
-                    } else {
-                        _light_dark_state = !_light_dark_state;
-                    }
-
-                    if(!_light_dark_state) { 
-                        AdaptiveTheme.of(context).setLight();
-                        icon = Icons.toggle_off;
-                    } else {
-                        AdaptiveTheme.of(context).setDark();
-                    }
-                    
-                  });
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                selectedBorderColor: Colors.blue[700],
-                selectedColor: Colors.white,
-                fillColor: Colors.blue[200],
-                color: Colors.blue[400],
-                isSelected: _light_dark_state,
-                children: Icon(Icons.toggle_on)
-              )
-        ]
-      ),
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
+          actions: const <Widget>[LightDarkButton()]),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
