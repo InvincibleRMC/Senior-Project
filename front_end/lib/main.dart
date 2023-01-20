@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 
-void main() {
-
-
-  AdaptiveThemeMode current_mode = await AdaptiveTheme.getThemeMode();
+void main() async {
   runApp(const MyApp());
 }
 
@@ -14,16 +11,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    AdaptiveThemeMode current_mode = await AdaptiveTheme.getThemeMode();
+    AdaptiveThemeMode current_mode = await AdaptiveTheme.getThemeMode()
      return AdaptiveTheme(
       light: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
         accentColor: Colors.amber,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
         accentColor: Colors.amber,
       ),
       initial: current_mode,
@@ -116,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fillColor: Colors.blue[200],
                 color: Colors.blue[400],
                 isSelected: _light_dark_state,
-                // children: Icon(Icons.moon)
+                children: Icon(Icons.toggle_on)
               )
         ]
       ),
