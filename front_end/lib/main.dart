@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 
 void main() {
+
+
+  AdaptiveThemeMode current_mode = await AdaptiveTheme.getThemeMode();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required mode: AdaptiveThemeMode});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    AdaptiveThemeMode current_mode = await AdaptiveTheme.getThemeMode();
+     return AdaptiveTheme(
+      light: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.red,
+        accentColor: Colors.amber,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      dark: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.red,
+        accentColor: Colors.amber,
+      ),
+      initial: current_mode,
+      builder: (theme, darkTheme) => MaterialApp(
+        title: 'Adaptive Theme Demo',
+        theme: theme,
+        darkTheme: darkTheme,
+        home: const MyHomePage(title: "CWRU Plan+"),
+      ),
     );
+
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.initialMode});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -42,6 +51,7 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
+  AdaptiveThemeMode initialMode;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -49,6 +59,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  bool _light_dark_initial = false;
+  bool _light_dark_state = false;
 
   void _incrementCounter() {
     setState(() {
@@ -69,11 +82,43 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    
+    Icon icon;
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: <Widget>[
+            ToggleButtons(
+                direction: Axis.horizontal,
+                onPressed: (int index) {
+                  setState(() {
+                    if(!_light_dark_initial) {
+                        _light_dark_state = widget._initialState.isDark();
+                    } else {
+                        _light_dark_state = !_light_dark_state;
+                    }
+
+                    if(!_light_dark_state) { 
+                        AdaptiveTheme.of(context).setLight();
+                        icon = Icons.toggle_off;
+                    } else {
+                        AdaptiveTheme.of(context).setDark();
+                    }
+                    
+                  });
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                selectedBorderColor: Colors.blue[700],
+                selectedColor: Colors.white,
+                fillColor: Colors.blue[200],
+                color: Colors.blue[400],
+                isSelected: _light_dark_state,
+                // children: Icon(Icons.moon)
+              )
+        ]
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
