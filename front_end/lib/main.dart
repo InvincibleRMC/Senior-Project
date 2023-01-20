@@ -16,12 +16,12 @@ class MyApp extends StatelessWidget {
       light: ThemeData(
         brightness: Brightness.light,
         primarySwatch: Colors.blue,
-        accentColor: Colors.amber,
+        // colorScheme: Colors.amber,
       ),
       dark: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
-        accentColor: Colors.amber,
+        // colorScheme: ColorScheme.sec
       ),
       initial: AdaptiveThemeMode.system,
       builder: (theme, darkTheme) => MaterialApp(
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: theme,
         darkTheme: darkTheme,
-        home: MyHomePage(title: "CWRU Plan+"),
+        home: const MyHomePage(title: "CWRU Plan+"),
       ),
     );
   }
@@ -69,15 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-
-    Icon icon;
-
     return Scaffold(
       appBar: AppBar(
           // Here we take the value from the MyHomePage object that was created by
