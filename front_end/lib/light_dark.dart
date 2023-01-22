@@ -27,7 +27,7 @@ class _LightDarkButtonState extends State<LightDarkButton> {
   @override
   void initState() {
     super.initState();
-    _darkMode = AdaptiveTheme.of(context).mode.isDark;
+    // _darkMode = AdaptiveTheme.of(context).mode.isDark;
   }
 
   @override
@@ -35,9 +35,9 @@ class _LightDarkButtonState extends State<LightDarkButton> {
     return IconButton(
       onPressed: _pressed,
       icon: _darkMode
-          ? const Icon(Icons.brightness_2)
-          : const Icon(Icons.wb_sunny),
-      tooltip: _darkMode ? "Change to dark mode" : "Change to light mode",
+          ? const Icon(Icons.wb_sunny)
+          : const Icon(Icons.brightness_2),
+      tooltip: _darkMode ? "Switch to light theme" : "Switch to light theme",
     );
   }
 }
