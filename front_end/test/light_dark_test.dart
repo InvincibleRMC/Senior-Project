@@ -14,39 +14,39 @@ void main() {
 
       // Asserts Correct widget
       if (darkMode) {
-        expect(find.byIcon(night), findsOneWidget);
-      } else {
         expect(find.byIcon(light), findsOneWidget);
+      } else {
+        expect(find.byIcon(night), findsOneWidget);
       }
     });
     testWidgets('Night to Light', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
 
-      await tester.tap(find.byIcon(light));
-      await tester.pump();
-
-      //Asert Night
-      expect(find.byIcon(night), findsOneWidget);
-      expect(find.byIcon(light), findsNothing);
-
       await tester.tap(find.byIcon(night));
       await tester.pump();
 
-      expect(find.byIcon(night), findsNothing);
+      //Asert Night
       expect(find.byIcon(light), findsOneWidget);
+      expect(find.byIcon(night), findsNothing);
+
+      await tester.tap(find.byIcon(light));
+      await tester.pump();
+
+      expect(find.byIcon(light), findsNothing);
+      expect(find.byIcon(night), findsOneWidget);
     });
     testWidgets('Light to Night', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
 
       //Asert Light
-      expect(find.byIcon(night), findsNothing);
-      expect(find.byIcon(light), findsOneWidget);
+      expect(find.byIcon(light), findsNothing);
+      expect(find.byIcon(night), findsOneWidget);
 
-      await tester.tap(find.byIcon(light));
+      await tester.tap(find.byIcon(night));
       await tester.pump();
 
-      expect(find.byIcon(night), findsOneWidget);
-      expect(find.byIcon(light), findsNothing);
+      expect(find.byIcon(light), findsOneWidget);
+      expect(find.byIcon(night), findsNothing);
     });
   });
 }
