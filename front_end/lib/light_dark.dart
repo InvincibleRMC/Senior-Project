@@ -1,6 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:system_theme/system_theme.dart';
 
 class LightDarkButton extends StatefulWidget {
   const LightDarkButton({super.key});
@@ -10,23 +9,14 @@ class LightDarkButton extends StatefulWidget {
 }
 
 class _LightDarkButtonState extends State<LightDarkButton> {
-  bool _darkMode = SystemTheme.isDarkMode;
+  // Starts in Dark mode
+  bool _darkMode = true;
 
   void _pressed() {
     setState(() {
       _darkMode = !_darkMode;
+      AdaptiveTheme.of(context).toggleThemeMode();
     });
-
-    if (_darkMode) {
-      AdaptiveTheme.of(context).setDark();
-    } else {
-      AdaptiveTheme.of(context).setLight();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
