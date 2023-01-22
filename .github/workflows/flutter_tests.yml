@@ -20,3 +20,4 @@ jobs:
      - run: flutter test
      - run: flutter build linux
      - run: flutter build web
+     - run: flutter build apk
