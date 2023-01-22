@@ -27,7 +27,6 @@ class _LightDarkButtonState extends State<LightDarkButton> {
   @override
   void initState() {
     super.initState();
-    // _darkMode = AdaptiveTheme.of(context).mode.isDark;
   }
 
   @override
