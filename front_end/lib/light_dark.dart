@@ -15,8 +15,13 @@ class _LightDarkButtonState extends State<LightDarkButton> {
   void _pressed() {
     setState(() {
       _darkMode = !_darkMode;
-      AdaptiveTheme.of(context).toggleThemeMode();
     });
+
+    if (_darkMode) {
+      AdaptiveTheme.of(context).setDark();
+    } else {
+      AdaptiveTheme.of(context).setLight();
+    }
   }
 
   @override
