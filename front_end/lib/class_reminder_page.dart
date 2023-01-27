@@ -5,17 +5,16 @@ import 'package:front_end/standard_widgets.dart';
 
 import 'main.dart';
 
-class ClassReminderPage extends StatelessWidget {
-  ClassReminderPage({Key? key}) : super(key: key);
+class ClassReminderPage extends StatefulWidget {
+  const ClassReminderPage({Key? key}) : super(key: key);
 
+  @override
+  State<ClassReminderPage> createState() => _ClassReminderPageState();
+}
+
+class _ClassReminderPageState extends State<ClassReminderPage> {
   List<String> _selectedClasses = [];
   String _email = "";
-
-  Future<List<String>> _getData(String filter) async {
-    List<String> all = MiddleWare.getAllCourses();
-    all.retainWhere((c) => c.contains(filter));
-    return all;
-  }
 
   @override
   Widget build(BuildContext context) {

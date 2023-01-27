@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          ClassReminderPage(key: const Key("class_reminder")),
+                          const ClassReminderPage(key: Key("class_reminder")),
                     ));
               },
               child: const Text("To Class Reminder"),
