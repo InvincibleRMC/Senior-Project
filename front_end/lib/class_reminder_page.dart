@@ -9,7 +9,7 @@ class ClassReminderPage extends StatelessWidget {
   ClassReminderPage({Key? key}) : super(key: key);
 
   List<String> selectedClasses_ = [];
-
+  String email_ = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,17 +22,17 @@ class ClassReminderPage extends StatelessWidget {
                 items: MiddleWare.getAllCourses(),
                 popupProps: const PopupPropsMultiSelection.menu(
                     showSelectedItems: true),
-                onChanged: (List<String> data) => selectedClasses_ = data),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "email",
-              ),
-            ),
+                onChanged: (List<String> data) => {selectedClasses_ = data}),
+            TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "email",
+                ),
+                onChanged: (String emailData) => {email_ = emailData}),
             ElevatedButton(
               key: const Key("scheduler_button"),
               onPressed: () {
-                MiddleWare.emailReminder("temp", selectedClasses_);
+                MiddleWare.emailReminder(email_, selectedClasses_);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

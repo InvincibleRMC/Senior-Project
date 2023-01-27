@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:front_end/light_dark.dart';
 import 'package:front_end/scheduler_page.dart';
 import 'package:front_end/standard_widgets.dart';
 
@@ -13,7 +12,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
