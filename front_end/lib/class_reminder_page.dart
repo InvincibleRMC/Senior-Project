@@ -8,8 +8,15 @@ import 'main.dart';
 class ClassReminderPage extends StatelessWidget {
   ClassReminderPage({Key? key}) : super(key: key);
 
-  List<String> selectedClasses_ = [];
-  String email_ = "";
+  List<String> _selectedClasses = [];
+  String _email = "";
+
+  Future<List<String>> _getData(String filter) async {
+    List<String> all = MiddleWare.getAllCourses();
+    all.retainWhere((c) => c.contains(filter));
+    return all;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,21 +25,26 @@ class ClassReminderPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            const Text(
+              "Input Classes you want an automatic email for when they open on SIS",
+              style: TextStyle(fontSize: 25),
+              textAlign: TextAlign.center,
+            ),
             DropdownSearch<String>.multiSelection(
                 items: MiddleWare.getAllCourses(),
                 popupProps: const PopupPropsMultiSelection.menu(
-                    showSelectedItems: true),
-                onChanged: (List<String> data) => {selectedClasses_ = data}),
+                    showSelectedItems: true, showSearchBox: true),
+                onChanged: (List<String> data) => {_selectedClasses = data}),
             TextField(
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "email",
                 ),
-                onChanged: (String emailData) => {email_ = emailData}),
+                onChanged: (String emailData) => {_email = emailData}),
             ElevatedButton(
               key: const Key("scheduler_button"),
               onPressed: () {
-                MiddleWare.emailReminder(email_, selectedClasses_);
+                MiddleWare.emailReminder(_email, _selectedClasses);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(

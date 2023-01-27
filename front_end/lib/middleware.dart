@@ -15,7 +15,7 @@ abstract class MiddleWare {
 
   // String for right now
   static List<String> getAllCourses() {
-    return ["CSDS 310", "CSDS 420", "USNA 104"];
+    return ["CSDS 310", "CSDS 420", "USNA 104", "EECS 102", "PHED 104"];
   }
 
   // String for right now
