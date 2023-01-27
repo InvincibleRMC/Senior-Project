@@ -40,13 +40,13 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                 ),
                 onChanged: (String emailData) => {_email = emailData}),
             ElevatedButton(
-              key: const Key("scheduler_button"),
+              key: const Key("home_button"),
               onPressed: () {
                 MiddleWare.emailReminder(_email, _selectedClasses);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const MyHomePage(key: Key("home")),
+                      builder: (context) => const HomePage(key: Key("home")),
                     ));
               },
               child: const Text("Submit"),

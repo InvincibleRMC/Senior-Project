@@ -17,11 +17,17 @@ class _SchedulerPageState extends State<SchedulerPage> {
   // string _concentraion = "";
   // string _minor = "";
 
-  List<String> _previousClasses = [];
-  List<String> _preferredProfessors = [];
-  List<String> _unpreferredProfessors = [];
-  List<String> _preferredClasses = [];
-  List<String> _unpreferredClasses = [];
+  List<String>? _previousClasses;
+
+  List<String>? _preferredProfessors;
+  List<String>? _unpreferredProfessors;
+  List<String>? _preferredClasses;
+  List<String>? _unpreferredClasses;
+
+  @visibleForTesting
+  void majorSetter(String major) {
+    _major = major;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,30 +37,30 @@ class _SchedulerPageState extends State<SchedulerPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            const Text(
-              "Input Classes you want an automatic email for when they open on SIS",
-              style: TextStyle(fontSize: 25),
-              textAlign: TextAlign.center,
-            ),
             DropdownSearch<String>(
               items: MiddleWare.getAllMajors(),
               popupProps: const PopupProps.menu(
                   showSelectedItems: true, showSearchBox: true),
               onChanged: (String? major) => _major = major,
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Major",
+                ),
+              ),
             ),
-            // DropdownSearch<String>.multiSelection(
-            //     items: MiddleWare.getAllCourses(),
-            //     popupProps: const PopupPropsMultiSelection.menu(
-            //         showSelectedItems: true, showSearchBox: true),
-            //     onChanged: (List<String> data) => {_selectedClasses = data}),
-            // TextField(
-            //     decoration: const InputDecoration(
-            //       border: OutlineInputBorder(),
-            //       labelText: "email",
-            //     ),
-            //     onChanged: (String emailData) => {_email = emailData}),
+            DropdownSearch<String>.multiSelection(
+              items: MiddleWare.getAllCourses(),
+              popupProps: const PopupPropsMultiSelection.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (List<String> courses) => {_previousClasses = courses},
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Previous Courses",
+                ),
+              ),
+            ),
             ElevatedButton(
-              key: const Key("scheduler_button"),
+              key: const Key("home_button"),
               onPressed: () {
                 // Ensures a Major is chosen
                 if (_major == null) {
@@ -77,8 +83,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const MyHomePage(key: Key("home")),
+                        builder: (context) => const HomePage(key: Key("home")),
                       ));
                 }
               },
