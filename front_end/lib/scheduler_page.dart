@@ -12,8 +12,8 @@ class SchedulerPage extends StatefulWidget {
 }
 
 class _SchedulerPageState extends State<SchedulerPage> {
-  String? _major = "";
-  //TODO not sure how to do concentraions
+  String? _major;
+  //TODO not sure how to do concentrations
   // string _concentraion = "";
   // string _minor = "";
 
@@ -37,10 +37,11 @@ class _SchedulerPageState extends State<SchedulerPage> {
               textAlign: TextAlign.center,
             ),
             DropdownSearch<String>(
-                items: MiddleWare.getAllMajors(),
-                popupProps: const PopupProps.menu(
-                    showSelectedItems: true, showSearchBox: true),
-                onChanged: (String? major) => _major = major),
+              items: MiddleWare.getAllMajors(),
+              popupProps: const PopupProps.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (String? major) => _major = major,
+            ),
             // DropdownSearch<String>.multiSelection(
             //     items: MiddleWare.getAllCourses(),
             //     popupProps: const PopupPropsMultiSelection.menu(
@@ -55,9 +56,23 @@ class _SchedulerPageState extends State<SchedulerPage> {
             ElevatedButton(
               key: const Key("scheduler_button"),
               onPressed: () {
+                // Ensures a Major is chosen
                 if (_major == null) {
-                  //TODO ALERT THINGY
-                } else {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Must input major'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'ok'),
+                          child: const Text('ok'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                // Passes information along and returns home
+                else {
                   MiddleWare.scheduler();
                   Navigator.pushReplacement(
                       context,
