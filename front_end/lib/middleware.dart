@@ -14,12 +14,24 @@ abstract class MiddleWare {
   }
 
   // String for right now
+  // Might want to get course names as well
   static List<String> getAllCourses() {
     return ["CSDS 310", "CSDS 420", "USNA 104", "EECS 102", "PHED 104"];
   }
 
   // String for right now
+  static List<String> getAllProfessors() {
+    return [
+      "Richard Bacchman",
+      "Ronald Loui",
+      "John Doe",
+      "Jane Smith",
+      "Yee Haw"
+    ];
+  }
+
+  // String for right now
   static List<String> getAllMajors() {
-    return ["TODO"];
+    return ["CS BS", "CS BA", "YEE haw"];
   }
 }

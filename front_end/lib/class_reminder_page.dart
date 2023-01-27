@@ -2,7 +2,6 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/middleware.dart';
 import 'package:front_end/standard_widgets.dart';
-
 import 'main.dart';
 
 class ClassReminderPage extends StatefulWidget {
