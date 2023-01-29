@@ -1,8 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/middleware.dart';
+import 'package:front_end/results.dart';
 import 'package:front_end/standard_widgets.dart';
-import 'main.dart';
 
 class SchedulerPage extends StatefulWidget {
   const SchedulerPage({Key? key}) : super(key: key);
@@ -18,16 +18,10 @@ class _SchedulerPageState extends State<SchedulerPage> {
   // string _minor = "";
 
   List<String>? _previousClasses;
-
   List<String>? _preferredProfessors;
   List<String>? _unpreferredProfessors;
   List<String>? _preferredClasses;
   List<String>? _unpreferredClasses;
-
-  @visibleForTesting
-  void majorSetter(String major) {
-    _major = major;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +32,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             DropdownSearch<String>(
+              key: const Key("drop_down_search_major"),
               items: MiddleWare.getAllMajors(),
               popupProps: const PopupProps.menu(
                   showSelectedItems: true, showSearchBox: true),
@@ -49,6 +44,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
               ),
             ),
             DropdownSearch<String>.multiSelection(
+              key: const Key("drop_down_search_courses"),
               items: MiddleWare.getAllCourses(),
               popupProps: const PopupPropsMultiSelection.menu(
                   showSelectedItems: true, showSearchBox: true),
@@ -60,7 +56,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
               ),
             ),
             ElevatedButton(
-              key: const Key("home_button"),
+              key: const Key("submit_button"),
               onPressed: () {
                 // Ensures a Major is chosen
                 if (_major == null) {
@@ -70,6 +66,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
                       title: const Text('Must input major'),
                       actions: <Widget>[
                         TextButton(
+                          key: const Key("ok_button"),
                           onPressed: () => Navigator.pop(context, 'ok'),
                           child: const Text('ok'),
                         ),
@@ -83,7 +80,8 @@ class _SchedulerPageState extends State<SchedulerPage> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(key: Key("home")),
+                        builder: (context) =>
+                            const ResultsPage(key: Key("home")),
                       ));
                 }
               },

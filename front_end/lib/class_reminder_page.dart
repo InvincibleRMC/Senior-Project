@@ -13,7 +13,7 @@ class ClassReminderPage extends StatefulWidget {
 
 class _ClassReminderPageState extends State<ClassReminderPage> {
   List<String> _selectedClasses = [];
-  String _email = "";
+  String? _email;
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +34,49 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                     showSelectedItems: true, showSearchBox: true),
                 onChanged: (List<String> data) => {_selectedClasses = data}),
             TextField(
+                key: const Key("email_input_field"),
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "email",
                 ),
                 onChanged: (String emailData) => {_email = emailData}),
             ElevatedButton(
-              key: const Key("home_button"),
+              key: const Key("submit_button"),
               onPressed: () {
-                MiddleWare.emailReminder(_email, _selectedClasses);
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(key: Key("home")),
-                    ));
+                if (_email == null) {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Warning No email inputted'),
+                      actions: <Widget>[
+                        TextButton(
+                          key: const Key("cancel_button"),
+                          onPressed: () =>
+                              Navigator.pop(context, 'cancel submissin'),
+                          child: const Text('cancel'),
+                        ),
+                        TextButton(
+                          key: const Key("continue_anyway_button"),
+                          onPressed: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const HomePage(key: Key("home")),
+                              )),
+                          child: const Text('Continue anyway'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  // Can do NonNull assertion because inside of an not null check
+                  MiddleWare.emailReminder(_email!, _selectedClasses);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(key: Key("home")),
+                      ));
+                }
               },
               child: const Text("Submit"),
             ),
