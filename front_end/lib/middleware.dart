@@ -1,8 +1,13 @@
 // Abstract class is dart an interface
+import 'package:tcp_socket_connection/tcp_socket_connection.dart';
+
 abstract class MiddleWare {
   // TODO probably add some class validation to front_end for users
   // maybe here or on textfield
   // https://codewithandrea.com/articles/flutter-text-field-form-validation/
+
+  //starting the connection and listening to the socket asynchronously
+
   static void emailReminder(String email, List<String> classes) {
     //TODO connect to database soontm
     print("YEEYHAWHODADKAWODK");
