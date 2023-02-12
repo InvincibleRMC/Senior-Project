@@ -6,6 +6,7 @@ data = []
 
 
 def load_professor_name(parsed_page: BeautifulSoup):
+    """Load professors name"""
     full_name = parsed_page.find("div", class_="NameTitle__Name-dowf0z-0 cfjPUG")
     if full_name is None:
         return ["", ""]
@@ -21,6 +22,7 @@ def load_professor_name(parsed_page: BeautifulSoup):
 
 
 def load_professor_score(parsed_page: BeautifulSoup):
+    """Load professors score"""
     score = parsed_page.find("div", class_="RatingValue__Numerator-qw8sqy-2 liyUjw")
     if score is None:
         return ""
@@ -28,6 +30,7 @@ def load_professor_score(parsed_page: BeautifulSoup):
 
 
 def load_professor_department(parsed_page: BeautifulSoup):
+    """Load professors department"""
     department = parsed_page.find("a", class_="TeacherDepartment__StyledDepartmentLink-fl79e8-0 fuypDB")
     if department is None:
         return ""
@@ -35,6 +38,7 @@ def load_professor_department(parsed_page: BeautifulSoup):
 
 
 def load_take_again_and_difficulty(parsed_page: BeautifulSoup):
+    """Load take again and difficulty"""
     scores: list[str] = []
     for i in parsed_page.find_all(attrs={"class": "FeedbackItem__FeedbackNumber-uof32n-1 kkESWs"}):
         scores.append(i.text.strip())
@@ -42,6 +46,7 @@ def load_take_again_and_difficulty(parsed_page: BeautifulSoup):
 
 
 def load_reviews(parsed_page: BeautifulSoup):
+    """Load reviews"""
     reviews = parsed_page.find("li", class_="TeacherRatingTabs__StyledTab-pnmswv-2 bOzrdx react-tabs__tab--selected")
     if reviews is None:
         return ""
@@ -49,6 +54,7 @@ def load_reviews(parsed_page: BeautifulSoup):
 
 
 def add_to_data(url: str):
+    """Takes a url and adds data to the table"""
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
     name = load_professor_name(soup)
@@ -62,14 +68,17 @@ def add_to_data(url: str):
 
 
 def convert_to_sql_insert():
+    """TBD"""
     pass
 
 
 def convert_to_sql_update():
+    """TBD"""
     pass
 
 
 def print_table():
+    """Uses tabulate to print the table nicely"""
     col_names = ["First Name", "Last Name", "Department", "RMP Score",
                  "Would Take Again", "Difficulty", "Reviews"]
     print(tabulate(data, headers=col_names, tablefmt="fancy_grid",
