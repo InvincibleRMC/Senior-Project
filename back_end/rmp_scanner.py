@@ -1,8 +1,10 @@
+"""Rate My Professor Scanner"""
 import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
+from typing import List, Any
 
-data = []
+data: List[List[Any]] = []
 
 
 def load_professor_name(parsed_page: BeautifulSoup):
@@ -31,7 +33,8 @@ def load_professor_score(parsed_page: BeautifulSoup):
 
 def load_professor_department(parsed_page: BeautifulSoup):
     """Load professors department"""
-    department = parsed_page.find("a", class_="TeacherDepartment__StyledDepartmentLink-fl79e8-0 fuypDB")
+    department = parsed_page.find("a",
+                                  class_="TeacherDepartment__StyledDepartmentLink-fl79e8-0 fuypDB")
     if department is None:
         return ""
     return department.text.strip().replace(' department', '')
@@ -39,7 +42,7 @@ def load_professor_department(parsed_page: BeautifulSoup):
 
 def load_take_again_and_difficulty(parsed_page: BeautifulSoup):
     """Load take again and difficulty"""
-    scores: list[str] = []
+    scores: List[str] = []
     for i in parsed_page.find_all(attrs={"class": "FeedbackItem__FeedbackNumber-uof32n-1 kkESWs"}):
         scores.append(i.text.strip())
     return scores
@@ -47,7 +50,9 @@ def load_take_again_and_difficulty(parsed_page: BeautifulSoup):
 
 def load_reviews(parsed_page: BeautifulSoup):
     """Load reviews"""
-    reviews = parsed_page.find("li", class_="TeacherRatingTabs__StyledTab-pnmswv-2 bOzrdx react-tabs__tab--selected")
+    reviews = parsed_page.find("li",
+                               class_="TeacherRatingTabs__StyledTab-pnmswv-2 \
+                               bOzrdx react-tabs__tab--selected")
     if reviews is None:
         return ""
     return reviews.text.strip().replace(' Student Ratings', '')
@@ -63,7 +68,7 @@ def add_to_data(url: str):
     reviews = load_reviews(soup)
     take_again_and_difficulty = load_take_again_and_difficulty(soup)
     load_take_again_and_difficulty(soup)
-    professor_data = name + [department] + [score] + take_again_and_difficulty + [reviews]
+    professor_data = name + [department] + [float(score)] + take_again_and_difficulty + [reviews]
     data.append(professor_data)
 
 
@@ -81,8 +86,7 @@ def print_table():
     """Uses tabulate to print the table nicely"""
     col_names = ["First Name", "Last Name", "Department", "RMP Score",
                  "Would Take Again", "Difficulty", "Reviews"]
-    print(tabulate(data, headers=col_names, tablefmt="fancy_grid",
-                   floatfmt=(None, None, None, ".1f", None, ".1f", None)))
+    print(tabulate(data, headers=col_names, tablefmt="fancy_grid",))
 
 
 add_to_data("https://www.ratemyprofessors.com/professor?tid=2256935")  # Allman,Mark
