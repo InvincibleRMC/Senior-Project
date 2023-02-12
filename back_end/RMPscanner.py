@@ -5,60 +5,60 @@ from tabulate import tabulate
 data = []
 
 
-def load_professor_name(URL: str, parsedPage: BeautifulSoup):
-    fullName = parsedPage.find("div", class_="NameTitle__Name-dowf0z-0 cfjPUG")
-    if fullName is None:
+def load_professor_name(url: str, parsed_page: BeautifulSoup):
+    full_name = parsed_page.find("div", class_="NameTitle__Name-dowf0z-0 cfjPUG")
+    if full_name is None:
         return ["", ""]
 
     try:
-        firstName = fullName.text.strip().split()[0] + " " + fullName.text.strip().split()[1]
-        lastName = fullName.text.strip().split()[2]
+        first_name = full_name.text.strip().split()[0] + " " + full_name.text.strip().split()[1]
+        last_name = full_name.text.strip().split()[2]
     except IndexError:
-        firstName = fullName.text.strip().split()[0]
-        lastName = fullName.text.strip().split()[1]
-    name = [firstName, lastName]
+        first_name = full_name.text.strip().split()[0]
+        last_name = full_name.text.strip().split()[1]
+    name = [first_name, last_name]
     return name
 
 
-def load_professor_score(URL: str, parsedPage: BeautifulSoup):
-    score = parsedPage.find("div", class_="RatingValue__Numerator-qw8sqy-2 liyUjw")
+def load_professor_score(url: str, parsed_page: BeautifulSoup):
+    score = parsed_page.find("div", class_="RatingValue__Numerator-qw8sqy-2 liyUjw")
     if score is None:
         return ""
     return score.text.strip()
 
 
-def load_professor_department(URL: str, parsedPage: BeautifulSoup):
-    department = parsedPage.find("a", class_="TeacherDepartment__StyledDepartmentLink-fl79e8-0 fuypDB")
+def load_professor_department(url: str, parsed_page: BeautifulSoup):
+    department = parsed_page.find("a", class_="TeacherDepartment__StyledDepartmentLink-fl79e8-0 fuypDB")
     if department is None:
         return ""
     return department.text.strip().replace(' department', '')
 
 
-def load_take_again_and_difficulty(URL: str, parsedPage: BeautifulSoup):
+def load_take_again_and_difficulty(url: str, parsed_page: BeautifulSoup):
     scores: list[str] = []
-    for i in parsedPage.find_all(attrs={"class": "FeedbackItem__FeedbackNumber-uof32n-1 kkESWs"}):
+    for i in parsed_page.find_all(attrs={"class": "FeedbackItem__FeedbackNumber-uof32n-1 kkESWs"}):
         scores.append(i.text.strip())
     return scores
 
 
-def load_reviews(URL: str, parsedPage: BeautifulSoup):
-    reviews = parsedPage.find("li", class_="TeacherRatingTabs__StyledTab-pnmswv-2 bOzrdx react-tabs__tab--selected")
+def load_reviews(url: str, parsed_page: BeautifulSoup):
+    reviews = parsed_page.find("li", class_="TeacherRatingTabs__StyledTab-pnmswv-2 bOzrdx react-tabs__tab--selected")
     if reviews is None:
         return ""
     return reviews.text.strip().replace(' Student Ratings', '')
 
 
-def add_to_data(URL: str):
-    page = requests.get(URL)
+def add_to_data(url: str):
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
-    name = load_professor_name(URL, soup)
-    department = load_professor_department(URL, soup)
-    score = load_professor_score(URL, soup)
-    reviews = load_reviews(URL, soup)
-    takeAgainAndDifficulty = load_take_again_and_difficulty(URL, soup)
-    load_take_again_and_difficulty(URL, soup)
-    professorData = name + [department] + [score] + takeAgainAndDifficulty + [reviews]
-    data.append(professorData)
+    name = load_professor_name(url, soup)
+    department = load_professor_department(url, soup)
+    score = load_professor_score(url, soup)
+    reviews = load_reviews(url, soup)
+    take_again_and_difficulty = load_take_again_and_difficulty(url, soup)
+    load_take_again_and_difficulty(url, soup)
+    professor_data = name + [department] + [score] + take_again_and_difficulty + [reviews]
+    data.append(professor_data)
 
 
 def convert_to_SQL_insert():
@@ -70,8 +70,10 @@ def convert_to_SQL_update():
 
 
 def print_table():
-    col_names = ["First Name", "Last Name", "Department", "RMP Score", "Would Take Again", "Difficulty", "Reviews"]
-    print(tabulate(data, headers=col_names, tablefmt="fancy_grid", floatfmt=(None, None, None, '.1f', None, '.1f', None)))
+    col_names = ["First Name", "Last Name", "Department", "RMP Score",
+                 "Would Take Again", "Difficulty", "Reviews"]
+    print(tabulate(data, headers=col_names, tablefmt="fancy_grid",
+                   floatfmt=(None, None, None, ".1f", None, ".1f", None)))
 
 
 add_to_data("https://www.ratemyprofessors.com/professor?tid=2256935")  # Allman,Mark
