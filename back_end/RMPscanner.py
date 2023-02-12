@@ -5,7 +5,7 @@ from tabulate import tabulate
 data = []
 
 
-def load_professor_name(url: str, parsed_page: BeautifulSoup):
+def load_professor_name(parsed_page: BeautifulSoup):
     full_name = parsed_page.find("div", class_="NameTitle__Name-dowf0z-0 cfjPUG")
     if full_name is None:
         return ["", ""]
@@ -20,28 +20,28 @@ def load_professor_name(url: str, parsed_page: BeautifulSoup):
     return name
 
 
-def load_professor_score(url: str, parsed_page: BeautifulSoup):
+def load_professor_score(parsed_page: BeautifulSoup):
     score = parsed_page.find("div", class_="RatingValue__Numerator-qw8sqy-2 liyUjw")
     if score is None:
         return ""
     return score.text.strip()
 
 
-def load_professor_department(url: str, parsed_page: BeautifulSoup):
+def load_professor_department(parsed_page: BeautifulSoup):
     department = parsed_page.find("a", class_="TeacherDepartment__StyledDepartmentLink-fl79e8-0 fuypDB")
     if department is None:
         return ""
     return department.text.strip().replace(' department', '')
 
 
-def load_take_again_and_difficulty(url: str, parsed_page: BeautifulSoup):
+def load_take_again_and_difficulty(parsed_page: BeautifulSoup):
     scores: list[str] = []
     for i in parsed_page.find_all(attrs={"class": "FeedbackItem__FeedbackNumber-uof32n-1 kkESWs"}):
         scores.append(i.text.strip())
     return scores
 
 
-def load_reviews(url: str, parsed_page: BeautifulSoup):
+def load_reviews(parsed_page: BeautifulSoup):
     reviews = parsed_page.find("li", class_="TeacherRatingTabs__StyledTab-pnmswv-2 bOzrdx react-tabs__tab--selected")
     if reviews is None:
         return ""
@@ -51,12 +51,12 @@ def load_reviews(url: str, parsed_page: BeautifulSoup):
 def add_to_data(url: str):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, "html.parser")
-    name = load_professor_name(url, soup)
-    department = load_professor_department(url, soup)
-    score = load_professor_score(url, soup)
-    reviews = load_reviews(url, soup)
-    take_again_and_difficulty = load_take_again_and_difficulty(url, soup)
-    load_take_again_and_difficulty(url, soup)
+    name = load_professor_name(soup)
+    department = load_professor_department(soup)
+    score = load_professor_score(soup)
+    reviews = load_reviews(soup)
+    take_again_and_difficulty = load_take_again_and_difficulty(soup)
+    load_take_again_and_difficulty(soup)
     professor_data = name + [department] + [score] + take_again_and_difficulty + [reviews]
     data.append(professor_data)
 
