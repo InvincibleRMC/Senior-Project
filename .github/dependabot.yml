@@ -9,3 +9,8 @@ updates:
     directory: "/front_end" # Location of package manifests
     schedule:
       interval: "daily"
+      
+ - package-ecosystem: "pip"
+    directory: "/back_end" # Location of package manifests
+    schedule:
+      interval: "daily"
