@@ -1,8 +1,8 @@
 """Rate My Professor Scanner"""
+from typing import List, Any
 import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
-from typing import List, Any
 
 data: List[List[Any]] = []
 
@@ -61,7 +61,11 @@ def load_reviews(parsed_page: BeautifulSoup):
 def add_to_data(url: str):
     """Takes a url and adds data to the table"""
     page = requests.get(url)
-    soup = BeautifulSoup(page.content, "html.parser")
+    try:
+        soup = BeautifulSoup(page.content, "html.parser")
+    except requests.exceptions.Timeout:
+        print("timeout occurred")
+        return
     name = load_professor_name(soup)
     department = load_professor_department(soup)
     score = load_professor_score(soup)
@@ -74,12 +78,12 @@ def add_to_data(url: str):
 
 def convert_to_sql_insert():
     """TBD"""
-    pass
+    print("todo")
 
 
 def convert_to_sql_update():
     """TBD"""
-    pass
+    print("todo")
 
 
 def print_table():
