@@ -60,12 +60,8 @@ def load_reviews(parsed_page: BeautifulSoup):
 
 def add_to_data(url: str):
     """Takes a url and adds data to the table"""
-    page = requests.get(url)
-    try:
-        soup = BeautifulSoup(page.content, "html.parser")
-    except requests.exceptions.Timeout:
-        print("timeout occurred")
-        return
+    page = requests.get(url, timeout=10)
+    soup = BeautifulSoup(page.content, "html.parser")
     name = load_professor_name(soup)
     department = load_professor_department(soup)
     score = load_professor_score(soup)
