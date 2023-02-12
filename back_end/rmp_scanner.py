@@ -61,11 +61,11 @@ def add_to_data(url: str):
     data.append(professor_data)
 
 
-def convert_to_SQL_insert():
+def convert_to_sql_insert():
     pass
 
 
-def convert_to_SQL_update():
+def convert_to_sql_update():
     pass
 
 
