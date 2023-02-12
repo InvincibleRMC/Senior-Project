@@ -18,6 +18,3 @@ jobs:
      - run: flutter --version
      - run: flutter config --enable-linux-desktop
      - run: flutter test
-     - run: flutter build linux
-     - run: flutter build web
-     - run: flutter build apk
