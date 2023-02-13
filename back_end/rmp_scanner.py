@@ -50,9 +50,9 @@ def load_take_again_and_difficulty(parsed_page: BeautifulSoup):
 
 def load_reviews(parsed_page: BeautifulSoup):
     """Load reviews"""
-    reviews = parsed_page.find("li",
-                               class_="TeacherRatingTabs__StyledTab-pnmswv-2 \
-                               bOzrdx react-tabs__tab--selected")
+    reviews = parsed_page.find("li", class_="TeacherRatingTabs__StyledTab-pnmswv-2" +
+                                            " bOzrdx" +
+                                            " react-tabs__tab--selected")
     if reviews is None:
         return ""
     return reviews.text.strip().replace(' Student Ratings', '')
