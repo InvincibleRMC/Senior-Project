@@ -1,6 +1,8 @@
 import socket
 import time
-import signal
+import signal 
+
+from class_pb2 import Class
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(('localhost', 50000))
@@ -17,3 +19,4 @@ while 1:
         time.sleep(0.01)
     conn.sendall(data)
 conn.close()
+
