@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "proto/data.proto";
+
+message ScheduleResponse {
+}
+
+
+message ProfessorListResponse {
+    repeated Professor professors = 1;
+}
+
+message CourseListResponse {
+    optional string major = 1;
+    repeated Course courses  = 2;
+}
+
+message Response {
+    enum ResponseType {
+        CourseList = 0;
+        ProfessorList = 1;
+        Schedule = 2;
+    }
+
+    ResponseType type = 1;
+    oneof msg {
+        ScheduleResponse r1 = 2;
+        ProfessorListResponse r2 = 3;
+        CourseListResponse r3 = 4;
+    }
+}

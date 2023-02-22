@@ -8,39 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use courseDescriptor instead')
-const Course$json = const {
-  '1': 'Course',
-  '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-  ],
-};
-
-/// Descriptor for `Course`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List courseDescriptor = $convert.base64Decode('CgZDb3Vyc2USDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWU=');
-@$core.Deprecated('Use majorDescriptor instead')
-const Major$json = const {
-  '1': 'Major',
-  '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
-  ],
-};
-
-/// Descriptor for `Major`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List majorDescriptor = $convert.base64Decode('CgVNYWpvchIOCgJpZBgBIAEoBVICaWQ=');
-@$core.Deprecated('Use professorDescriptor instead')
-const Professor$json = const {
-  '1': 'Professor',
-  '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
-    const {'1': 'first', '3': 2, '4': 1, '5': 9, '10': 'first'},
-    const {'1': 'last', '3': 3, '4': 1, '5': 9, '10': 'last'},
-  ],
-};
-
-/// Descriptor for `Professor`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List professorDescriptor = $convert.base64Decode('CglQcm9mZXNzb3ISDgoCaWQYASABKAVSAmlkEhQKBWZpcnN0GAIgASgJUgVmaXJzdBISCgRsYXN0GAMgASgJUgRsYXN0');
 @$core.Deprecated('Use notificationRequestDescriptor instead')
 const NotificationRequest$json = const {
   '1': 'NotificationRequest',
@@ -67,25 +34,56 @@ const ScheduleRequest$json = const {
 
 /// Descriptor for `ScheduleRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSFAoFbWFqb3IYASABKAlSBW1ham9yEjEKD3ByZXZpb3VzQ2xhc3NlcxgCIAMoCzIHLkNvdXJzZVIPcHJldmlvdXNDbGFzc2VzEjMKEHByZWZlcnJlZENsYXNzZXMYAyADKAsyBy5Db3Vyc2VSEHByZWZlcnJlZENsYXNzZXMSNwoSdW5wcmVmZXJyZWRDbGFzc2VzGAQgAygLMgcuQ291cnNlUhJ1bnByZWZlcnJlZENsYXNzZXMSMgoOcHJlZmVycmVkUHJvZnMYBSADKAsyCi5Qcm9mZXNzb3JSDnByZWZlcnJlZFByb2ZzEjYKEHVucHJlZmZlcmVkUHJvZnMYBiADKAsyCi5Qcm9mZXNzb3JSEHVucHJlZmZlcmVkUHJvZnM=');
-@$core.Deprecated('Use scheduleResponseDescriptor instead')
-const ScheduleResponse$json = const {
-  '1': 'ScheduleResponse',
+@$core.Deprecated('Use professorRequestDescriptor instead')
+const ProfessorRequest$json = const {
+  '1': 'ProfessorRequest',
+  '2': const [
+    const {'1': 'major', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'major', '17': true},
+  ],
+  '8': const [
+    const {'1': '_major'},
+  ],
 };
 
-/// Descriptor for `ScheduleResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List scheduleResponseDescriptor = $convert.base64Decode('ChBTY2hlZHVsZVJlc3BvbnNl');
+/// Descriptor for `ProfessorRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List professorRequestDescriptor = $convert.base64Decode('ChBQcm9mZXNzb3JSZXF1ZXN0EhkKBW1ham9yGAEgASgJSABSBW1ham9yiAEBQggKBl9tYWpvcg==');
+@$core.Deprecated('Use courseRequestDescriptor instead')
+const CourseRequest$json = const {
+  '1': 'CourseRequest',
+  '2': const [
+    const {'1': 'major', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'major', '17': true},
+  ],
+  '8': const [
+    const {'1': '_major'},
+  ],
+};
+
+/// Descriptor for `CourseRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List courseRequestDescriptor = $convert.base64Decode('Cg1Db3Vyc2VSZXF1ZXN0EhkKBW1ham9yGAEgASgJSABSBW1ham9yiAEBQggKBl9tYWpvcg==');
 @$core.Deprecated('Use requestDescriptor instead')
 const Request$json = const {
   '1': 'Request',
   '2': const [
-    const {'1': 'sched', '3': 1, '4': 1, '5': 11, '6': '.ScheduleRequest', '9': 0, '10': 'sched', '17': true},
-    const {'1': 'noti', '3': 2, '4': 1, '5': 11, '6': '.NotificationRequest', '9': 1, '10': 'noti', '17': true},
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.Request.RequestType', '10': 'type'},
+    const {'1': 'r1', '3': 2, '4': 1, '5': 11, '6': '.ScheduleRequest', '9': 0, '10': 'r1'},
+    const {'1': 'r2', '3': 3, '4': 1, '5': 11, '6': '.NotificationRequest', '9': 0, '10': 'r2'},
+    const {'1': 'r3', '3': 4, '4': 1, '5': 11, '6': '.ProfessorRequest', '9': 0, '10': 'r3'},
+    const {'1': 'r4', '3': 5, '4': 1, '5': 11, '6': '.CourseRequest', '9': 0, '10': 'r4'},
   ],
+  '4': const [Request_RequestType$json],
   '8': const [
-    const {'1': '_sched'},
-    const {'1': '_noti'},
+    const {'1': 'msg'},
+  ],
+};
+
+@$core.Deprecated('Use requestDescriptor instead')
+const Request_RequestType$json = const {
+  '1': 'RequestType',
+  '2': const [
+    const {'1': 'SCHEDULE', '2': 0},
+    const {'1': 'NOTIFICATION', '2': 1},
   ],
 };
 
 /// Descriptor for `Request`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List requestDescriptor = $convert.base64Decode('CgdSZXF1ZXN0EisKBXNjaGVkGAEgASgLMhAuU2NoZWR1bGVSZXF1ZXN0SABSBXNjaGVkiAEBEi0KBG5vdGkYAiABKAsyFC5Ob3RpZmljYXRpb25SZXF1ZXN0SAFSBG5vdGmIAQFCCAoGX3NjaGVkQgcKBV9ub3Rp');
+final $typed_data.Uint8List requestDescriptor = $convert.base64Decode('CgdSZXF1ZXN0EigKBHR5cGUYASABKA4yFC5SZXF1ZXN0LlJlcXVlc3RUeXBlUgR0eXBlEiIKAnIxGAIgASgLMhAuU2NoZWR1bGVSZXF1ZXN0SABSAnIxEiYKAnIyGAMgASgLMhQuTm90aWZpY2F0aW9uUmVxdWVzdEgAUgJyMhIjCgJyMxgEIAEoCzIRLlByb2Zlc3NvclJlcXVlc3RIAFICcjMSIAoCcjQYBSABKAsyDi5Db3Vyc2VSZXF1ZXN0SABSAnI0Ii0KC1JlcXVlc3RUeXBlEgwKCFNDSEVEVUxFEAASEAoMTk9USUZJQ0FUSU9OEAFCBQoDbXNn');

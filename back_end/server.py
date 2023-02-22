@@ -12,10 +12,11 @@ s.listen(1)
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 while True:
-
     c = Class()
     c.id = 0
     c.name = "bruh"
+
+    
 
     json: bytes = Class.SerializeToString(c)
     print(json.decode())

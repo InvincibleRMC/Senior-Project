@@ -1,19 +1,6 @@
 syntax = "proto3";
 
-message Course {
-   uint32 id = 1 ;
-   string name = 2;
-}
-
-message Major {
-    int32 id = 1;
-}
-
-message Professor {
-    int32 id = 1;
-    string first = 2;
-    string last = 3;
-}
+import "proto/data.proto";
 
 message NotificationRequest {
     string email = 1;
@@ -29,10 +16,25 @@ message ScheduleRequest {
     repeated Professor unprefferedProfs = 6;
 }
 
-message ScheduleResponse {
+message ProfessorRequest {
+    optional string major = 1;
 }
 
+message CourseRequest {
+    optional string major = 1;
+}
+
+
 message Request {
-    optional ScheduleRequest sched = 1;
-    optional NotificationRequest noti = 2;
+    enum RequestType {
+        SCHEDULE = 0;
+        NOTIFICATION = 1;
+    }
+    RequestType type = 1;
+    oneof msg  {
+        ScheduleRequest r1 = 2;
+        NotificationRequest r2 = 3;
+        ProfessorRequest r3 = 4;
+        CourseRequest r4 = 5;
+    }
 }

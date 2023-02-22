@@ -1,0 +1,16 @@
+syntax="proto3";
+
+message Course {
+   uint32 id = 1 ;
+   string name = 2;
+}
+
+message Major {
+    int32 id = 1;
+}
+
+message Professor {
+    int32 id = 1;
+    string first = 2;
+    string last = 3;
+}
