@@ -251,11 +251,59 @@ class CourseRequest extends $pb.GeneratedMessage {
   void clearMajor() => clearField(1);
 }
 
+class DebugRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DebugRequest', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'msg')
+    ..hasRequiredFields = false
+  ;
+
+  DebugRequest._() : super();
+  factory DebugRequest({
+    $core.String? msg,
+  }) {
+    final _result = create();
+    if (msg != null) {
+      _result.msg = msg;
+    }
+    return _result;
+  }
+  factory DebugRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DebugRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DebugRequest clone() => DebugRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DebugRequest copyWith(void Function(DebugRequest) updates) => super.copyWith((message) => updates(message as DebugRequest)) as DebugRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DebugRequest create() => DebugRequest._();
+  DebugRequest createEmptyInstance() => create();
+  static $pb.PbList<DebugRequest> createRepeated() => $pb.PbList<DebugRequest>();
+  @$core.pragma('dart2js:noInline')
+  static DebugRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DebugRequest>(create);
+  static DebugRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get msg => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set msg($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMsg() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMsg() => clearField(1);
+}
+
 enum Request_Msg {
   r1, 
   r2, 
   r3, 
   r4, 
+  r5, 
   notSet
 }
 
@@ -265,25 +313,28 @@ class Request extends $pb.GeneratedMessage {
     3 : Request_Msg.r2,
     4 : Request_Msg.r3,
     5 : Request_Msg.r4,
+    6 : Request_Msg.r5,
     0 : Request_Msg.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Request', createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5])
-    ..e<Request_RequestType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Request_RequestType.SCHEDULE, valueOf: Request_RequestType.valueOf, enumValues: Request_RequestType.values)
+    ..oo(0, [2, 3, 4, 5, 6])
+    ..e<RequestType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: RequestType.REQ_SCHEDULE, valueOf: RequestType.valueOf, enumValues: RequestType.values)
     ..aOM<ScheduleRequest>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r1', subBuilder: ScheduleRequest.create)
     ..aOM<NotificationRequest>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r2', subBuilder: NotificationRequest.create)
     ..aOM<ProfessorRequest>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r3', subBuilder: ProfessorRequest.create)
     ..aOM<CourseRequest>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r4', subBuilder: CourseRequest.create)
+    ..aOM<DebugRequest>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r5', subBuilder: DebugRequest.create)
     ..hasRequiredFields = false
   ;
 
   Request._() : super();
   factory Request({
-    Request_RequestType? type,
+    RequestType? type,
     ScheduleRequest? r1,
     NotificationRequest? r2,
     ProfessorRequest? r3,
     CourseRequest? r4,
+    DebugRequest? r5,
   }) {
     final _result = create();
     if (type != null) {
@@ -300,6 +351,9 @@ class Request extends $pb.GeneratedMessage {
     }
     if (r4 != null) {
       _result.r4 = r4;
+    }
+    if (r5 != null) {
+      _result.r5 = r5;
     }
     return _result;
   }
@@ -328,9 +382,9 @@ class Request extends $pb.GeneratedMessage {
   void clearMsg() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  Request_RequestType get type => $_getN(0);
+  RequestType get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type(Request_RequestType v) { setField(1, v); }
+  set type(RequestType v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -379,5 +433,16 @@ class Request extends $pb.GeneratedMessage {
   void clearR4() => clearField(5);
   @$pb.TagNumber(5)
   CourseRequest ensureR4() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  DebugRequest get r5 => $_getN(5);
+  @$pb.TagNumber(6)
+  set r5(DebugRequest v) { setField(6, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasR5() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearR5() => clearField(6);
+  @$pb.TagNumber(6)
+  DebugRequest ensureR5() => $_ensure(5);
 }
 

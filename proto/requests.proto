@@ -24,17 +24,23 @@ message CourseRequest {
     optional string major = 1;
 }
 
+message DebugRequest {
+    string msg = 1;
+}
+
+enum RequestType {
+    REQ_SCHEDULE = 0;
+    REQ_NOTIFICATION = 1;
+    REQ_DEBUG = 2;
+}
 
 message Request {
-    enum RequestType {
-        SCHEDULE = 0;
-        NOTIFICATION = 1;
-    }
     RequestType type = 1;
     oneof msg  {
         ScheduleRequest r1 = 2;
         NotificationRequest r2 = 3;
         ProfessorRequest r3 = 4;
         CourseRequest r4 = 5;
+        DebugRequest r5 = 6;
     }
 }

@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: proto/reponses.proto
+//  source: proto/responses.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
@@ -11,9 +11,9 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'data.pb.dart' as $0;
 
-import 'reponses.pbenum.dart';
+import 'responses.pbenum.dart';
 
-export 'reponses.pbenum.dart';
+export 'responses.pbenum.dart';
 
 class ScheduleResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduleResponse', createEmptyInstance: create)
@@ -140,10 +140,58 @@ class CourseListResponse extends $pb.GeneratedMessage {
   $core.List<$0.Course> get courses => $_getList(1);
 }
 
+class DebugResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DebugResponse', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'msg')
+    ..hasRequiredFields = false
+  ;
+
+  DebugResponse._() : super();
+  factory DebugResponse({
+    $core.String? msg,
+  }) {
+    final _result = create();
+    if (msg != null) {
+      _result.msg = msg;
+    }
+    return _result;
+  }
+  factory DebugResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory DebugResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  DebugResponse clone() => DebugResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  DebugResponse copyWith(void Function(DebugResponse) updates) => super.copyWith((message) => updates(message as DebugResponse)) as DebugResponse; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static DebugResponse create() => DebugResponse._();
+  DebugResponse createEmptyInstance() => create();
+  static $pb.PbList<DebugResponse> createRepeated() => $pb.PbList<DebugResponse>();
+  @$core.pragma('dart2js:noInline')
+  static DebugResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DebugResponse>(create);
+  static DebugResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get msg => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set msg($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMsg() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMsg() => clearField(1);
+}
+
 enum Response_Msg {
   r1, 
   r2, 
   r3, 
+  r4, 
   notSet
 }
 
@@ -152,23 +200,26 @@ class Response extends $pb.GeneratedMessage {
     2 : Response_Msg.r1,
     3 : Response_Msg.r2,
     4 : Response_Msg.r3,
+    5 : Response_Msg.r4,
     0 : Response_Msg.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Response', createEmptyInstance: create)
-    ..oo(0, [2, 3, 4])
-    ..e<Response_ResponseType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: Response_ResponseType.CourseList, valueOf: Response_ResponseType.valueOf, enumValues: Response_ResponseType.values)
+    ..oo(0, [2, 3, 4, 5])
+    ..e<ResponseType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ResponseType.RES_COURSES, valueOf: ResponseType.valueOf, enumValues: ResponseType.values)
     ..aOM<ScheduleResponse>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r1', subBuilder: ScheduleResponse.create)
     ..aOM<ProfessorListResponse>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r2', subBuilder: ProfessorListResponse.create)
     ..aOM<CourseListResponse>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r3', subBuilder: CourseListResponse.create)
+    ..aOM<DebugResponse>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r4', subBuilder: DebugResponse.create)
     ..hasRequiredFields = false
   ;
 
   Response._() : super();
   factory Response({
-    Response_ResponseType? type,
+    ResponseType? type,
     ScheduleResponse? r1,
     ProfessorListResponse? r2,
     CourseListResponse? r3,
+    DebugResponse? r4,
   }) {
     final _result = create();
     if (type != null) {
@@ -182,6 +233,9 @@ class Response extends $pb.GeneratedMessage {
     }
     if (r3 != null) {
       _result.r3 = r3;
+    }
+    if (r4 != null) {
+      _result.r4 = r4;
     }
     return _result;
   }
@@ -210,9 +264,9 @@ class Response extends $pb.GeneratedMessage {
   void clearMsg() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  Response_ResponseType get type => $_getN(0);
+  ResponseType get type => $_getN(0);
   @$pb.TagNumber(1)
-  set type(Response_ResponseType v) { setField(1, v); }
+  set type(ResponseType v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
@@ -250,5 +304,16 @@ class Response extends $pb.GeneratedMessage {
   void clearR3() => clearField(4);
   @$pb.TagNumber(4)
   CourseListResponse ensureR3() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  DebugResponse get r4 => $_getN(4);
+  @$pb.TagNumber(5)
+  set r4(DebugResponse v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasR4() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearR4() => clearField(5);
+  @$pb.TagNumber(5)
+  DebugResponse ensureR4() => $_ensure(4);
 }
 

@@ -1,7 +1,9 @@
-import 'package:front_end/proto/class.pb.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 
 import 'package:protobuf/protobuf.dart';
+
+import 'package:front_end/proto/requests.pb.dart';
+import 'package:front_end/proto/responses.pb.dart';
 
 class Network {
   TcpSocketConnection? _connection;
@@ -27,15 +29,21 @@ class Network {
   void messageReceived(String message) {
     // print(message);
 
+    var res = Response();
+    res.clear();
+
     var read = CodedBufferReader(message.codeUnits);
+    res.mergeFromCodedBufferReader(read);
 
-    var c = Class();
+    print(res.toDebugString());
+    print(res.r4.msg);
 
-    c.mergeFromCodedBufferReader(read);
+    var req = Request();
+    req.type = RequestType.REQ_DEBUG;
+    req.r5 = DebugRequest();
+    req.r5.msg = "ping";
 
-    print(c.toDebugString());
-
-    _connection?.sendMessage("yeet");
+    _connection?.sendMessage(req.toString());
   }
 
   void startConnection() async {
@@ -43,12 +51,19 @@ class Network {
         true); //use this to see in the console what's happening
 
     if (_connection != null) {
-      if (await _connection!.canConnect(5000, attempts: 100000)) {
+      if (await _connection!.canConnect(50000, attempts: 100000)) {
         //check if it's possible to connect to the endpoint
-        await _connection?.connect(5000, messageReceived, attempts: 10000000);
+        await _connection?.connect(50000, messageReceived, attempts: 10000000);
       }
 
-      _connection!.sendMessage("yeet1");
+      var req = Request();
+      req.clear();
+
+      req.type = RequestType.REQ_DEBUG;
+      req.r5 = DebugRequest();
+      req.r5.msg = "ping";
+
+      _connection!.sendMessage(req.toString());
     }
   }
 }

@@ -15,17 +15,23 @@ message CourseListResponse {
     repeated Course courses  = 2;
 }
 
-message Response {
-    enum ResponseType {
-        CourseList = 0;
-        ProfessorList = 1;
-        Schedule = 2;
-    }
+message DebugResponse {
+    string msg = 1;
+}
 
+enum ResponseType {
+    RES_COURSES = 0;
+    RES_PROFS = 1;
+    RES_SCHEDULE = 2;
+    RES_DEBUG = 3;
+}
+
+message Response {
     ResponseType type = 1;
     oneof msg {
         ScheduleResponse r1 = 2;
         ProfessorListResponse r2 = 3;
         CourseListResponse r3 = 4;
+        DebugResponse r4 = 5;
     }
 }
