@@ -1,15 +1,13 @@
 #!/bin/python3
-
 import socket
-import time
-import signal 
+import signal
 import sys
-
 from proto.requests_pb2 import Request, DebugRequest, RequestType
 from proto.responses_pb2 import Response, DebugResponse, ResponseType
 
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
+
 
 class Server:
 
@@ -31,7 +29,6 @@ class Server:
             outgoing.Clear()
 
             print(data.decode())
-
 
             # get message from string
             # TODO: error check
@@ -55,8 +52,6 @@ class Server:
             data: bytes = outgoing.SerializeToString()
 
             conn.send(data)
-
-
 
 
 if __name__ == "__main__":
