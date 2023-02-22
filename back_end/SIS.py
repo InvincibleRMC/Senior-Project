@@ -1,10 +1,12 @@
+"""SIS Scraper"""
+import os
+from typing import List, Any
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
-from typing import List, Any
+from selenium.common.exceptions import NoSuchElementException
 from tabulate import tabulate
-import os
 
 options = FirefoxOptions()
 options.add_argument("--headless")
@@ -14,36 +16,49 @@ browser = webdriver.Firefox(options=options)
 data: List[List[Any]] = []
 
 
-def Mark_Allman():
+def mark_allman():
+    """Data for Mark Allman"""
     name = "Mark Allman"
-    generate_data(name, 'https://webapps.case.edu/courseevals/report-course?instructor=allman&course=2228%3A4270')
+    generate_data(name,
+                  ('https://webapps.case.edu/courseevals/'
+                   'report-course?instructor=allman&course=2228%3A4270'))
+    generate_data(name,
+                  ('https://webapps.case.edu/courseevals/'
+                   'report-course?instructor=allman&course=2228%3A4997'))
 
-    generate_data(name, 'https://webapps.case.edu/courseevals/report-course?instructor=allman&course=2228%3A4997')
 
-
-def Erman_Ayday():
+def erman_ayday():
+    """Data for Erman Ayday"""
     name = "Erman Ayday"
-    generate_data(name, 'https://webapps.case.edu/courseevals/report-course?instructor=ayday&course=2228%3A4263')
+    generate_data(name,
+                  ('https://webapps.case.edu/courseevals/'
+                   'report-course?instructor=ayday&course=2228%3A4263'))
+    generate_data(name,
+                  ('https://webapps.case.edu/courseevals/'
+                   'report-course?instructor=ayday&course=2228%3A5159'))
 
-    generate_data(name, 'https://webapps.case.edu/courseevals/report-course?instructor=ayday&course=2228%3A5159')
 
-
-def Nick_Barendt():
+def nick_barendt():
+    """Data for Nick Barendt"""
     name = "Nick Barendt"
-    generate_data(name, 'https://webapps.case.edu/courseevals/report-course?instructor=Barendt&course=2221%3A5176')
+    generate_data(name,
+                  ('https://webapps.case.edu/courseevals/'
+                   'report-course?instructor=Barendt&course=2221%3A5176'))
 
 
-def Cenk_Cavusoglu():
+def cenk_cavusoglu():
+    """Data for Cenk Cavusoglu"""
     pass
 
 
 def login(browser: webdriver.Firefox):
+    """Login to Browser"""
     while True:
         try:
             username_field = browser.find_element(By.ID, "username")
             password_field = browser.find_element(By.ID, "password")
             submit = browser.find_element(By.ID, "login-submit")
-        except:
+        except NoSuchElementException:
             # Don't need to login
             break
 
@@ -61,11 +76,13 @@ def login(browser: webdriver.Firefox):
 
 
 def get_course(soup: BeautifulSoup):
+    """Gets Course"""
     div = soup.find_all('div', attrs={'class': None})[2::3]
     return div[0].text.strip()[12:]
 
 
 def get_scores(soup: BeautifulSoup):
+    """Gets Scores"""
     values: List[str] = []
     for row in soup.table.find_all('tr')[1:]:
         for col in row.find_all('td'):
@@ -77,6 +94,7 @@ def get_scores(soup: BeautifulSoup):
 
 
 def generate_data(name: str, url: str):
+    """Generates Data"""
     browser.get(url)
     login(browser)
     soup = BeautifulSoup(browser.page_source, "html.parser")
@@ -93,9 +111,9 @@ def print_table():
 
 
 def main():
-    Mark_Allman()
-    Erman_Ayday()
-    Nick_Barendt()
+    mark_allman()
+    erman_ayday()
+    nick_barendt()
     print_table()
     browser.quit()
 
