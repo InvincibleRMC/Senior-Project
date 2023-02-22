@@ -50,7 +50,7 @@ def cenk_cavusoglu():
     """Data for Cenk Cavusoglu"""
 
 
-def login(browser: webdriver.Firefox):
+def login():
     """Login to Browser"""
     while True:
         try:
@@ -95,7 +95,7 @@ def get_scores(soup: BeautifulSoup):
 def generate_data(name: str, url: str):
     """Generates Data"""
     browser.get(url)
-    login(browser)
+    login()
     soup = BeautifulSoup(browser.page_source, "html.parser")
     course = get_course(soup)
     scores = get_scores(soup)
