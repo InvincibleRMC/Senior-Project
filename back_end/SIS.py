@@ -4,6 +4,7 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
 from typing import List, Any
 from tabulate import tabulate
+import os
 
 options = FirefoxOptions()
 options.add_argument("--headless")
@@ -46,7 +47,8 @@ def login(browser: webdriver.Firefox):
             # Don't need to login
             break
 
-        file_path = 'Desktop/Senior Project/Homework.txt'
+        # sis_key.txt 2 line .gitignored file with username and password
+        file_path = os.path.join(os.getcwd(), "back_end", "sis_key.txt")
         with open(file_path) as file:
             lines = file.readlines()
         username = lines[0].strip().replace('\n', '')
@@ -64,7 +66,7 @@ def get_course(soup: BeautifulSoup):
 
 
 def get_scores(soup: BeautifulSoup):
-    values = []
+    values: List[str] = []
     for row in soup.table.find_all('tr')[1:]:
         for col in row.find_all('td'):
             values.append(col.text.strip())
