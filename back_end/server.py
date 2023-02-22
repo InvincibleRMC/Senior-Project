@@ -48,7 +48,7 @@ class Server:
 
             outgoing.type = ResponseType.RES_DEBUG
 
-            outgoing.r4.msg = "bruhhhhh"
+            outgoing.r4.msg = "pong"
 
             # outgoing.r4.msg = "Pong"
 

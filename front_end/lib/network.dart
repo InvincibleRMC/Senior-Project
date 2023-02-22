@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 
 import 'package:protobuf/protobuf.dart';
@@ -6,6 +8,7 @@ import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
 class Network {
+  Utf8Decoder _decoder = Utf8Decoder();
   TcpSocketConnection? _connection;
 
   static final Network _instance = Network._internal();
@@ -63,7 +66,9 @@ class Network {
       req.r5 = DebugRequest();
       req.r5.msg = "ping";
 
-      _connection!.sendMessage(req.toString());
+      var out = req.writeToBuffer();
+
+      _connection!.sendMessage(_decoder.convert(out));
     }
   }
 }
