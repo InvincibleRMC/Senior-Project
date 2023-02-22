@@ -11,12 +11,16 @@ s.listen(1)
 # Kills with Control + C
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-while 1:
+while True:
+
+    c = Class()
+    c.id = 0
+    c.name = "bruh"
+
+    json: bytes = Class.SerializeToString(c)
+    print(json.decode())
     conn, addr = s.accept()
     data = conn.recv(1024)
     print(data)
-    if not data:
-        time.sleep(0.01)
-    conn.sendall(data)
-conn.close()
 
+    conn.sendall(json)
