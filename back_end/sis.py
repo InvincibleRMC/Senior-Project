@@ -48,7 +48,6 @@ def nick_barendt():
 
 def cenk_cavusoglu():
     """Data for Cenk Cavusoglu"""
-    pass
 
 
 def login(browser: webdriver.Firefox):
