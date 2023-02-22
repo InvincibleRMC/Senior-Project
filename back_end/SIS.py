@@ -12,6 +12,7 @@ browser = webdriver.Firefox(options=options)
 
 data: List[List[Any]] = []
 
+
 def Mark_Allman():
     name = "Mark Allman"
     generate_data(name, 'https://webapps.case.edu/courseevals/report-course?instructor=allman&course=2228%3A4270')
@@ -35,7 +36,7 @@ def Cenk_Cavusoglu():
     pass
 
 
-def login(browser):
+def login(browser: webdriver.Firefox):
     while True:
         try:
             username_field = browser.find_element(By.ID, "username")
@@ -56,12 +57,13 @@ def login(browser):
 
         submit.click()
 
-def get_course(soup):
+
+def get_course(soup: BeautifulSoup):
     div = soup.find_all('div', attrs={'class': None})[2::3]
     return div[0].text.strip()[12:]
 
 
-def get_scores(soup):
+def get_scores(soup: BeautifulSoup):
     values = []
     for row in soup.table.find_all('tr')[1:]:
         for col in row.find_all('td'):
@@ -72,7 +74,7 @@ def get_scores(soup):
     return scores
 
 
-def generate_data(name, url):
+def generate_data(name: str, url: str):
     browser.get(url)
     login(browser)
     soup = BeautifulSoup(browser.page_source, "html.parser")
@@ -87,12 +89,14 @@ def print_table():
     col_names = ["Name", "Course", "Teacher Rating", "Course Rating"]
     print(tabulate(data, headers=col_names, tablefmt="fancy_grid"))
 
+
 def main():
     Mark_Allman()
     Erman_Ayday()
     Nick_Barendt()
     print_table()
     browser.quit()
+
 
 if __name__ == "__main__":
     main()
