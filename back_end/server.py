@@ -2,8 +2,8 @@
 import socket
 import signal
 import sys
-from proto.requests_pb2 import Request, DebugRequest, RequestType
-from proto.responses_pb2 import Response, DebugResponse, ResponseType
+from proto.requests_pb2 import Request, DebugRequest, REQ_DEBUG
+from proto.responses_pb2 import Response, DebugResponse, RES_DEBUG
 
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
@@ -20,7 +20,6 @@ class Server:
         while True:
             conn, addr = self.socket.accept()
             data = conn.recv(4096)
-
 
             incoming_request = Request()
             incoming_request.Clear()
@@ -41,10 +40,8 @@ class Server:
             # respond
 
             print(str(incoming_request))
-            # print(incoming_request.msg.r5.msg)
-
-            outgoing.type = ResponseType.RES_DEBUG
-
+            # print(incoming_request.msg.r5.msg
+            outgoing.type = RES_DEBUG
             outgoing.r4.msg = "pong"
 
             # outgoing.r4.msg = "Pong"

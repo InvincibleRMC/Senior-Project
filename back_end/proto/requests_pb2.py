@@ -16,7 +16,7 @@ _sym_db = _symbol_database.Default()
 from proto import data_pb2 as proto_dot_data__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14proto/requests.proto\x1a\x10proto/data.proto\">\n\x13NotificationRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x18\n\x07\x63lasses\x18\x02 \x03(\x0b\x32\x07.Course\"\xd4\x01\n\x0fScheduleRequest\x12\r\n\x05major\x18\x01 \x01(\t\x12 \n\x0fpreviousClasses\x18\x02 \x03(\x0b\x32\x07.Course\x12!\n\x10preferredClasses\x18\x03 \x03(\x0b\x32\x07.Course\x12#\n\x12unpreferredClasses\x18\x04 \x03(\x0b\x32\x07.Course\x12\"\n\x0epreferredProfs\x18\x05 \x03(\x0b\x32\n.Professor\x12$\n\x10unprefferedProfs\x18\x06 \x03(\x0b\x32\n.Professor\"0\n\x10ProfessorRequest\x12\x12\n\x05major\x18\x01 \x01(\tH\x00\x88\x01\x01\x42\x08\n\x06_major\"-\n\rCourseRequest\x12\x12\n\x05major\x18\x01 \x01(\tH\x00\x88\x01\x01\x42\x08\n\x06_major\"\x1b\n\x0c\x44\x65\x62ugRequest\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\xcc\x01\n\x07Request\x12\x1a\n\x04type\x18\x01 \x01(\x0e\x32\x0c.RequestType\x12\x1e\n\x02r1\x18\x02 \x01(\x0b\x32\x10.ScheduleRequestH\x00\x12\"\n\x02r2\x18\x03 \x01(\x0b\x32\x14.NotificationRequestH\x00\x12\x1f\n\x02r3\x18\x04 \x01(\x0b\x32\x11.ProfessorRequestH\x00\x12\x1c\n\x02r4\x18\x05 \x01(\x0b\x32\x0e.CourseRequestH\x00\x12\x1b\n\x02r5\x18\x06 \x01(\x0b\x32\r.DebugRequestH\x00\x42\x05\n\x03msg*D\n\x0bRequestType\x12\x10\n\x0cREQ_SCHEDULE\x10\x00\x12\x14\n\x10REQ_NOTIFICATION\x10\x01\x12\r\n\tREQ_DEBUG\x10\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14proto/requests.proto\x1a\x10proto/data.proto\">\n\x13NotificationRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x18\n\x07\x63lasses\x18\x02 \x03(\x0b\x32\x07.Course\"\xd4\x01\n\x0fScheduleRequest\x12\r\n\x05major\x18\x01 \x01(\t\x12 \n\x0fpreviousClasses\x18\x02 \x03(\x0b\x32\x07.Course\x12!\n\x10preferredClasses\x18\x03 \x03(\x0b\x32\x07.Course\x12#\n\x12unpreferredClasses\x18\x04 \x03(\x0b\x32\x07.Course\x12\"\n\x0epreferredProfs\x18\x05 \x03(\x0b\x32\n.Professor\x12$\n\x10unprefferedProfs\x18\x06 \x03(\x0b\x32\n.Professor\"!\n\x10ProfessorRequest\x12\r\n\x05major\x18\x01 \x01(\t\"\x1e\n\rCourseRequest\x12\r\n\x05major\x18\x01 \x01(\t\"\x1b\n\x0c\x44\x65\x62ugRequest\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\xcc\x01\n\x07Request\x12\x1a\n\x04type\x18\x01 \x01(\x0e\x32\x0c.RequestType\x12\x1e\n\x02r1\x18\x02 \x01(\x0b\x32\x10.ScheduleRequestH\x00\x12\"\n\x02r2\x18\x03 \x01(\x0b\x32\x14.NotificationRequestH\x00\x12\x1f\n\x02r3\x18\x04 \x01(\x0b\x32\x11.ProfessorRequestH\x00\x12\x1c\n\x02r4\x18\x05 \x01(\x0b\x32\x0e.CourseRequestH\x00\x12\x1b\n\x02r5\x18\x06 \x01(\x0b\x32\r.DebugRequestH\x00\x42\x05\n\x03msg*D\n\x0bRequestType\x12\x10\n\x0cREQ_SCHEDULE\x10\x00\x12\x14\n\x10REQ_NOTIFICATION\x10\x01\x12\r\n\tREQ_DEBUG\x10\x02\x62\x06proto3')
 
 _REQUESTTYPE = DESCRIPTOR.enum_types_by_name['RequestType']
 RequestType = enum_type_wrapper.EnumTypeWrapper(_REQUESTTYPE)
@@ -76,18 +76,18 @@ _sym_db.RegisterMessage(Request)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _REQUESTTYPE._serialized_start=654
-  _REQUESTTYPE._serialized_end=722
+  _REQUESTTYPE._serialized_start=624
+  _REQUESTTYPE._serialized_end=692
   _NOTIFICATIONREQUEST._serialized_start=42
   _NOTIFICATIONREQUEST._serialized_end=104
   _SCHEDULEREQUEST._serialized_start=107
   _SCHEDULEREQUEST._serialized_end=319
   _PROFESSORREQUEST._serialized_start=321
-  _PROFESSORREQUEST._serialized_end=369
-  _COURSEREQUEST._serialized_start=371
-  _COURSEREQUEST._serialized_end=416
-  _DEBUGREQUEST._serialized_start=418
-  _DEBUGREQUEST._serialized_end=445
-  _REQUEST._serialized_start=448
-  _REQUEST._serialized_end=652
+  _PROFESSORREQUEST._serialized_end=354
+  _COURSEREQUEST._serialized_start=356
+  _COURSEREQUEST._serialized_end=386
+  _DEBUGREQUEST._serialized_start=388
+  _DEBUGREQUEST._serialized_end=415
+  _REQUEST._serialized_start=418
+  _REQUEST._serialized_end=622
 # @@protoc_insertion_point(module_scope)
