@@ -13,7 +13,7 @@ packages:
     dependency: "direct main"
     description:
       name: adaptive_theme
-      sha256: "84af26cfc68220df3cd35d9d94cb8953e7182ef560e13d8efb87f32bf1e588fc"
+      sha256: "61bde10390e937d11d05c6cf0d5cf378a73d49f9a442262e43613dae60ed0b3f"
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
@@ -432,6 +432,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  protoc_plugin:
+    dependency: "direct main"
+    description:
+      name: protoc_plugin
+      sha256: e2be5014ba145dc0f8de20ac425afa2a513aff64fe350d338e481d40de0573df
+      url: "https://pub.dev"
+    source: hosted
+    version: "20.0.1"
   pub_semver:
     dependency: transitive
     description:

@@ -11,7 +11,7 @@ message ProfessorListResponse {
 }
 
 message CourseListResponse {
-    optional string major = 1;
+    string major = 1;
     repeated Course courses  = 2;
 }
 

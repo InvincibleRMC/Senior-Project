@@ -50,28 +50,22 @@ final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('C
 const ProfessorRequest$json = const {
   '1': 'ProfessorRequest',
   '2': const [
-    const {'1': 'major', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'major', '17': true},
-  ],
-  '8': const [
-    const {'1': '_major'},
+    const {'1': 'major', '3': 1, '4': 1, '5': 9, '10': 'major'},
   ],
 };
 
 /// Descriptor for `ProfessorRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List professorRequestDescriptor = $convert.base64Decode('ChBQcm9mZXNzb3JSZXF1ZXN0EhkKBW1ham9yGAEgASgJSABSBW1ham9yiAEBQggKBl9tYWpvcg==');
+final $typed_data.Uint8List professorRequestDescriptor = $convert.base64Decode('ChBQcm9mZXNzb3JSZXF1ZXN0EhQKBW1ham9yGAEgASgJUgVtYWpvcg==');
 @$core.Deprecated('Use courseRequestDescriptor instead')
 const CourseRequest$json = const {
   '1': 'CourseRequest',
   '2': const [
-    const {'1': 'major', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'major', '17': true},
-  ],
-  '8': const [
-    const {'1': '_major'},
+    const {'1': 'major', '3': 1, '4': 1, '5': 9, '10': 'major'},
   ],
 };
 
 /// Descriptor for `CourseRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List courseRequestDescriptor = $convert.base64Decode('Cg1Db3Vyc2VSZXF1ZXN0EhkKBW1ham9yGAEgASgJSABSBW1ham9yiAEBQggKBl9tYWpvcg==');
+final $typed_data.Uint8List courseRequestDescriptor = $convert.base64Decode('Cg1Db3Vyc2VSZXF1ZXN0EhQKBW1ham9yGAEgASgJUgVtYWpvcg==');
 @$core.Deprecated('Use debugRequestDescriptor instead')
 const DebugRequest$json = const {
   '1': 'DebugRequest',

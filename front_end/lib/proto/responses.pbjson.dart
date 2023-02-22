@@ -42,16 +42,13 @@ final $typed_data.Uint8List professorListResponseDescriptor = $convert.base64Dec
 const CourseListResponse$json = const {
   '1': 'CourseListResponse',
   '2': const [
-    const {'1': 'major', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'major', '17': true},
+    const {'1': 'major', '3': 1, '4': 1, '5': 9, '10': 'major'},
     const {'1': 'courses', '3': 2, '4': 3, '5': 11, '6': '.Course', '10': 'courses'},
-  ],
-  '8': const [
-    const {'1': '_major'},
   ],
 };
 
 /// Descriptor for `CourseListResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List courseListResponseDescriptor = $convert.base64Decode('ChJDb3Vyc2VMaXN0UmVzcG9uc2USGQoFbWFqb3IYASABKAlIAFIFbWFqb3KIAQESIQoHY291cnNlcxgCIAMoCzIHLkNvdXJzZVIHY291cnNlc0IICgZfbWFqb3I=');
+final $typed_data.Uint8List courseListResponseDescriptor = $convert.base64Decode('ChJDb3Vyc2VMaXN0UmVzcG9uc2USFAoFbWFqb3IYASABKAlSBW1ham9yEiEKB2NvdXJzZXMYAiADKAsyBy5Db3Vyc2VSB2NvdXJzZXM=');
 @$core.Deprecated('Use debugResponseDescriptor instead')
 const DebugResponse$json = const {
   '1': 'DebugResponse',

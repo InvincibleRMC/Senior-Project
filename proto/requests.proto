@@ -17,11 +17,11 @@ message ScheduleRequest {
 }
 
 message ProfessorRequest {
-    optional string major = 1;
+    string major = 1;
 }
 
 message CourseRequest {
-    optional string major = 1;
+    string major = 1;
 }
 
 message DebugRequest {
