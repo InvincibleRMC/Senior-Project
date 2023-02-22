@@ -63,7 +63,7 @@ def login(browser: webdriver.Firefox):
 
         # sis_key.txt 2 line .gitignored file with username and password
         file_path = os.path.join(os.getcwd(), "back_end", "sis_key.txt")
-        with open(file_path) as file:
+        with open(file_path, encoding="utf8") as file:
             lines = file.readlines()
         username = lines[0].strip().replace('\n', '')
         password = lines[1].strip().replace('\n', '')
@@ -110,6 +110,7 @@ def print_table():
 
 
 def main():
+    """main function call"""
     mark_allman()
     erman_ayday()
     nick_barendt()
