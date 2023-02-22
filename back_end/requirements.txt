@@ -2,3 +2,4 @@ tabulate
 beautifulsoup4
 google
 protobuf
+requests
