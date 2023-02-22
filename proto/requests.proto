@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-message Class {
-   int32 id = 1 ;
+message Course {
+   uint32 id = 1 ;
    string name = 2;
 }
 
@@ -17,14 +17,14 @@ message Professor {
 
 message NotificationRequest {
     string email = 1;
-    repeated Class classes = 2;
+    repeated Course classes = 2;
 }
 
 message ScheduleRequest {
     string major = 1;
-    repeated Class previousClasses = 2;
-    repeated Class preferredClasses = 3;
-    repeated Class unpreferredClasses = 4;
+    repeated Course previousClasses = 2;
+    repeated Course preferredClasses = 3;
+    repeated Course unpreferredClasses = 4;
     repeated Professor preferredProfs = 5;
     repeated Professor unprefferedProfs = 6;
 }
@@ -33,6 +33,6 @@ message ScheduleResponse {
 }
 
 message Request {
-    optional ScheduleRequest sched = 0;
-    optional NotificationRequest noti = 1;
+    optional ScheduleRequest sched = 1;
+    optional NotificationRequest noti = 2;
 }

@@ -363,3 +363,68 @@ class ScheduleResponse extends $pb.GeneratedMessage {
   static ScheduleResponse? _defaultInstance;
 }
 
+class Request extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Request', createEmptyInstance: create)
+    ..aOM<ScheduleRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sched', subBuilder: ScheduleRequest.create)
+    ..aOM<NotificationRequest>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'noti', subBuilder: NotificationRequest.create)
+    ..hasRequiredFields = false
+  ;
+
+  Request._() : super();
+  factory Request({
+    ScheduleRequest? sched,
+    NotificationRequest? noti,
+  }) {
+    final _result = create();
+    if (sched != null) {
+      _result.sched = sched;
+    }
+    if (noti != null) {
+      _result.noti = noti;
+    }
+    return _result;
+  }
+  factory Request.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Request.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Request clone() => Request()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Request copyWith(void Function(Request) updates) => super.copyWith((message) => updates(message as Request)) as Request; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Request create() => Request._();
+  Request createEmptyInstance() => create();
+  static $pb.PbList<Request> createRepeated() => $pb.PbList<Request>();
+  @$core.pragma('dart2js:noInline')
+  static Request getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Request>(create);
+  static Request? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  ScheduleRequest get sched => $_getN(0);
+  @$pb.TagNumber(1)
+  set sched(ScheduleRequest v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSched() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSched() => clearField(1);
+  @$pb.TagNumber(1)
+  ScheduleRequest ensureSched() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  NotificationRequest get noti => $_getN(1);
+  @$pb.TagNumber(2)
+  set noti(NotificationRequest v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNoti() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNoti() => clearField(2);
+  @$pb.TagNumber(2)
+  NotificationRequest ensureNoti() => $_ensure(1);
+}
+

@@ -1,4 +1,7 @@
+import 'package:front_end/proto/class.pb.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
+
+import 'package:protobuf/protobuf.dart';
 
 class Network {
   TcpSocketConnection? _connection;
@@ -22,7 +25,16 @@ class Network {
   }
 
   void messageReceived(String message) {
-    print(message);
+    // print(message);
+
+    var read = CodedBufferReader(message.codeUnits);
+
+    var c = Class();
+
+    c.mergeFromCodedBufferReader(read);
+
+    print(c.toDebugString());
+
     _connection?.sendMessage("yeet");
   }
 
