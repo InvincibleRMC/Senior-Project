@@ -107,7 +107,7 @@ def sanjaya_gajurel():
     # name = "Sanjaya Gajurel"
 
 
-def Evren_Cavusoglu():
+def evren_cavusoglu():
     """Data for Evren Gurkan Cavusoglu"""
     # name = "Evren Gurkan Cavusoglu"
 
@@ -165,7 +165,7 @@ def login():
             break
 
         # sis_key.txt 2 line .gitignored file with username and password
-        if os.getcwd().__contains__("back_end"):
+        if "back_end" in os.getcwd():
             file_path = os.path.join(os.getcwd(), "sis_key.txt")
         else:
             file_path = os.path.join(os.getcwd(), "back_end", "sis_key.txt")
@@ -218,6 +218,7 @@ def generate_data(name: str, url: str):
 
 
 def no_course_evals(name: str):
+    """Data for No Course Evals"""
     data.append([name]+['N/A'] + ['N/A'] + ['N/A', 'N/A'])
 
 
