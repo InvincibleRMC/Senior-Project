@@ -20,9 +20,9 @@ message DebugResponse {
 }
 
 enum ResponseType {
-    RES_COURSES = 0;
+    RES_SCHEDULE = 0;
     RES_PROFS = 1;
-    RES_SCHEDULE = 2;
+    RES_COURSES = 2;
     RES_DEBUG = 3;
 }
 

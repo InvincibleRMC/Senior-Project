@@ -14,9 +14,9 @@ class Network {
   TcpSocketConnection? _connection;
 
   static final Network _instance = Network._internal();
-  List<Course>? classes;
-  List<Professor>? professors;
-  // List<String>? majors;
+  List<Course>? _classes;
+  List<Professor>? _professors;
+  List<String> _majors = ["cs", "ee", "pain"];
 
   // using a factory is important
   // because it promises to return _an_ object of this type
@@ -49,12 +49,12 @@ class Network {
         break;
       case ResponseType.RES_COURSES:
         {
-          classes = res.r3.courses;
+          _classes = res.r3.courses;
         }
         break;
       case ResponseType.RES_PROFS:
         {
-          professors = res.r2.professors;
+          _professors = res.r2.professors;
         }
         break;
       case ResponseType.RES_SCHEDULE:
@@ -65,13 +65,13 @@ class Network {
         break;
     }
 
-    var req = Request();
-    req.type = RequestType.REQ_DEBUG;
-    req.r5 = DebugRequest();
-    req.r5.msg = "ping";
+    // var req = Request();
+    // req.type = RequestType.REQ_DEBUG;
+    // req.r5 = DebugRequest();
+    // req.r5.msg = "ping";
 
-    Uint8List out = req.writeToBuffer();
-    _connection?.sendMessage(_decoder.convert(out));
+    // Uint8List out = req.writeToBuffer();
+    // _connection?.sendMessage(_decoder.convert(out));
   }
 
   void startConnection() async {
@@ -91,28 +91,63 @@ class Network {
     req.r5.msg = "ping";
 
     Uint8List out = req.writeToBuffer();
-
     _connection!.sendMessage(_decoder.convert(out));
+    _sendProfessorRequest();
+    _sendCourseRequest();
   }
 
   void requestHelper(Request req) {
+    print("Sending Request " + req.toString());
     Uint8List out = req.writeToBuffer();
     _connection!.sendMessage(_decoder.convert(out));
   }
 
-  // TODO: waiting for ENUM
-  void sendProfessorRequest(String major) {
+  void _sendProfessorRequest() {
     var req = Request();
-
+    req.type = RequestType.REQ_PROFESSOR;
     req.r3 = ProfessorRequest();
-    req.r3.major = major;
     requestHelper(req);
   }
 
-  // TODO: waiting for ENUM
-  void sendClassRequest() {
+  void _sendCourseRequest() {
     var req = Request();
-
+    req.type = RequestType.REQ_COURSE;
+    req.r4 = CourseRequest();
     requestHelper(req);
+  }
+
+  void sendNotificationRequest(String email, List<String> className) {
+    var req = Request();
+    req.type = RequestType.REQ_NOTIFICATION;
+    req.r2 = NotificationRequest(
+        email: email,
+        classes: List<Course>.generate(
+            className.length, (int index) => Course(name: className[index])));
+    requestHelper(req);
+  }
+
+  // TODO:
+  void sendScheduleRequest() {
+    var req = Request();
+    req.type = RequestType.REQ_SCHEDULE;
+    req.r1 = ScheduleRequest();
+    requestHelper(req);
+  }
+
+  List<String> getCourseNames() {
+    // TODO Error handling
+    return List<String>.generate(
+        _classes!.length, (int index) => _classes![index].name);
+  }
+
+  List<String> getProfessorNames() {
+    // TODO Error handling
+    return List<String>.generate(_professors!.length,
+        (int index) => _professors![index].first + _professors![index].last);
+  }
+
+  List<String> getMajors() {
+    // TODO Implement
+    return _majors;
   }
 }
