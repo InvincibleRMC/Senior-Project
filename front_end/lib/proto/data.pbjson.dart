@@ -14,21 +14,23 @@ const Course$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 13, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'semester', '3': 3, '4': 1, '5': 9, '10': 'semester'},
   ],
 };
 
 /// Descriptor for `Course`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List courseDescriptor = $convert.base64Decode('CgZDb3Vyc2USDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWU=');
+final $typed_data.Uint8List courseDescriptor = $convert.base64Decode('CgZDb3Vyc2USDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSGgoIc2VtZXN0ZXIYAyABKAlSCHNlbWVzdGVy');
 @$core.Deprecated('Use majorDescriptor instead')
 const Major$json = const {
   '1': 'Major',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
   ],
 };
 
 /// Descriptor for `Major`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List majorDescriptor = $convert.base64Decode('CgVNYWpvchIOCgJpZBgBIAEoBVICaWQ=');
+final $typed_data.Uint8List majorDescriptor = $convert.base64Decode('CgVNYWpvchIOCgJpZBgBIAEoBVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZQ==');
 @$core.Deprecated('Use professorDescriptor instead')
 const Professor$json = const {
   '1': 'Professor',

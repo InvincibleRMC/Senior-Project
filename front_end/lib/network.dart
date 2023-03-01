@@ -74,42 +74,50 @@ class Network {
     // _connection?.sendMessage(_decoder.convert(out));
   }
 
-  void startConnection() async {
-    _connection!.enableConsolePrint(
-        true); //use this to see in the console what's happening
+  // void startConnection() async {
+  //   _connection!.enableConsolePrint(
+  //       true); //use this to see in the console what's happening
 
-    if (await _connection!.canConnect(50000, attempts: 100000)) {
-      //check if it's possible to connect to the endpoint
-      await _connection!.connect(50000, messageReceived, attempts: 10000000);
+  //   if (await _connection!.canConnect(50000, attempts: 100000)) {
+  //     //check if it's possible to connect to the endpoint
+  //     await _connection!.connect(50000, messageReceived, attempts: 10000000);
+  //   }
+
+  //   var req = Request();
+  //   req.clear();
+
+  //   req.type = RequestType.REQ_DEBUG;
+  //   req.r5 = DebugRequest();
+  //   req.r5.msg = "ping";
+
+  //   Uint8List out = req.writeToBuffer();
+  //   _connection!.sendMessage(_decoder.convert(out));
+  //   _sendProfessorRequest();
+  //   _sendCourseRequest();
+  // }
+
+  void requestHelper(Request req) async {
+    TcpSocketConnection connection = TcpSocketConnection("localhost", 50000);
+
+    var timeOut = 1;
+    var attempts = 10000;
+
+    if (await connection.canConnect(timeOut, attempts: attempts)) {
+      connection.connect(timeOut, messageReceived);
+      Uint8List out = req.writeToBuffer();
+      connection.sendMessage(_decoder.convert(out));
+      print("Sending Request " + req.toString());
     }
-
-    var req = Request();
-    req.clear();
-
-    req.type = RequestType.REQ_DEBUG;
-    req.r5 = DebugRequest();
-    req.r5.msg = "ping";
-
-    Uint8List out = req.writeToBuffer();
-    _connection!.sendMessage(_decoder.convert(out));
-    _sendProfessorRequest();
-    _sendCourseRequest();
   }
 
-  void requestHelper(Request req) {
-    print("Sending Request " + req.toString());
-    Uint8List out = req.writeToBuffer();
-    _connection!.sendMessage(_decoder.convert(out));
-  }
-
-  void _sendProfessorRequest() {
+  void sendProfessorRequest() {
     var req = Request();
     req.type = RequestType.REQ_PROFESSOR;
     req.r3 = ProfessorRequest();
     requestHelper(req);
   }
 
-  void _sendCourseRequest() {
+  void sendCourseRequest() {
     var req = Request();
     req.type = RequestType.REQ_COURSE;
     req.r4 = CourseRequest();

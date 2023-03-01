@@ -13,6 +13,7 @@ class Course extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Course', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.OU3)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'semester')
     ..hasRequiredFields = false
   ;
 
@@ -20,6 +21,7 @@ class Course extends $pb.GeneratedMessage {
   factory Course({
     $core.int? id,
     $core.String? name,
+    $core.String? semester,
   }) {
     final _result = create();
     if (id != null) {
@@ -27,6 +29,9 @@ class Course extends $pb.GeneratedMessage {
     }
     if (name != null) {
       _result.name = name;
+    }
+    if (semester != null) {
+      _result.semester = semester;
     }
     return _result;
   }
@@ -68,21 +73,35 @@ class Course extends $pb.GeneratedMessage {
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
   void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get semester => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set semester($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSemester() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSemester() => clearField(3);
 }
 
 class Major extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Major', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..hasRequiredFields = false
   ;
 
   Major._() : super();
   factory Major({
     $core.int? id,
+    $core.String? name,
   }) {
     final _result = create();
     if (id != null) {
       _result.id = id;
+    }
+    if (name != null) {
+      _result.name = name;
     }
     return _result;
   }
@@ -115,6 +134,15 @@ class Major extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
 }
 
 class Professor extends $pb.GeneratedMessage {

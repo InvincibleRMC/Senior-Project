@@ -6,17 +6,24 @@ message ScheduleResponse {
 }
 
 
-message ProfessorListResponse {
+message ProfessorResponse {
     repeated Professor professors = 1;
 }
 
-message CourseListResponse {
-    string major = 1;
-    repeated Course courses  = 2;
+message CourseResponse {
+    repeated Course courses  = 1;
 }
 
 message DebugResponse {
     string msg = 1;
+}
+
+message MajorResponse {
+    repeated Major majors = 1;
+}
+
+message NotificationResponse {
+    bool success = 1;
 }
 
 enum ResponseType {
@@ -24,14 +31,18 @@ enum ResponseType {
     RES_PROFS = 1;
     RES_COURSES = 2;
     RES_DEBUG = 3;
+    RES_MAJOR = 4;
+    RES_NOTI = 5;
 }
 
 message Response {
     ResponseType type = 1;
     oneof msg {
         ScheduleResponse r1 = 2;
-        ProfessorListResponse r2 = 3;
-        CourseListResponse r3 = 4;
+        ProfessorResponse r2 = 3;
+        CourseResponse r3 = 4;
         DebugResponse r4 = 5;
+        MajorResponse r5 = 6;
+        NotificationResponse r6 = 7;
     }
 }

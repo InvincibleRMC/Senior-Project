@@ -12,12 +12,18 @@ import 'package:protobuf/protobuf.dart' as $pb;
 class RequestType extends $pb.ProtobufEnum {
   static const RequestType REQ_SCHEDULE = RequestType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_SCHEDULE');
   static const RequestType REQ_NOTIFICATION = RequestType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_NOTIFICATION');
-  static const RequestType REQ_DEBUG = RequestType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_DEBUG');
+  static const RequestType REQ_PROFESSOR = RequestType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_PROFESSOR');
+  static const RequestType REQ_COURSE = RequestType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_COURSE');
+  static const RequestType REQ_DEBUG = RequestType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_DEBUG');
+  static const RequestType REQ_MAJOR = RequestType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REQ_MAJOR');
 
   static const $core.List<RequestType> values = <RequestType> [
     REQ_SCHEDULE,
     REQ_NOTIFICATION,
+    REQ_PROFESSOR,
+    REQ_COURSE,
     REQ_DEBUG,
+    REQ_MAJOR,
   ];
 
   static final $core.Map<$core.int, RequestType> _byValue = $pb.ProtobufEnum.initByValue(values);

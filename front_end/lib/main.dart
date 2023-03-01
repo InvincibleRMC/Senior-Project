@@ -7,7 +7,8 @@ import 'package:front_end/standard_widgets.dart';
 import 'class_reminder_page.dart';
 
 void main() async {
-  Network().startConnection();
+  Network().sendProfessorRequest();
+  Network().sendCourseRequest();
   runApp(const MyApp());
 }
 

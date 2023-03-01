@@ -16,11 +16,11 @@ message ScheduleRequest {
     repeated Professor unprefferedProfs = 6;
 }
 
-message ProfessorRequest {
-}
+message MajorRequest {}
 
-message CourseRequest {
-}
+message ProfessorRequest {}
+
+message CourseRequest {}
 
 message DebugRequest {
     string msg = 1;
@@ -32,6 +32,7 @@ enum RequestType {
     REQ_PROFESSOR = 2;
     REQ_COURSE = 3;
     REQ_DEBUG = 4;
+    REQ_MAJOR = 5;
 }
 
 message Request {
@@ -42,5 +43,6 @@ message Request {
         ProfessorRequest r3 = 4;
         CourseRequest r4 = 5;
         DebugRequest r5 = 6;
+        MajorRequest r6 = 7;
     }
 }

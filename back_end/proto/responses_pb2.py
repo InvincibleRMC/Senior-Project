@@ -16,20 +16,24 @@ _sym_db = _symbol_database.Default()
 from proto import data_pb2 as proto_dot_data__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15proto/responses.proto\x1a\x10proto/data.proto\"\x12\n\x10ScheduleResponse\"7\n\x15ProfessorListResponse\x12\x1e\n\nprofessors\x18\x01 \x03(\x0b\x32\n.Professor\"=\n\x12\x43ourseListResponse\x12\r\n\x05major\x18\x01 \x01(\t\x12\x18\n\x07\x63ourses\x18\x02 \x03(\x0b\x32\x07.Course\"\x1c\n\rDebugResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\xb6\x01\n\x08Response\x12\x1b\n\x04type\x18\x01 \x01(\x0e\x32\r.ResponseType\x12\x1f\n\x02r1\x18\x02 \x01(\x0b\x32\x11.ScheduleResponseH\x00\x12$\n\x02r2\x18\x03 \x01(\x0b\x32\x16.ProfessorListResponseH\x00\x12!\n\x02r3\x18\x04 \x01(\x0b\x32\x13.CourseListResponseH\x00\x12\x1c\n\x02r4\x18\x05 \x01(\x0b\x32\x0e.DebugResponseH\x00\x42\x05\n\x03msg*O\n\x0cResponseType\x12\x0f\n\x0bRES_COURSES\x10\x00\x12\r\n\tRES_PROFS\x10\x01\x12\x10\n\x0cRES_SCHEDULE\x10\x02\x12\r\n\tRES_DEBUG\x10\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15proto/responses.proto\x1a\x10proto/data.proto\"\x12\n\x10ScheduleResponse\"3\n\x11ProfessorResponse\x12\x1e\n\nprofessors\x18\x01 \x03(\x0b\x32\n.Professor\"*\n\x0e\x43ourseResponse\x12\x18\n\x07\x63ourses\x18\x01 \x03(\x0b\x32\x07.Course\"\x1c\n\rDebugResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\'\n\rMajorResponse\x12\x16\n\x06majors\x18\x01 \x03(\x0b\x32\x06.Major\"\'\n\x14NotificationResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"\xf1\x01\n\x08Response\x12\x1b\n\x04type\x18\x01 \x01(\x0e\x32\r.ResponseType\x12\x1f\n\x02r1\x18\x02 \x01(\x0b\x32\x11.ScheduleResponseH\x00\x12 \n\x02r2\x18\x03 \x01(\x0b\x32\x12.ProfessorResponseH\x00\x12\x1d\n\x02r3\x18\x04 \x01(\x0b\x32\x0f.CourseResponseH\x00\x12\x1c\n\x02r4\x18\x05 \x01(\x0b\x32\x0e.DebugResponseH\x00\x12\x1c\n\x02r5\x18\x06 \x01(\x0b\x32\x0e.MajorResponseH\x00\x12#\n\x02r6\x18\x07 \x01(\x0b\x32\x15.NotificationResponseH\x00\x42\x05\n\x03msg*l\n\x0cResponseType\x12\x10\n\x0cRES_SCHEDULE\x10\x00\x12\r\n\tRES_PROFS\x10\x01\x12\x0f\n\x0bRES_COURSES\x10\x02\x12\r\n\tRES_DEBUG\x10\x03\x12\r\n\tRES_MAJOR\x10\x04\x12\x0c\n\x08RES_NOTI\x10\x05\x62\x06proto3')
 
 _RESPONSETYPE = DESCRIPTOR.enum_types_by_name['ResponseType']
 ResponseType = enum_type_wrapper.EnumTypeWrapper(_RESPONSETYPE)
-RES_COURSES = 0
+RES_SCHEDULE = 0
 RES_PROFS = 1
-RES_SCHEDULE = 2
+RES_COURSES = 2
 RES_DEBUG = 3
+RES_MAJOR = 4
+RES_NOTI = 5
 
 
 _SCHEDULERESPONSE = DESCRIPTOR.message_types_by_name['ScheduleResponse']
-_PROFESSORLISTRESPONSE = DESCRIPTOR.message_types_by_name['ProfessorListResponse']
-_COURSELISTRESPONSE = DESCRIPTOR.message_types_by_name['CourseListResponse']
+_PROFESSORRESPONSE = DESCRIPTOR.message_types_by_name['ProfessorResponse']
+_COURSERESPONSE = DESCRIPTOR.message_types_by_name['CourseResponse']
 _DEBUGRESPONSE = DESCRIPTOR.message_types_by_name['DebugResponse']
+_MAJORRESPONSE = DESCRIPTOR.message_types_by_name['MajorResponse']
+_NOTIFICATIONRESPONSE = DESCRIPTOR.message_types_by_name['NotificationResponse']
 _RESPONSE = DESCRIPTOR.message_types_by_name['Response']
 ScheduleResponse = _reflection.GeneratedProtocolMessageType('ScheduleResponse', (_message.Message,), {
   'DESCRIPTOR' : _SCHEDULERESPONSE,
@@ -38,19 +42,19 @@ ScheduleResponse = _reflection.GeneratedProtocolMessageType('ScheduleResponse', 
   })
 _sym_db.RegisterMessage(ScheduleResponse)
 
-ProfessorListResponse = _reflection.GeneratedProtocolMessageType('ProfessorListResponse', (_message.Message,), {
-  'DESCRIPTOR' : _PROFESSORLISTRESPONSE,
+ProfessorResponse = _reflection.GeneratedProtocolMessageType('ProfessorResponse', (_message.Message,), {
+  'DESCRIPTOR' : _PROFESSORRESPONSE,
   '__module__' : 'proto.responses_pb2'
-  # @@protoc_insertion_point(class_scope:ProfessorListResponse)
+  # @@protoc_insertion_point(class_scope:ProfessorResponse)
   })
-_sym_db.RegisterMessage(ProfessorListResponse)
+_sym_db.RegisterMessage(ProfessorResponse)
 
-CourseListResponse = _reflection.GeneratedProtocolMessageType('CourseListResponse', (_message.Message,), {
-  'DESCRIPTOR' : _COURSELISTRESPONSE,
+CourseResponse = _reflection.GeneratedProtocolMessageType('CourseResponse', (_message.Message,), {
+  'DESCRIPTOR' : _COURSERESPONSE,
   '__module__' : 'proto.responses_pb2'
-  # @@protoc_insertion_point(class_scope:CourseListResponse)
+  # @@protoc_insertion_point(class_scope:CourseResponse)
   })
-_sym_db.RegisterMessage(CourseListResponse)
+_sym_db.RegisterMessage(CourseResponse)
 
 DebugResponse = _reflection.GeneratedProtocolMessageType('DebugResponse', (_message.Message,), {
   'DESCRIPTOR' : _DEBUGRESPONSE,
@@ -58,6 +62,20 @@ DebugResponse = _reflection.GeneratedProtocolMessageType('DebugResponse', (_mess
   # @@protoc_insertion_point(class_scope:DebugResponse)
   })
 _sym_db.RegisterMessage(DebugResponse)
+
+MajorResponse = _reflection.GeneratedProtocolMessageType('MajorResponse', (_message.Message,), {
+  'DESCRIPTOR' : _MAJORRESPONSE,
+  '__module__' : 'proto.responses_pb2'
+  # @@protoc_insertion_point(class_scope:MajorResponse)
+  })
+_sym_db.RegisterMessage(MajorResponse)
+
+NotificationResponse = _reflection.GeneratedProtocolMessageType('NotificationResponse', (_message.Message,), {
+  'DESCRIPTOR' : _NOTIFICATIONRESPONSE,
+  '__module__' : 'proto.responses_pb2'
+  # @@protoc_insertion_point(class_scope:NotificationResponse)
+  })
+_sym_db.RegisterMessage(NotificationResponse)
 
 Response = _reflection.GeneratedProtocolMessageType('Response', (_message.Message,), {
   'DESCRIPTOR' : _RESPONSE,
@@ -69,16 +87,20 @@ _sym_db.RegisterMessage(Response)
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _RESPONSETYPE._serialized_start=398
-  _RESPONSETYPE._serialized_end=477
+  _RESPONSETYPE._serialized_start=516
+  _RESPONSETYPE._serialized_end=624
   _SCHEDULERESPONSE._serialized_start=43
   _SCHEDULERESPONSE._serialized_end=61
-  _PROFESSORLISTRESPONSE._serialized_start=63
-  _PROFESSORLISTRESPONSE._serialized_end=118
-  _COURSELISTRESPONSE._serialized_start=120
-  _COURSELISTRESPONSE._serialized_end=181
-  _DEBUGRESPONSE._serialized_start=183
-  _DEBUGRESPONSE._serialized_end=211
-  _RESPONSE._serialized_start=214
-  _RESPONSE._serialized_end=396
+  _PROFESSORRESPONSE._serialized_start=63
+  _PROFESSORRESPONSE._serialized_end=114
+  _COURSERESPONSE._serialized_start=116
+  _COURSERESPONSE._serialized_end=158
+  _DEBUGRESPONSE._serialized_start=160
+  _DEBUGRESPONSE._serialized_end=188
+  _MAJORRESPONSE._serialized_start=190
+  _MAJORRESPONSE._serialized_end=229
+  _NOTIFICATIONRESPONSE._serialized_start=231
+  _NOTIFICATIONRESPONSE._serialized_end=270
+  _RESPONSE._serialized_start=273
+  _RESPONSE._serialized_end=514
 # @@protoc_insertion_point(module_scope)

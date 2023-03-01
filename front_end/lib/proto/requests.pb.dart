@@ -157,22 +157,42 @@ class ScheduleRequest extends $pb.GeneratedMessage {
   $core.List<$0.Professor> get unprefferedProfs => $_getList(5);
 }
 
+class MajorRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MajorRequest', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  MajorRequest._() : super();
+  factory MajorRequest() => create();
+  factory MajorRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MajorRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MajorRequest clone() => MajorRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MajorRequest copyWith(void Function(MajorRequest) updates) => super.copyWith((message) => updates(message as MajorRequest)) as MajorRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MajorRequest create() => MajorRequest._();
+  MajorRequest createEmptyInstance() => create();
+  static $pb.PbList<MajorRequest> createRepeated() => $pb.PbList<MajorRequest>();
+  @$core.pragma('dart2js:noInline')
+  static MajorRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MajorRequest>(create);
+  static MajorRequest? _defaultInstance;
+}
+
 class ProfessorRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProfessorRequest', createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'major')
     ..hasRequiredFields = false
   ;
 
   ProfessorRequest._() : super();
-  factory ProfessorRequest({
-    $core.String? major,
-  }) {
-    final _result = create();
-    if (major != null) {
-      _result.major = major;
-    }
-    return _result;
-  }
+  factory ProfessorRequest() => create();
   factory ProfessorRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ProfessorRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -193,33 +213,15 @@ class ProfessorRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ProfessorRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ProfessorRequest>(create);
   static ProfessorRequest? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get major => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set major($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMajor() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMajor() => clearField(1);
 }
 
 class CourseRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CourseRequest', createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'major')
     ..hasRequiredFields = false
   ;
 
   CourseRequest._() : super();
-  factory CourseRequest({
-    $core.String? major,
-  }) {
-    final _result = create();
-    if (major != null) {
-      _result.major = major;
-    }
-    return _result;
-  }
+  factory CourseRequest() => create();
   factory CourseRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CourseRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -240,15 +242,6 @@ class CourseRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static CourseRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CourseRequest>(create);
   static CourseRequest? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get major => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set major($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMajor() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMajor() => clearField(1);
 }
 
 class DebugRequest extends $pb.GeneratedMessage {
@@ -304,6 +297,7 @@ enum Request_Msg {
   r3, 
   r4, 
   r5, 
+  r6, 
   notSet
 }
 
@@ -314,16 +308,18 @@ class Request extends $pb.GeneratedMessage {
     4 : Request_Msg.r3,
     5 : Request_Msg.r4,
     6 : Request_Msg.r5,
+    7 : Request_Msg.r6,
     0 : Request_Msg.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Request', createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6])
+    ..oo(0, [2, 3, 4, 5, 6, 7])
     ..e<RequestType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: RequestType.REQ_SCHEDULE, valueOf: RequestType.valueOf, enumValues: RequestType.values)
     ..aOM<ScheduleRequest>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r1', subBuilder: ScheduleRequest.create)
     ..aOM<NotificationRequest>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r2', subBuilder: NotificationRequest.create)
     ..aOM<ProfessorRequest>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r3', subBuilder: ProfessorRequest.create)
     ..aOM<CourseRequest>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r4', subBuilder: CourseRequest.create)
     ..aOM<DebugRequest>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r5', subBuilder: DebugRequest.create)
+    ..aOM<MajorRequest>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r6', subBuilder: MajorRequest.create)
     ..hasRequiredFields = false
   ;
 
@@ -335,6 +331,7 @@ class Request extends $pb.GeneratedMessage {
     ProfessorRequest? r3,
     CourseRequest? r4,
     DebugRequest? r5,
+    MajorRequest? r6,
   }) {
     final _result = create();
     if (type != null) {
@@ -354,6 +351,9 @@ class Request extends $pb.GeneratedMessage {
     }
     if (r5 != null) {
       _result.r5 = r5;
+    }
+    if (r6 != null) {
+      _result.r6 = r6;
     }
     return _result;
   }
@@ -444,5 +444,16 @@ class Request extends $pb.GeneratedMessage {
   void clearR5() => clearField(6);
   @$pb.TagNumber(6)
   DebugRequest ensureR5() => $_ensure(5);
+
+  @$pb.TagNumber(7)
+  MajorRequest get r6 => $_getN(6);
+  @$pb.TagNumber(7)
+  set r6(MajorRequest v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasR6() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearR6() => clearField(7);
+  @$pb.TagNumber(7)
+  MajorRequest ensureR6() => $_ensure(6);
 }
 
