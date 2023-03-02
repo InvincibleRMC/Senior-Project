@@ -16,7 +16,7 @@ class Network {
   static final Network _instance = Network._internal();
   List<Course>? _classes;
   List<Professor>? _professors;
-  List<String> _majors = ["cs", "ee", "pain"];
+  List<Major>? _majors;
 
   // using a factory is important
   // because it promises to return _an_ object of this type
@@ -40,7 +40,8 @@ class Network {
 
     var read = CodedBufferReader(message.codeUnits);
     res.mergeFromCodedBufferReader(read);
-
+    print("Message Recieved");
+    print(res);
     switch (res.type) {
       case ResponseType.RES_DEBUG:
         {
@@ -57,10 +58,20 @@ class Network {
           _professors = res.r2.professors;
         }
         break;
+      case ResponseType.RES_MAJOR:
+        {
+          _majors = res.r5.majors;
+        }
+        break;
       case ResponseType.RES_SCHEDULE:
         {
           // TODO: schedule object
           // schedule = res.r1.;
+        }
+        break;
+      case ResponseType.RES_NOTI:
+        {
+          // TODO notifiy sender?
         }
         break;
     }
@@ -98,12 +109,14 @@ class Network {
 
   void requestHelper(Request req) async {
     TcpSocketConnection connection = TcpSocketConnection("localhost", 50000);
+    // For Debug
+    connection.enableConsolePrint(true);
 
-    var timeOut = 1;
-    var attempts = 10000;
-
+    // 1 sec seems to have been short
+    int timeOut = 5;
+    int attempts = 10000;
     if (await connection.canConnect(timeOut, attempts: attempts)) {
-      connection.connect(timeOut, messageReceived);
+      await connection.connect(timeOut, messageReceived);
       Uint8List out = req.writeToBuffer();
       connection.sendMessage(_decoder.convert(out));
       print("Sending Request " + req.toString());
@@ -156,6 +169,7 @@ class Network {
 
   List<String> getMajors() {
     // TODO Implement
-    return _majors;
+    return List<String>.generate(
+        _majors!.length, (index) => _majors![index].name);
   }
 }
