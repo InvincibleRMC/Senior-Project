@@ -242,6 +242,8 @@ class Server:
 def main():
     """Init all"""
 
+    #py
+
     if len(sys.argv) < 2:
         print("Not enough input arguments. Usage: server <port>")
         sys.exit()
