@@ -4,4 +4,3 @@ google
 protobuf
 requests
 selenium
-sqlite3
