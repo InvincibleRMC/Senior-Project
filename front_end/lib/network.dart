@@ -10,6 +10,7 @@ import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
 class Network {
+  static const int _port = 50001;
   final Utf8Decoder _decoder = const Utf8Decoder();
   // TcpSocketConnection? _connection;
 
@@ -108,7 +109,7 @@ class Network {
   // }
 
   void requestHelper(Request req) async {
-    TcpSocketConnection connection = TcpSocketConnection("localhost", 50001);
+    TcpSocketConnection connection = TcpSocketConnection("localhost", _port);
     // For Debug
     connection.enableConsolePrint(true);
 
