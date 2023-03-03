@@ -6,18 +6,24 @@ import time
 
 from sqlite3 import Connection, Cursor
 import sqlite3
-from typing import List, Tuple
+from typing import List
 
 import multiprocessing as mp
 from multiprocessing.synchronize import Lock
 
-from proto.requests_pb2 import Request, REQ_DEBUG, REQ_COURSE, REQ_NOTIFICATION
-from proto.requests_pb2 import REQ_SCHEDULE, REQ_PROFESSOR
-from proto.responses_pb2 import Response, DebugResponse, RES_DEBUG
+from proto.requests_pb2 import (Request, REQ_DEBUG, REQ_COURSE, REQ_NOTIFICATION,
+                                REQ_SCHEDULE, REQ_PROFESSOR, REQ_MAJOR, MajorRequest,
+                                NotificationRequest, ScheduleRequest, CourseRequest,
+                                ProfessorRequest)
+from proto.responses_pb2 import (Response, DebugResponse, RES_DEBUG, RES_COURSES, RES_MAJOR,
+                                 RES_NOTI, RES_PROFS, RES_SCHEDULE, MajorResponse,
+                                 NotificationResponse, ScheduleResponse, CourseResponse,
+                                 ProfessorResponse)
 
-from proto.requests_pb2 import *
-from proto.responses_pb2 import *
-from proto.data_pb2 import *
+from proto.data_pb2 import Course, Professor, Major
+# from proto.requests_pb2 import *
+# from proto.responses_pb2 import *
+# from proto.data_pb2 import *
 
 
 # TODO: thread pool
@@ -102,6 +108,8 @@ class WorkerThread:
                 response = Response(type=RES_SCHEDULE, r1=self.handle_req_schedule(request.r1))
             elif request_type == REQ_DEBUG:
                 response = Response(type=RES_DEBUG, r4=DebugResponse(msg="pong"))
+            elif request_type == REQ_MAJOR:
+                response = Response(type=RES_MAJOR, r5=self.handle_req_major(request.r6))
             else:
                 print("Error: unknown request type")
                 continue
@@ -184,7 +192,7 @@ class Server:
         self.socket.listen(1)
 
         # rx and tx queues
-        self.rx_queue: mp.Queue[Tuple[socket.socket, Tuple[str, int], Request]] = mp.Queue()
+        self.rx_queue: mp.Queue = mp.Queue()
         self.rx_lock = mp.Lock()
 
         # db connection
@@ -194,7 +202,7 @@ class Server:
         # worker threads
         self.workers: List[mp.Process] = []
         self.num_workers = 4
-        for i in range(self.num_workers):
+        for _ in range(self.num_workers):
             worker = WorkerThread(self.rx_queue, self.rx_lock, self.db_conn)
             worker_proc = mp.Process(target=Server.run_worker, args=(worker,))
             worker_proc.start()
