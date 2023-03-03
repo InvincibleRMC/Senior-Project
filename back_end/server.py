@@ -167,9 +167,11 @@ class Server:
 
     @staticmethod
     def run_worker(worker: WorkerThread):
+        """Server run helper for workers"""
         worker.run()
 
     def __init__(self, server_ip: str, port: int, db_fn: str):
+        """Creates Server Object"""
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.bind((server_ip, port))
         self.socket.listen(1)
@@ -192,9 +194,11 @@ class Server:
             self.workers.append(worker_proc)
 
     def __del__(self):
+        """Delete Server object"""
         self.socket.close()
 
     def run(self):
+        """Run Server"""
         while running:
             conn, addr = self.socket.accept()
             data = conn.recv(4096)
@@ -217,6 +221,7 @@ class Server:
             self.rx_queue.put_nowait((conn, addr, incoming_request))
 
     def shutdown(self):
+        """Shutdown Server"""
         self.socket.close()
 
 
