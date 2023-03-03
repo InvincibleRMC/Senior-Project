@@ -27,7 +27,7 @@ running: bool = True
 
 
 class DatabaseConnection:
-
+    """DatabaseConnection is a connection to a sqlite database with helper functions for locking"""
     def __init__(self, filepath: str):
         """Create DatabaseConnection Object"""
         try:
@@ -56,7 +56,7 @@ class DatabaseConnection:
 
 
 class WorkerThread:
-
+    """Threads for processing Requests then sending Responses"""
     def __init__(self, rx_q: mp.Queue,
                  rx_lock: Lock,
                  db_conn: DatabaseConnection):
@@ -142,7 +142,8 @@ class WorkerThread:
             prof.last = last
             return prof
 
-        res.professors.extend([create_prof(1, "Ronald", "Loui"), create_prof(2, "Harold", "Connamacher")])
+        res.professors.extend([create_prof(1, "Ronald", "Loui"),
+                               create_prof(2, "Harold", "Connamacher")])
         return res
 
     def handle_req_schedule(self, req: ScheduleRequest) -> ScheduleResponse:
@@ -170,7 +171,7 @@ class WorkerThread:
 
 
 class Server:
-
+    """Server for receives Requests and adding to Queue for workerThreads"""
     @staticmethod
     def run_worker(worker: WorkerThread):
         """Server run helper for workers"""
@@ -231,7 +232,8 @@ class Server:
         self.socket.close()
 
 
-if __name__ == "__main__":
+def main():
+    """Init all"""
 
     if len(sys.argv) < 2:
         print("Not enough input arguments. Usage: server <port>")
@@ -254,3 +256,7 @@ if __name__ == "__main__":
 
     print("Server shutting down...")
     sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
