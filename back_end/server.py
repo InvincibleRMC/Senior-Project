@@ -29,6 +29,7 @@ running: bool = True
 class DatabaseConnection:
 
     def __init__(self, filepath: str):
+        """Create DatabaseConnection Object"""
         try:
             self.connection: Connection = sqlite3.connect(filepath)
         except sqlite3.Error:
@@ -36,12 +37,15 @@ class DatabaseConnection:
         self.lock = mp.Lock()
 
     def __del__(self):
+        """Delete DataBaseConnection Object"""
         self.connection.close()
 
     def get_version(self):
+        """Returns version of sqlite"""
         return self.execute("select sqlite_version();")
 
     def execute(self, query: str):
+        """Execute query"""
         self.lock.acquire()
         cursor: Cursor = self.connection.cursor()
         cursor.execute(query)
@@ -56,6 +60,7 @@ class WorkerThread:
     def __init__(self, rx_q: mp.Queue,
                  rx_lock: Lock,
                  db_conn: DatabaseConnection):
+        """Creates WorkerThread Object"""
         self.rx_q = rx_q
         self.rx_lock = rx_lock
 
@@ -64,6 +69,7 @@ class WorkerThread:
         self.t_sleep = 0.1
 
     def run(self):
+        """Run WorkerThread"""
         while True:
             if not self.rx_lock.acquire(block=False):
                 time.sleep(self.t_sleep)
