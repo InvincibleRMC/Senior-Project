@@ -108,9 +108,11 @@ class WorkerThread:
             conn.close()
 
     def handle_req_course(self, req: CourseRequest) -> CourseResponse:
+        """Generates CourseResponse from CourseRequest"""
         res = CourseResponse()
 
         def create_course(ident: int, name: str, semester: str) -> Course:
+            """Helper to create a Course object."""
             course = Course()
             course.Clear()
             course.id = ident
@@ -122,9 +124,11 @@ class WorkerThread:
         return res
 
     def handle_req_prof(self, req: ProfessorRequest) -> ProfessorResponse:
+        """Generates ProfessorResponse from ProfessorRequest"""
         res = ProfessorResponse()
 
         def create_prof(ident: int, first: str, last: str) -> Professor:
+            """Helper to create a Professor object."""
             prof = Professor()
             prof.Clear()
             prof.id = ident
@@ -136,14 +140,18 @@ class WorkerThread:
         return res
 
     def handle_req_schedule(self, req: ScheduleRequest) -> ScheduleResponse:
+        """Generates ScheduleResponse from ScheduleRequest"""
         pass
 
     def handle_req_noti(self, req: NotificationRequest) -> NotificationResponse:
+        """Generates NotificationResponse from NotificationRequest"""
         return NotificationResponse(True)
 
     def handle_req_major(self, req: MajorRequest) -> MajorResponse:
+        """Generates MajorResponse from MajorRequest"""
 
         def create_major(ident: int, name: str) -> Major:
+            """Helper to create a Major object."""
             major = Major()
             major.Clear()
             major.id = ident
@@ -161,9 +169,9 @@ class Server:
     def run_worker(worker: WorkerThread):
         worker.run()
 
-    def __init__(self, server: str, port: int, db_fn: str):
+    def __init__(self, server_ip: str, port: int, db_fn: str):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind((server, port))
+        self.socket.bind((server_ip, port))
         self.socket.listen(1)
 
         # rx and tx queues
@@ -179,9 +187,9 @@ class Server:
         self.num_workers = 4
         for i in range(self.num_workers):
             worker = WorkerThread(self.rx_queue, self.rx_lock, self.db_conn)
-            workerProc = mp.Process(target=Server.run_worker, args=(worker,))
-            workerProc.start()
-            self.workers.append(workerProc)
+            worker_proc = mp.Process(target=Server.run_worker, args=(worker,))
+            worker_proc.start()
+            self.workers.append(worker_proc)
 
     def __del__(self):
         self.socket.close()
