@@ -1,4 +1,6 @@
 #!/bin/python3
+
+"""Module for Sever IO and basic Requests and Response"""
 import socket
 import signal
 import sys
@@ -63,9 +65,7 @@ class DatabaseConnection:
 
 class WorkerThread:
     """Threads for processing Requests then sending Responses"""
-    def __init__(self, rx_q: mp.Queue,
-                 rx_lock: Lock,
-                 db_conn: DatabaseConnection):
+    def __init__(self, rx_q: mp.Queue, rx_lock: Lock, db_conn: DatabaseConnection):
         """Creates WorkerThread Object"""
         self.rx_q = rx_q
         self.rx_lock = rx_lock
@@ -87,7 +87,6 @@ class WorkerThread:
                 continue
 
             (conn, addr, request) = self.rx_q.get_nowait()
-            addr = addr
             # self.rx_q.task_done()
             self.rx_lock.release()
 
@@ -247,10 +246,10 @@ def main():
         print("Not enough input arguments. Usage: server <port>")
         sys.exit()
 
-    PORT = int(sys.argv[1])
+    port = int(sys.argv[1])
     print("Initializing server...")
-    DB_FN = "TODO"
-    server = Server("localhost", PORT, DB_FN)
+    db_fn = "TODO"
+    server = Server("localhost", port, db_fn)
 
     def signal_handler():
         server.shutdown()
