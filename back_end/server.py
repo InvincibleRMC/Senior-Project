@@ -23,6 +23,7 @@ from multiprocessing.synchronize import Lock
 
 running: bool = True
 
+
 class DatabaseConnection:
 
     def __init__(self, filepath: str):
@@ -46,6 +47,7 @@ class DatabaseConnection:
         cursor.close()
         self.lock.release()
         return record
+
 
 class WorkerThread:
 
@@ -95,16 +97,13 @@ class WorkerThread:
                 print("Error: unknown request type")
                 continue
 
-            if response is None:
-                continue
-
             # send data
             data: bytes = response.SerializeToString()
             conn.send(data)
 
             # close socket
             conn.close()
-    
+
     def handle_req_course(self, req: CourseRequest) -> CourseResponse:
         res = CourseResponse()
 
@@ -140,7 +139,7 @@ class WorkerThread:
         return NotificationResponse(True)
 
     def handle_req_major(self, req: MajorRequest) -> MajorResponse:
-        
+
         def create_major(id: int, name: str) -> Major:
             major = Major()
             major.Clear()
@@ -151,7 +150,6 @@ class WorkerThread:
         res = MajorResponse()
         res.majors.extend([create_major(1, "CS"), create_major(2, "CE")])
         return res
-
 
 
 class Server:
@@ -230,7 +228,7 @@ if __name__ == "__main__":
 
     print("Running Server...")
     server.run()
-    
+
     del server
 
     print("Server shutting down...")
