@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:front_end/class_reminder_page.dart';
 import 'package:front_end/main.dart';
+import 'package:front_end/network.dart';
 import 'package:front_end/results.dart';
 import 'package:front_end/scheduler_page.dart';
 import 'package:mockito/mockito.dart';
@@ -51,6 +52,7 @@ void main() {
     });
     group('Scheduler Navigation tests', () {
       testWidgets('Scheduler to Results', (WidgetTester tester) async {
+        Network().setMajors();
         await tester.pumpWidget(MaterialApp(
           home: const SchedulerPage(),
 
@@ -73,7 +75,7 @@ void main() {
         await tester.tap(find.byKey(const Key("drop_down_search_major")));
         await tester.pumpAndSettle();
 
-        //With Major entered allow acess to Results Page
+        //With Major entered allow access to Results Page
         await tester.tap(find.text("CS BS"));
         await tester.pumpAndSettle();
 
@@ -82,6 +84,9 @@ void main() {
 
         expect(find.byType(ResultsPage), findsOneWidget);
         expect(find.byType(SchedulerPage), findsNothing);
+
+        // To wait out tcp connections
+        await tester.binding.delayed(const Duration(days: 999));
       });
     });
     group('Class Reminder Navigation tests', () {
@@ -144,6 +149,9 @@ void main() {
 
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ClassReminderPage), findsNothing);
+
+        // To wait out tcp connections
+        await tester.binding.delayed(const Duration(days: 999));
       });
     });
     group('Results Navigation tests', () {

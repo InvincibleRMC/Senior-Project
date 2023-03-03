@@ -9,6 +9,7 @@ import 'class_reminder_page.dart';
 void main() async {
   Network().sendProfessorRequest();
   Network().sendCourseRequest();
+  Network().sendMajorRequest();
   runApp(const MyApp());
 }
 

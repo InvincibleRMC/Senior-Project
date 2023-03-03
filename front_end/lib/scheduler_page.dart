@@ -1,6 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:front_end/middleware.dart';
 import 'package:front_end/network.dart';
 import 'package:front_end/results.dart';
 import 'package:front_end/standard_widgets.dart';
@@ -15,7 +14,7 @@ class SchedulerPage extends StatefulWidget {
 class _SchedulerPageState extends State<SchedulerPage> {
   String? _major;
   //TODO not sure how to do concentrations
-  // string _concentraion = "";
+  // string _concentration = "";
   // string _minor = "";
 
   List<String>? _previousClasses;
