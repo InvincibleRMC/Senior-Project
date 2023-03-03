@@ -21,20 +21,15 @@ from multiprocessing.synchronize import Lock
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
 
-
-
-
-def signal_handler(sig, frame):
-    print('You pressed Ctrl+C!')
-    sys.exit(0)
-
-signal.signal(signal.SIGINT, signal_handler)
-
+running: bool = True
 
 class DatabaseConnection:
 
     def __init__(self, filepath: str):
-        self.connection: Connection = sqlite3.connect(filepath)
+        try:
+            self.connection: Connection = sqlite3.connect(filepath)
+        except Exception:
+            print("SQLite bad!")
         self.lock = mp.Lock()
 
     def __del__(self):
@@ -75,10 +70,8 @@ class WorkerThread:
                 time.sleep(self.t_sleep)
                 continue
 
-            response = Response()
-            response.Clear()
-
             (conn, addr, request) = self.rx_q.get_nowait()
+            # self.rx_q.task_done()
             self.rx_lock.release()
 
             request_type = request.type
@@ -86,40 +79,59 @@ class WorkerThread:
             # TODO: handle request
             print(f"Request type: {request_type}")
 
+            response = None
+
             if request_type == REQ_COURSE:
-                pass
+                response = Response(type=RES_COURSES, r3=self.handle_req_course(request.r4))
             elif request_type == REQ_PROFESSOR:
-                pass
+                response = Response(type=RES_PROFS, r2=self.handle_req_prof(request.r3))
             elif request_type == REQ_NOTIFICATION:
-                pass
+                response = Response(type=RES_NOTI, r6=self.handle_req_noti(request.r2))
             elif request_type == REQ_SCHEDULE:
-                pass
+                response = Response(type=RES_SCHEDULE, r1=self.handle_req_schedule(request.r1))
             elif request_type == REQ_DEBUG:
-                response.type = RES_DEBUG
-                response.r4.msg = "pong"
+                response = Response(type=RES_DEBUG, r4=DebugResponse(msg="pong"))
             else:
                 print("Error: unknown request type")
                 continue
 
-            # respond
-            # print(str(request))
+            if response is None:
+                continue
 
+            # send data
             data: bytes = response.SerializeToString()
-
             conn.send(data)
 
-            # TODO: process request
-
-            # TODO: query database
-
-            # TODO: enqueue response
+            # close socket
             conn.close()
     
     def handle_req_course(self, req: CourseRequest) -> CourseResponse:
-        pass
+        res = CourseResponse()
+
+        def create_course(id: int, name: str, semester: str) -> Course:
+            course = Course()
+            course.Clear()
+            course.id = id
+            course.name = name
+            course.semester = semester
+            return course
+
+        res.courses.extend([create_course(1, "bruh", "spring"), create_course(2, "yeet", "fall")])
+        return res
 
     def handle_req_prof(self, req: ProfessorRequest) -> ProfessorResponse:
-        pass
+        res = ProfessorResponse()
+
+        def create_prof(id: int, first: str, last: str) -> Professor:
+            prof = Professor()
+            prof.Clear()
+            prof.id = id 
+            prof.first = first 
+            prof.last = last
+            return prof
+
+        res.professors.extend([create_prof(1, "Ronald", "Loui"), create_prof(2, "Harold", "Connamacher")])
+        return res
 
     def handle_req_schedule(self, req: ScheduleRequest) -> ScheduleResponse:
         pass
@@ -128,7 +140,17 @@ class WorkerThread:
         return NotificationResponse(True)
 
     def handle_req_major(self, req: MajorRequest) -> MajorResponse:
-        pass
+        
+        def create_major(id: int, name: str) -> Major:
+            major = Major()
+            major.Clear()
+            major.id = id
+            major.name = name
+            return major
+
+        res = MajorResponse()
+        res.majors.extend([create_major(1, "CS"), create_major(2, "CE")])
+        return res
 
 
 
@@ -160,8 +182,11 @@ class Server:
             workerProc.start()
             self.workers.append(workerProc)
 
+    def __del__(self):
+        self.socket.close()
+
     def run(self):
-        while True:
+        while running:
             conn, addr = self.socket.accept()
             data = conn.recv(4096)
 
@@ -182,9 +207,12 @@ class Server:
 
             self.rx_queue.put_nowait((conn, addr, incoming_request))
 
+    def shutdown(self):
+        self.shutdown = False
+        self.socket.close()
+
 
 if __name__ == "__main__":
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
 
     if len(sys.argv) < 2:
         print("Not enough input arguments. Usage: server <port>")
@@ -195,7 +223,15 @@ if __name__ == "__main__":
     db_fn = "TODO"
     server = Server("localhost", port, db_fn)
 
+    def signal_handler(sig, frame):
+        server.shutdown()
+        sys.exit(0)
+    signal.signal(signal.SIGINT, signal_handler)
+
     print("Running Server...")
     server.run()
+    
+    del server
 
     print("Server shutting down...")
+    sys.exit(0)
