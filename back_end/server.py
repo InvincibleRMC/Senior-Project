@@ -155,7 +155,7 @@ class WorkerThread:
 
     def handle_req_schedule(self, req: ScheduleRequest) -> ScheduleResponse:
         """Generates ScheduleResponse from ScheduleRequest"""
-        pass
+        # TODO:
 
     def handle_req_noti(self, req: NotificationRequest) -> NotificationResponse:
         """Generates NotificationResponse from NotificationRequest"""
@@ -241,8 +241,6 @@ class Server:
 
 def main():
     """Init all"""
-
-    #py
 
     if len(sys.argv) < 2:
         print("Not enough input arguments. Usage: server <port>")
