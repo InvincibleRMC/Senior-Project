@@ -8,6 +8,9 @@ from sqlite3 import Connection, Cursor
 import sqlite3
 from typing import List, Tuple
 
+import multiprocessing as mp
+from multiprocessing.synchronize import Lock
+
 from proto.requests_pb2 import Request, REQ_DEBUG, REQ_COURSE, REQ_NOTIFICATION
 from proto.requests_pb2 import REQ_SCHEDULE, REQ_PROFESSOR
 from proto.responses_pb2 import Response, DebugResponse, RES_DEBUG
@@ -16,8 +19,6 @@ from proto.requests_pb2 import *
 from proto.responses_pb2 import *
 from proto.data_pb2 import *
 
-import multiprocessing as mp
-from multiprocessing.synchronize import Lock
 
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
@@ -216,14 +217,14 @@ if __name__ == "__main__":
 
     if len(sys.argv) < 2:
         print("Not enough input arguments. Usage: server <port>")
-        exit()
+        sys.exit()
 
-    port = int(sys.argv[1])
+    PORT = int(sys.argv[1])
     print("Initializing server...")
-    db_fn = "TODO"
-    server = Server("localhost", port, db_fn)
+    DB_FN = "TODO"
+    server = Server("localhost", PORT, DB_FN)
 
-    def signal_handler(sig, frame):
+    def signal_handler():
         server.shutdown()
         sys.exit(0)
     signal.signal(signal.SIGINT, signal_handler)
