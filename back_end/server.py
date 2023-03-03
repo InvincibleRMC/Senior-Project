@@ -8,6 +8,8 @@ from sqlite3 import Connection, Cursor
 import sqlite3
 from typing import List, Tuple
 
+from ctypes import Structure, c_bool
+
 from proto.requests_pb2 import Request, DebugRequest, REQ_DEBUG, REQ_COURSE, REQ_NOTIFICATION, REQ_SCHEDULE, REQ_PROFESSOR
 from proto.responses_pb2 import Response, DebugResponse, RES_DEBUG
 
@@ -30,6 +32,7 @@ class DatabaseConnection:
             self.connection: Connection = sqlite3.connect(filepath)
         except Exception:
             print("SQLite bad!")
+            exit(1)
         self.lock = mp.Lock()
 
     def __del__(self):
@@ -220,7 +223,7 @@ if __name__ == "__main__":
 
     port = int(sys.argv[1])
     print("Initializing server...")
-    db_fn = "TODO"
+    db_fn = "CSDS395.db"
     server = Server("localhost", port, db_fn)
 
     def signal_handler(sig, frame):
