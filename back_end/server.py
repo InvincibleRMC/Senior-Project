@@ -31,7 +31,7 @@ class DatabaseConnection:
     def __init__(self, filepath: str):
         try:
             self.connection: Connection = sqlite3.connect(filepath)
-        except Exception:
+        except sqlite3.Error:
             print("SQLite bad!")
         self.lock = mp.Lock()
 
@@ -209,7 +209,6 @@ class Server:
             self.rx_queue.put_nowait((conn, addr, incoming_request))
 
     def shutdown(self):
-        self.shutdown = False
         self.socket.close()
 
 
