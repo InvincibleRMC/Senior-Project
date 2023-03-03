@@ -11,7 +11,7 @@ import 'package:front_end/proto/responses.pb.dart';
 
 class Network {
   final Utf8Decoder _decoder = const Utf8Decoder();
-  TcpSocketConnection? _connection;
+  // TcpSocketConnection? _connection;
 
   static final Network _instance = Network._internal();
   List<Course>? _classes;
@@ -30,7 +30,7 @@ class Network {
   // it's also private, so it can only be called in this class
   Network._internal() {
     // initialization logic
-    _connection = TcpSocketConnection("localhost", 50000);
+    // _connection = TcpSocketConnection("localhost", 50001);
     // startConnection();
   }
 
@@ -108,7 +108,7 @@ class Network {
   // }
 
   void requestHelper(Request req) async {
-    TcpSocketConnection connection = TcpSocketConnection("localhost", 50000);
+    TcpSocketConnection connection = TcpSocketConnection("localhost", 50001);
     // For Debug
     connection.enableConsolePrint(true);
 
