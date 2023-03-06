@@ -176,7 +176,7 @@ class WorkerThread:
         return res
 
 
-class Server:
+class Server:  # pylint: disable=too-few-public-methods
     """Server for receives Requests and adding to Queue for workerThreads"""
 
     def __init__(self, server_ip: str, port: int, db_fn: str):
