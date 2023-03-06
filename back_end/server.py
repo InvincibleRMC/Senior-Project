@@ -2,7 +2,6 @@
 
 """Module for Sever IO and basic Requests and Response"""
 import socket
-import signal
 import sys
 import time
 
@@ -177,16 +176,15 @@ class WorkerThread:
         return res
 
 
-class Server:
+class Server:  # pylint: disable=too-few-public-methods
     """Server for receives Requests and adding to Queue for workerThreads"""
-    @staticmethod
-    def run_worker(worker: WorkerThread):
-        """Server run helper for workers"""
-        worker.run()
 
     def __init__(self, server_ip: str, port: int, db_fn: str):
         """Creates Server Object"""
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # From Stackoverflow how to not have to wait for server address
+        # https://stackoverflow.com/questions/4465959/python-errno-98-address-already-in-use
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((server_ip, port))
         self.socket.listen(1)
 
@@ -203,13 +201,9 @@ class Server:
         self.num_workers = 4
         for _ in range(self.num_workers):
             worker = WorkerThread(self.rx_queue, self.rx_lock, self.db_conn)
-            worker_proc = mp.Process(target=Server.run_worker, args=(worker,))
+            worker_proc = mp.Process(target=worker.run)
             worker_proc.start()
             self.workers.append(worker_proc)
-
-    def __del__(self):
-        """Delete Server object"""
-        self.socket.close()
 
     def run(self):
         """Run Server"""
@@ -234,10 +228,6 @@ class Server:
 
             self.rx_queue.put_nowait((conn, addr, incoming_request))
 
-    def shutdown(self):
-        """Shutdown Server"""
-        self.socket.close()
-
 
 def main():
     """Init all"""
@@ -248,18 +238,11 @@ def main():
 
     port = int(sys.argv[1])
     print("Initializing server...")
-    db_fn = "TODO"
+    db_fn = "CSDS395.db"
     server = Server("localhost", port, db_fn)
-
-    def signal_handler():
-        server.shutdown()
-        sys.exit(0)
-    signal.signal(signal.SIGINT, signal_handler)
 
     print("Running Server...")
     server.run()
-
-    del server
 
     print("Server shutting down...")
     sys.exit(0)
