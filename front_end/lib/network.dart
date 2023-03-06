@@ -4,14 +4,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:front_end/proto/data.pbserver.dart';
 import 'package:tcp_socket_connection/tcp_socket_connection.dart';
-
 import 'package:protobuf/protobuf.dart';
 
 import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
 class Network {
-  static const int _port = 50001;
+  static const int _port = 50000;
   final Utf8Decoder _decoder = const Utf8Decoder();
   // TcpSocketConnection? _connection;
 
