@@ -201,7 +201,7 @@ class Server:
         self.num_workers = 4
         for _ in range(self.num_workers):
             worker = WorkerThread(self.rx_queue, self.rx_lock, self.db_conn)
-            worker_proc = mp.Process(target=worker.run, daemon=True)
+            worker_proc = mp.Process(target=worker.run)
             worker_proc.start()
             self.workers.append(worker_proc)
 
