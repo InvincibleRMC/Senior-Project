@@ -1,6 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:front_end/middleware.dart';
+import 'package:front_end/network.dart';
 import 'package:front_end/standard_widgets.dart';
 import 'main.dart';
 
@@ -29,7 +29,7 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
               textAlign: TextAlign.center,
             ),
             DropdownSearch<String>.multiSelection(
-                items: MiddleWare.getAllCourses(),
+                items: Network().getCourseNames(),
                 popupProps: const PopupPropsMultiSelection.menu(
                     showSelectedItems: true, showSearchBox: true),
                 onChanged: (List<String> data) => {_selectedClasses = data}),
@@ -70,7 +70,7 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                   );
                 } else {
                   // Can do NonNull assertion because inside of an not null check
-                  MiddleWare.emailReminder(_email!, _selectedClasses);
+                  Network().sendNotificationRequest(_email!, _selectedClasses);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

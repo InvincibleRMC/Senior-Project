@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+import "proto/data.proto";
+
+message NotificationRequest {
+    string email = 1;
+    repeated Course classes = 2;
+}
+
+message ScheduleRequest {
+    string major = 1;
+    repeated Course previousClasses = 2;
+    repeated Course preferredClasses = 3;
+    repeated Course unpreferredClasses = 4;
+    repeated Professor preferredProfs = 5;
+    repeated Professor unprefferedProfs = 6;
+}
+
+message MajorRequest {}
+
+message ProfessorRequest {}
+
+message CourseRequest {}
+
+message DebugRequest {
+    string msg = 1;
+}
+
+enum RequestType {
+    REQ_SCHEDULE = 0;
+    REQ_NOTIFICATION = 1;
+    REQ_PROFESSOR = 2;
+    REQ_COURSE = 3;
+    REQ_DEBUG = 4;
+    REQ_MAJOR = 5;
+}
+
+message Request {
+    RequestType type = 1;
+    oneof msg  {
+        ScheduleRequest r1 = 2;
+        NotificationRequest r2 = 3;
+        ProfessorRequest r3 = 4;
+        CourseRequest r4 = 5;
+        DebugRequest r5 = 6;
+        MajorRequest r6 = 7;
+    }
+}

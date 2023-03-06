@@ -1,6 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:front_end/middleware.dart';
+import 'package:front_end/network.dart';
 import 'package:front_end/results.dart';
 import 'package:front_end/standard_widgets.dart';
 
@@ -14,7 +14,7 @@ class SchedulerPage extends StatefulWidget {
 class _SchedulerPageState extends State<SchedulerPage> {
   String? _major;
   //TODO not sure how to do concentrations
-  // string _concentraion = "";
+  // string _concentration = "";
   // string _minor = "";
 
   List<String>? _previousClasses;
@@ -33,7 +33,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
           children: <Widget>[
             DropdownSearch<String>(
               key: const Key("drop_down_search_major"),
-              items: MiddleWare.getAllMajors(),
+              items: Network().getMajors(),
               popupProps: const PopupProps.menu(
                   showSelectedItems: true, showSearchBox: true),
               onChanged: (String? major) => _major = major,
@@ -45,7 +45,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
             ),
             DropdownSearch<String>.multiSelection(
               key: const Key("drop_down_search_courses"),
-              items: MiddleWare.getAllCourses(),
+              items: Network().getCourseNames(),
               popupProps: const PopupPropsMultiSelection.menu(
                   showSelectedItems: true, showSearchBox: true),
               onChanged: (List<String> courses) => {_previousClasses = courses},
@@ -76,7 +76,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
                 }
                 // Passes information along and returns home
                 else {
-                  MiddleWare.scheduler();
+                  Network().sendScheduleRequest();
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

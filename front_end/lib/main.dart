@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:front_end/network.dart';
 import 'package:front_end/scheduler_page.dart';
 import 'package:front_end/standard_widgets.dart';
 
 import 'class_reminder_page.dart';
 
 void main() async {
+  Network().sendProfessorRequest();
+  Network().sendCourseRequest();
+  Network().sendMajorRequest();
   runApp(const MyApp());
 }
 
