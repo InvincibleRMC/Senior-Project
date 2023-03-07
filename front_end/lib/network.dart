@@ -21,16 +21,18 @@ class Network {
   static List<Major> _majors = List.empty();
   int id = 1;
 
-  static List<Request> requests = List.empty(growable: true);
-  Timer timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-    for (var req in requests) {
-      requestHelper(req);
-    }
-  });
+  // Set to prevent Duplicates
+  static Set<Request> requests = {};
+
   // using a factory is important
   // because it promises to return _an_ object of this type
   // but it doesn't promise to make a new one.
   factory Network() {
+    Timer.periodic(const Duration(seconds: 5), (timer) {
+      for (var req in requests) {
+        requestHelper(req);
+      }
+    });
     return _instance;
   }
 
