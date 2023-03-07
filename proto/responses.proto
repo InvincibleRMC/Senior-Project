@@ -54,4 +54,5 @@ message Response {
         MajorResponse r5 = 6;
         NotificationResponse r6 = 7;
     }
+    int32 id = 8;
 }

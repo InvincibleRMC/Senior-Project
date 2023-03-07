@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -11,14 +12,21 @@ import 'package:front_end/proto/responses.pb.dart';
 
 class Network {
   static const int _port = 50000;
-  final Utf8Decoder _decoder = const Utf8Decoder();
+  static const Utf8Decoder _decoder = Utf8Decoder();
   // TcpSocketConnection? _connection;
 
   static final Network _instance = Network._internal();
-  List<Course> _classes = List.empty();
-  List<Professor> _professors = List.empty();
-  List<Major> _majors = List.empty();
+  static List<Course> _classes = List.empty();
+  static List<Professor> _professors = List.empty();
+  static List<Major> _majors = List.empty();
+  int id = 1;
 
+  static List<Request> requests = List.empty(growable: true);
+  Timer timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+    for (var req in requests) {
+      requestHelper(req);
+    }
+  });
   // using a factory is important
   // because it promises to return _an_ object of this type
   // but it doesn't promise to make a new one.
@@ -31,7 +39,7 @@ class Network {
   // it's also private, so it can only be called in this class
   Network._internal();
 
-  void messageReceived(String message) {
+  static void messageReceived(String message) {
     var res = Response();
     res.clear();
 
@@ -72,13 +80,15 @@ class Network {
         }
         break;
     }
+    requests.removeWhere((Request req) => req.id == res.id);
   }
 
-  void requestHelper(Request req) async {
+  static void requestHelper(Request req) async {
     TcpSocketConnection connection = TcpSocketConnection("localhost", _port);
     // For Debug
     connection.enableConsolePrint(true);
 
+    requests.add(req);
     // 1 sec seems to have been short
     int timeOut = 3;
     int attempts = 1000;
@@ -94,6 +104,7 @@ class Network {
     var req = Request();
     req.type = RequestType.REQ_MAJOR;
     req.r6 = MajorRequest();
+    req.id = id++;
     requestHelper(req);
   }
 
@@ -101,6 +112,7 @@ class Network {
     var req = Request();
     req.type = RequestType.REQ_PROFESSOR;
     req.r3 = ProfessorRequest();
+    req.id = id++;
     requestHelper(req);
   }
 
@@ -108,6 +120,7 @@ class Network {
     var req = Request();
     req.type = RequestType.REQ_COURSE;
     req.r4 = CourseRequest();
+    req.id = id++;
     requestHelper(req);
   }
 
@@ -118,6 +131,7 @@ class Network {
         email: email,
         classes: List<Course>.generate(
             className.length, (int index) => Course(name: className[index])));
+    req.id = id++;
     requestHelper(req);
   }
 
@@ -181,6 +195,7 @@ class Network {
         unpreferredClasses: unpreferredCourse,
         preferredProfs: preferredProfs,
         unprefferedProfs: unpreferredProfs);
+    req.id = id++;
     requestHelper(req);
   }
 

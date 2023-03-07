@@ -112,6 +112,8 @@ class WorkerThread:
                 print("Error: unknown request type")
                 continue
 
+            response.id = request.id
+
             # send data
             data: bytes = response.SerializeToString()
             conn.send(data)

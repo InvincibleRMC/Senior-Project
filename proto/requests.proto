@@ -48,4 +48,5 @@ message Request {
         DebugRequest r5 = 6;
         MajorRequest r6 = 7;
     }
+    int32 id = 8;
 }
