@@ -26,8 +26,6 @@ class Network {
     return _instance;
   }
 
-  void dispose() {}
-
   // This named constructor is the "real" constructor
   // It'll be called exactly once, by the static property assignment above
   // it's also private, so it can only be called in this class
@@ -39,12 +37,12 @@ class Network {
 
     var read = CodedBufferReader(message.codeUnits);
     res.mergeFromCodedBufferReader(read);
-    print("Message Recieved");
+    print("Message Received");
     print(res);
     switch (res.type) {
       case ResponseType.RES_DEBUG:
         {
-          print("DEBUG recieved");
+          print("DEBUG Received");
         }
         break;
       case ResponseType.RES_COURSES:
@@ -82,13 +80,13 @@ class Network {
     connection.enableConsolePrint(true);
 
     // 1 sec seems to have been short
-    int timeOut = 5;
+    int timeOut = 3;
     int attempts = 1000;
     if (await connection.canConnect(timeOut, attempts: attempts)) {
       await connection.connect(timeOut, messageReceived);
       Uint8List out = req.writeToBuffer();
       connection.sendMessage(_decoder.convert(out));
-      print("Sending Request " + req.toString());
+      print("Sending Request ${req.toString()}");
     }
   }
 
@@ -124,10 +122,65 @@ class Network {
   }
 
   // TODO:
-  void sendScheduleRequest() {
+  void sendScheduleRequest(
+      String major,
+      String semester,
+      int? minCredit,
+      int? maxCredit,
+      List<String>? previousClasses,
+      List<String>? preferredClasses,
+      List<String>? unpreferredClasses,
+      List<String>? preferredProfessors,
+      List<String>? unpreferredProfessors) {
+    List<Course>? previousCourse;
+    List<Course>? preferredCourse;
+    List<Course>? unpreferredCourse;
+    List<Professor>? preferredProfs;
+    List<Professor>? unpreferredProfs;
+
+    if (previousClasses != null) {
+      previousCourse = List<Course>.generate(previousClasses.length,
+          (int index) => Course(name: previousClasses[index]));
+    }
+
+    if (preferredClasses != null) {
+      preferredCourse = List<Course>.generate(preferredClasses.length,
+          (int index) => Course(name: preferredClasses[index]));
+    }
+
+    if (unpreferredClasses != null) {
+      unpreferredCourse = List<Course>.generate(unpreferredClasses.length,
+          (int index) => Course(name: unpreferredClasses[index]));
+    }
+
+    if (preferredProfessors != null) {
+      preferredProfs = List<Professor>.generate(
+          preferredProfessors.length,
+          (int index) => Professor(
+              first: preferredProfessors[index].split(' ')[0],
+              last: preferredProfessors[index].split(' ')[1]));
+    }
+
+    if (unpreferredProfessors != null) {
+      unpreferredProfs = List<Professor>.generate(
+          unpreferredProfessors.length,
+          (int index) => Professor(
+              first: unpreferredProfessors[index].split(' ')[0],
+              last: unpreferredProfessors[index].split(' ')[1]));
+    }
+
     var req = Request();
     req.type = RequestType.REQ_SCHEDULE;
-    req.r1 = ScheduleRequest();
+    req.r1 = ScheduleRequest(
+        major: Major(name: major),
+        semester: semester,
+        minCredits: minCredit,
+        maxCredits: maxCredit,
+        previousClasses: previousCourse,
+        preferredClasses: preferredCourse,
+        unpreferredClasses: unpreferredCourse,
+        preferredProfs: preferredProfs,
+        unprefferedProfs: unpreferredProfs);
     requestHelper(req);
   }
 
@@ -139,8 +192,10 @@ class Network {
 
   List<String> getProfessorNames() {
     // TODO Error handling
-    return List<String>.generate(_professors.length,
-        (int index) => _professors[index].first + _professors[index].last);
+    return List<String>.generate(
+        _professors.length,
+        (int index) =>
+            '${_professors[index].first} ${_professors[index].last}');
   }
 
   List<String> getMajors() {

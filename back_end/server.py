@@ -93,7 +93,7 @@ class WorkerThread:
 
             # TODO: handle request
             print(f"Request type: {request_type}")
-
+            print(request)
             response = None
 
             if request_type == REQ_COURSE:
