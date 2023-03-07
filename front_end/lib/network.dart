@@ -47,6 +47,9 @@ class Network {
 
     var read = CodedBufferReader(message.codeUnits);
     res.mergeFromCodedBufferReader(read);
+
+    requests.removeWhere((Request req) => req.id == res.id);
+
     print("Message Received");
     print(res);
     switch (res.type) {
@@ -82,14 +85,12 @@ class Network {
         }
         break;
     }
-    requests.removeWhere((Request req) => req.id == res.id);
   }
 
   static void requestHelper(Request req) async {
     TcpSocketConnection connection = TcpSocketConnection("localhost", _port);
     // For Debug
     connection.enableConsolePrint(true);
-
     requests.add(req);
     // 1 sec seems to have been short
     int timeOut = 3;
