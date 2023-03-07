@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:front_end/proto/data.pbserver.dart';
@@ -19,6 +20,7 @@ class Network {
   static List<Course> _classes = List.empty();
   static List<Professor> _professors = List.empty();
   static List<Major> _majors = List.empty();
+  static ScheduleResponse _schedule = ScheduleResponse();
   int id = 1;
 
   // Set to prevent Duplicates
@@ -75,8 +77,7 @@ class Network {
         break;
       case ResponseType.RES_SCHEDULE:
         {
-          // TODO: schedule object
-          // schedule = res.r1.;
+          _schedule = res.r1;
         }
         break;
       case ResponseType.RES_NOTI:
@@ -204,8 +205,7 @@ class Network {
 
   List<String> getCourseNames() {
     // TODO Error handling
-    return List<String>.generate(
-        _classes.length, (int index) => _classes[index].name);
+    return courseToString(_classes);
   }
 
   List<String> getProfessorNames() {
@@ -217,9 +217,29 @@ class Network {
   }
 
   List<String> getMajors() {
-    // TODO Implement
     return List<String>.generate(
         _majors.length, (index) => _majors[index].name);
+  }
+
+  List<String> courseToString(List<Course> courseList) {
+    return List<String>.generate(
+        _classes.length, (int index) => _classes[index].name);
+  }
+
+  List<List<String>> getSchedule() {
+    List<List<String>> schedule =
+        List<List<String>>.filled(8, List<String>.empty());
+
+    schedule[0] = courseToString(_schedule.fall1);
+    schedule[1] = courseToString(_schedule.spring1);
+    schedule[2] = courseToString(_schedule.fall2);
+    schedule[3] = courseToString(_schedule.spring2);
+    schedule[4] = courseToString(_schedule.fall3);
+    schedule[5] = courseToString(_schedule.spring3);
+    schedule[6] = courseToString(_schedule.fall4);
+    schedule[7] = courseToString(_schedule.spring4);
+
+    return schedule;
   }
 
   @visibleForTesting

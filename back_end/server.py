@@ -121,20 +121,20 @@ class WorkerThread:
             # close socket
             conn.close()
 
+    def create_course(self, ident: int, name: str, semester: str) -> Course:
+        """Helper to create a Course object."""
+        course = Course()
+        course.Clear()
+        course.id = ident
+        course.name = name
+        course.semester = semester
+        return course
+
     def handle_req_course(self, req: CourseRequest) -> CourseResponse:
         """Generates CourseResponse from CourseRequest"""
         res = CourseResponse()
-
-        def create_course(ident: int, name: str, semester: str) -> Course:
-            """Helper to create a Course object."""
-            course = Course()
-            course.Clear()
-            course.id = ident
-            course.name = name
-            course.semester = semester
-            return course
-
-        res.courses.extend([create_course(1, "bruh", "spring"), create_course(2, "yeet", "fall")])
+        res.courses.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
         return res
 
     def handle_req_prof(self, req: ProfessorRequest) -> ProfessorResponse:
@@ -156,7 +156,25 @@ class WorkerThread:
 
     def handle_req_schedule(self, req: ScheduleRequest) -> ScheduleResponse:
         """Generates ScheduleResponse from ScheduleRequest"""
+        res = ScheduleResponse()
         # TODO:
+        res.fall1.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.spring1.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.fall2.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.spring2.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.fall3.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.spring3.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.fall4.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        res.spring4.extend([self.create_course(1, "bruh", "spring"),
+                            self.create_course(2, "yeet", "fall")])
+        return res
 
     def handle_req_noti(self, req: NotificationRequest) -> NotificationResponse:
         """Generates NotificationResponse from NotificationRequest"""
