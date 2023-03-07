@@ -79,6 +79,14 @@ void main() {
         await tester.tap(find.text("CS BS"));
         await tester.pumpAndSettle();
 
+        // With Semester entered allow access to Results Page
+        await tester.tap(find.byKey(const Key("drop_down_search_semester")));
+        await tester.pumpAndSettle();
+
+        //With Major entered allow access to Results Page
+        await tester.tap(find.text("Fall1"));
+        await tester.pumpAndSettle();
+
         await tester.tap(find.byKey(const Key("submit_button")));
         await tester.pumpAndSettle();
 
