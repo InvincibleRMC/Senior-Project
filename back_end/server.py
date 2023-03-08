@@ -127,8 +127,9 @@ class DatabaseConnection:
                 save = row
 
             num, sub_cat_num, course_time, course_days = save
-            sql= """INSERT OR REPLACE INTO final_class_list(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)"""
-            cur.execute(sql,save)
+            sql1 = """INSERT OR REPLACE INTO final_class_list"""
+            sql2 = """(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)"""
+            cur.execute(sql1+sql2, save)
 
             cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.num =" + str(num))
             rows = cur.fetchall()
