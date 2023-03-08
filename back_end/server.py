@@ -45,8 +45,8 @@ class DatabaseConnection:
         conn = None
         try:
             conn = sqlite3.connect(db_file)
-        except Error as e:
-            print(e)
+        except Error as error:
+            print(error)
 
         return conn
 
