@@ -72,15 +72,9 @@ def add_to_data(url: str):
     data.append(professor_data)
 
 
-def convert_to_sql_insert():
-    """TBD"""
-    print("todo")
-
-
-def convert_to_sql_update():
-    """TBD"""
-    print("todo")
-
+def no_rmp_data(last_name: str, first_name: str):
+    professor_data = [first_name, last_name] + ["N/A"] + ["N/A"] + ["N/A", "N/A"] + ["N/A"]
+    data.append(professor_data)
 
 def print_table():
     """Uses tabulate to print the table nicely"""
@@ -89,47 +83,48 @@ def print_table():
     print(tabulate(data, headers=col_names, tablefmt="fancy_grid",))
 
 
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2256935")  # Allman,Mark
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2354474")  # Ayday,Erman
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2420821")  # Barendt,Nicholas
-add_to_data("https://www.ratemyprofessors.com/professor?tid=801648")   # Cavusoglu,Cenk
-# Chandra,Praphul
-# Chaudhary,Vipin
-add_to_data("https://www.ratemyprofessors.com/professor?tid=1658282")  # Connamacher,Harold
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2832423")  # Foreback,Dianne
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2638814")  # French,Roger
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2252150")  # Fu,Michael
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2593133")  # Gajurel,Sanjaya
-# Ganesan,Ashwin
-# Gupta,Manish
-add_to_data("https://www.ratemyprofessors.com/professor?tid=1901816")  # Gurkan Cavusoglu,Evren
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2766350")  # Izadnegahdar,Daniel
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2849338")  # Jayapandian,Catherine
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2863682")  # Jimenez Segovia,Luis
-add_to_data("https://www.ratemyprofessors.com/professor?tid=1104419")  # Koyuturk,Mehmet
-# add_to_data("https://www.ratemyprofessors.com/professor?tid=2848501") # Kuppannagari,Sanmukh
-add_to_data("https://www.ratemyprofessors.com/professor?tid=1478435")  # Lewicki,Michael
-add_to_data("https://www.ratemyprofessors.com/professor?tid=846293")  # Li,Jing
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2231701")  # Li,Pan
-# Li,Shuo
-add_to_data("https://www.ratemyprofessors.com/professor?tid=16817")  # Liberatore,Vincenzo
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2529012")  # Loui,Ronald
-# Murthy,Sreerama
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2699654")  # Omeike,Stanley
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2571392")  # Ozguner,Orhan
-add_to_data("https://www.ratemyprofessors.com/professor?tid=16730")  # Podgurski,H
-add_to_data("https://www.ratemyprofessors.com/professor?tid=846287")  # Rabinovich,Michael
-add_to_data("https://www.ratemyprofessors.com/professor?tid=1868954")  # Ray,Soumya
-# Shkurti,Thomas
-add_to_data("https://www.ratemyprofessors.com/professor?tid=321409")  # Szarek,Stanislaw
-add_to_data("https://www.ratemyprofessors.com/professor?tid=935633")  # Thomas,Peter
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2425127")  # Wang,An
-# add_to_data("https://www.ratemyprofessors.com/professor?tid=2764934") # Weyer,Daniel
-# add_to_data("https://www.ratemyprofessors.com/professor?tid=2025941") # Wilson,David
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2558896")  # Wu,Yinghui
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2355255")  # Xiao,Xusheng
-# Xu,Kevin
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2519044")  # Xu,Shuai
-add_to_data("https://www.ratemyprofessors.com/professor?tid=2524332")  # Ye,Yanfang
-
-print_table()
+def run_rmp_scanner():
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2256935")  # Allman,Mark
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2354474")  # Ayday,Erman
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2420821")  # Barendt,Nicholas
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2848027")  # Bruckman, Laura
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=801648")   # Cavusoglu,Cenk
+    no_rmp_data("Chandra", "Praphul")                                      # Chandra,Praphul
+    no_rmp_data("Chaudhary", "Vipin")                                      # Chaudhary,Vipin
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=1658282")  # Connamacher,Harold
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2832423")  # Foreback,Dianne
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2638814")  # French,Roger
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2252150")  # Fu,Michael
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2593133")  # Gajurel,Sanjaya
+    no_rmp_data("Ganesan", "Ashwin")                                       # Ganesan,Ashwin
+    no_rmp_data("Gupta","Manish")                                          # Gupta,Manish
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=1901816")  # Gurkan Cavusoglu,Evren
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2766350")  # Izadnegahdar,Daniel
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2849338")  # Jayapandian,Catherine
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2863682")  # Jimenez Segovia,Luis
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=1104419")  # Koyuturk,Mehmet
+    no_rmp_data("Kuppannagari", "Sanmukh")                                 # Kuppannagari,Sanmukh
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=1478435")  # Lewicki,Michael
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=846293")   # Li,Jing
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2231701")  # Li,Pan
+    no_rmp_data("Li", "Shuo")                                              # Li,Shuo
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=16817")    # Liberatore,Vincenzo
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2529012")  # Loui,Ronald
+    no_rmp_data("Murthy", "Sreerama")                                      # Murthy,Sreerama
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2699654")  # Omeike,Stanley
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2571392")  # Ozguner,Orhan
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=16730")    # Podgurski,H
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=846287")   # Rabinovich,Michael
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=1868954")  # Ray,Soumya
+    no_rmp_data("Shkurti", "Thomas")                                       # Shkurti,Thomas
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=321409")   # Szarek,Stanislaw
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=935633")   # Thomas,Peter
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2425127")  # Wang,An
+    no_rmp_data("Weyer", "Daniel")                                         # Weyer,Daniel
+    no_rmp_data("Wilson", "David")                                         # Wilson,David
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2558896")  # Wu,Yinghui
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2355255")  # Xiao,Xusheng
+    no_rmp_data("Xu", "Kevin")                                             # Xu,Kevin
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2519044")  # Xu,Shuai
+    add_to_data("https://www.ratemyprofessors.com/professor?tid=2524332")  # Ye,Yanfang
+    return data
