@@ -38,17 +38,20 @@ final $typed_data.Uint8List notificationRequestDescriptor = $convert.base64Decod
 const ScheduleRequest$json = const {
   '1': 'ScheduleRequest',
   '2': const [
-    const {'1': 'major', '3': 1, '4': 1, '5': 9, '10': 'major'},
-    const {'1': 'previousClasses', '3': 2, '4': 3, '5': 11, '6': '.Course', '10': 'previousClasses'},
-    const {'1': 'preferredClasses', '3': 3, '4': 3, '5': 11, '6': '.Course', '10': 'preferredClasses'},
-    const {'1': 'unpreferredClasses', '3': 4, '4': 3, '5': 11, '6': '.Course', '10': 'unpreferredClasses'},
-    const {'1': 'preferredProfs', '3': 5, '4': 3, '5': 11, '6': '.Professor', '10': 'preferredProfs'},
-    const {'1': 'unprefferedProfs', '3': 6, '4': 3, '5': 11, '6': '.Professor', '10': 'unprefferedProfs'},
+    const {'1': 'major', '3': 1, '4': 1, '5': 11, '6': '.Major', '10': 'major'},
+    const {'1': 'semester', '3': 2, '4': 1, '5': 9, '10': 'semester'},
+    const {'1': 'minCredits', '3': 3, '4': 1, '5': 5, '10': 'minCredits'},
+    const {'1': 'maxCredits', '3': 4, '4': 1, '5': 5, '10': 'maxCredits'},
+    const {'1': 'previousClasses', '3': 5, '4': 3, '5': 11, '6': '.Course', '10': 'previousClasses'},
+    const {'1': 'preferredClasses', '3': 6, '4': 3, '5': 11, '6': '.Course', '10': 'preferredClasses'},
+    const {'1': 'unpreferredClasses', '3': 7, '4': 3, '5': 11, '6': '.Course', '10': 'unpreferredClasses'},
+    const {'1': 'preferredProfs', '3': 8, '4': 3, '5': 11, '6': '.Professor', '10': 'preferredProfs'},
+    const {'1': 'unprefferedProfs', '3': 9, '4': 3, '5': 11, '6': '.Professor', '10': 'unprefferedProfs'},
   ],
 };
 
 /// Descriptor for `ScheduleRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSFAoFbWFqb3IYASABKAlSBW1ham9yEjEKD3ByZXZpb3VzQ2xhc3NlcxgCIAMoCzIHLkNvdXJzZVIPcHJldmlvdXNDbGFzc2VzEjMKEHByZWZlcnJlZENsYXNzZXMYAyADKAsyBy5Db3Vyc2VSEHByZWZlcnJlZENsYXNzZXMSNwoSdW5wcmVmZXJyZWRDbGFzc2VzGAQgAygLMgcuQ291cnNlUhJ1bnByZWZlcnJlZENsYXNzZXMSMgoOcHJlZmVycmVkUHJvZnMYBSADKAsyCi5Qcm9mZXNzb3JSDnByZWZlcnJlZFByb2ZzEjYKEHVucHJlZmZlcmVkUHJvZnMYBiADKAsyCi5Qcm9mZXNzb3JSEHVucHJlZmZlcmVkUHJvZnM=');
+final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSHAoFbWFqb3IYASABKAsyBi5NYWpvclIFbWFqb3ISGgoIc2VtZXN0ZXIYAiABKAlSCHNlbWVzdGVyEh4KCm1pbkNyZWRpdHMYAyABKAVSCm1pbkNyZWRpdHMSHgoKbWF4Q3JlZGl0cxgEIAEoBVIKbWF4Q3JlZGl0cxIxCg9wcmV2aW91c0NsYXNzZXMYBSADKAsyBy5Db3Vyc2VSD3ByZXZpb3VzQ2xhc3NlcxIzChBwcmVmZXJyZWRDbGFzc2VzGAYgAygLMgcuQ291cnNlUhBwcmVmZXJyZWRDbGFzc2VzEjcKEnVucHJlZmVycmVkQ2xhc3NlcxgHIAMoCzIHLkNvdXJzZVISdW5wcmVmZXJyZWRDbGFzc2VzEjIKDnByZWZlcnJlZFByb2ZzGAggAygLMgouUHJvZmVzc29yUg5wcmVmZXJyZWRQcm9mcxI2ChB1bnByZWZmZXJlZFByb2ZzGAkgAygLMgouUHJvZmVzc29yUhB1bnByZWZmZXJlZFByb2Zz');
 @$core.Deprecated('Use majorRequestDescriptor instead')
 const MajorRequest$json = const {
   '1': 'MajorRequest',
@@ -91,6 +94,7 @@ const Request$json = const {
     const {'1': 'r4', '3': 5, '4': 1, '5': 11, '6': '.CourseRequest', '9': 0, '10': 'r4'},
     const {'1': 'r5', '3': 6, '4': 1, '5': 11, '6': '.DebugRequest', '9': 0, '10': 'r5'},
     const {'1': 'r6', '3': 7, '4': 1, '5': 11, '6': '.MajorRequest', '9': 0, '10': 'r6'},
+    const {'1': 'id', '3': 8, '4': 1, '5': 5, '10': 'id'},
   ],
   '8': const [
     const {'1': 'msg'},
@@ -98,4 +102,4 @@ const Request$json = const {
 };
 
 /// Descriptor for `Request`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List requestDescriptor = $convert.base64Decode('CgdSZXF1ZXN0EiAKBHR5cGUYASABKA4yDC5SZXF1ZXN0VHlwZVIEdHlwZRIiCgJyMRgCIAEoCzIQLlNjaGVkdWxlUmVxdWVzdEgAUgJyMRImCgJyMhgDIAEoCzIULk5vdGlmaWNhdGlvblJlcXVlc3RIAFICcjISIwoCcjMYBCABKAsyES5Qcm9mZXNzb3JSZXF1ZXN0SABSAnIzEiAKAnI0GAUgASgLMg4uQ291cnNlUmVxdWVzdEgAUgJyNBIfCgJyNRgGIAEoCzINLkRlYnVnUmVxdWVzdEgAUgJyNRIfCgJyNhgHIAEoCzINLk1ham9yUmVxdWVzdEgAUgJyNkIFCgNtc2c=');
+final $typed_data.Uint8List requestDescriptor = $convert.base64Decode('CgdSZXF1ZXN0EiAKBHR5cGUYASABKA4yDC5SZXF1ZXN0VHlwZVIEdHlwZRIiCgJyMRgCIAEoCzIQLlNjaGVkdWxlUmVxdWVzdEgAUgJyMRImCgJyMhgDIAEoCzIULk5vdGlmaWNhdGlvblJlcXVlc3RIAFICcjISIwoCcjMYBCABKAsyES5Qcm9mZXNzb3JSZXF1ZXN0SABSAnIzEiAKAnI0GAUgASgLMg4uQ291cnNlUmVxdWVzdEgAUgJyNBIfCgJyNRgGIAEoCzINLkRlYnVnUmVxdWVzdEgAUgJyNRIfCgJyNhgHIAEoCzINLk1ham9yUmVxdWVzdEgAUgJyNhIOCgJpZBgIIAEoBVICaWRCBQoDbXNn');

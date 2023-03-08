@@ -3,6 +3,15 @@ syntax = "proto3";
 import "proto/data.proto";
 
 message ScheduleResponse {
+    // Maybe repeated repeated Course?
+    repeated Course fall1   = 1;
+    repeated Course spring1 = 2;
+    repeated Course fall2   = 3;
+    repeated Course spring2 = 4;
+    repeated Course fall3   = 5;
+    repeated Course spring3 = 6;
+    repeated Course fall4   = 7;
+    repeated Course spring4 = 8;
 }
 
 
@@ -45,4 +54,5 @@ message Response {
         MajorResponse r5 = 6;
         NotificationResponse r6 = 7;
     }
+    int32 id = 8;
 }

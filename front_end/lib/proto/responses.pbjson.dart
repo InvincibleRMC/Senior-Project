@@ -26,10 +26,20 @@ final $typed_data.Uint8List responseTypeDescriptor = $convert.base64Decode('CgxS
 @$core.Deprecated('Use scheduleResponseDescriptor instead')
 const ScheduleResponse$json = const {
   '1': 'ScheduleResponse',
+  '2': const [
+    const {'1': 'fall1', '3': 1, '4': 3, '5': 11, '6': '.Course', '10': 'fall1'},
+    const {'1': 'spring1', '3': 2, '4': 3, '5': 11, '6': '.Course', '10': 'spring1'},
+    const {'1': 'fall2', '3': 3, '4': 3, '5': 11, '6': '.Course', '10': 'fall2'},
+    const {'1': 'spring2', '3': 4, '4': 3, '5': 11, '6': '.Course', '10': 'spring2'},
+    const {'1': 'fall3', '3': 5, '4': 3, '5': 11, '6': '.Course', '10': 'fall3'},
+    const {'1': 'spring3', '3': 6, '4': 3, '5': 11, '6': '.Course', '10': 'spring3'},
+    const {'1': 'fall4', '3': 7, '4': 3, '5': 11, '6': '.Course', '10': 'fall4'},
+    const {'1': 'spring4', '3': 8, '4': 3, '5': 11, '6': '.Course', '10': 'spring4'},
+  ],
 };
 
 /// Descriptor for `ScheduleResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List scheduleResponseDescriptor = $convert.base64Decode('ChBTY2hlZHVsZVJlc3BvbnNl');
+final $typed_data.Uint8List scheduleResponseDescriptor = $convert.base64Decode('ChBTY2hlZHVsZVJlc3BvbnNlEh0KBWZhbGwxGAEgAygLMgcuQ291cnNlUgVmYWxsMRIhCgdzcHJpbmcxGAIgAygLMgcuQ291cnNlUgdzcHJpbmcxEh0KBWZhbGwyGAMgAygLMgcuQ291cnNlUgVmYWxsMhIhCgdzcHJpbmcyGAQgAygLMgcuQ291cnNlUgdzcHJpbmcyEh0KBWZhbGwzGAUgAygLMgcuQ291cnNlUgVmYWxsMxIhCgdzcHJpbmczGAYgAygLMgcuQ291cnNlUgdzcHJpbmczEh0KBWZhbGw0GAcgAygLMgcuQ291cnNlUgVmYWxsNBIhCgdzcHJpbmc0GAggAygLMgcuQ291cnNlUgdzcHJpbmc0');
 @$core.Deprecated('Use professorResponseDescriptor instead')
 const ProfessorResponse$json = const {
   '1': 'ProfessorResponse',
@@ -91,6 +101,7 @@ const Response$json = const {
     const {'1': 'r4', '3': 5, '4': 1, '5': 11, '6': '.DebugResponse', '9': 0, '10': 'r4'},
     const {'1': 'r5', '3': 6, '4': 1, '5': 11, '6': '.MajorResponse', '9': 0, '10': 'r5'},
     const {'1': 'r6', '3': 7, '4': 1, '5': 11, '6': '.NotificationResponse', '9': 0, '10': 'r6'},
+    const {'1': 'id', '3': 8, '4': 1, '5': 5, '10': 'id'},
   ],
   '8': const [
     const {'1': 'msg'},
@@ -98,4 +109,4 @@ const Response$json = const {
 };
 
 /// Descriptor for `Response`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List responseDescriptor = $convert.base64Decode('CghSZXNwb25zZRIhCgR0eXBlGAEgASgOMg0uUmVzcG9uc2VUeXBlUgR0eXBlEiMKAnIxGAIgASgLMhEuU2NoZWR1bGVSZXNwb25zZUgAUgJyMRIkCgJyMhgDIAEoCzISLlByb2Zlc3NvclJlc3BvbnNlSABSAnIyEiEKAnIzGAQgASgLMg8uQ291cnNlUmVzcG9uc2VIAFICcjMSIAoCcjQYBSABKAsyDi5EZWJ1Z1Jlc3BvbnNlSABSAnI0EiAKAnI1GAYgASgLMg4uTWFqb3JSZXNwb25zZUgAUgJyNRInCgJyNhgHIAEoCzIVLk5vdGlmaWNhdGlvblJlc3BvbnNlSABSAnI2QgUKA21zZw==');
+final $typed_data.Uint8List responseDescriptor = $convert.base64Decode('CghSZXNwb25zZRIhCgR0eXBlGAEgASgOMg0uUmVzcG9uc2VUeXBlUgR0eXBlEiMKAnIxGAIgASgLMhEuU2NoZWR1bGVSZXNwb25zZUgAUgJyMRIkCgJyMhgDIAEoCzISLlByb2Zlc3NvclJlc3BvbnNlSABSAnIyEiEKAnIzGAQgASgLMg8uQ291cnNlUmVzcG9uc2VIAFICcjMSIAoCcjQYBSABKAsyDi5EZWJ1Z1Jlc3BvbnNlSABSAnI0EiAKAnI1GAYgASgLMg4uTWFqb3JSZXNwb25zZUgAUgJyNRInCgJyNhgHIAEoCzIVLk5vdGlmaWNhdGlvblJlc3BvbnNlSABSAnI2Eg4KAmlkGAggASgFUgJpZEIFCgNtc2c=');

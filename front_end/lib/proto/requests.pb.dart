@@ -72,18 +72,24 @@ class NotificationRequest extends $pb.GeneratedMessage {
 
 class ScheduleRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduleRequest', createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'major')
-    ..pc<$0.Course>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'previousClasses', $pb.PbFieldType.PM, protoName: 'previousClasses', subBuilder: $0.Course.create)
-    ..pc<$0.Course>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredClasses', $pb.PbFieldType.PM, protoName: 'preferredClasses', subBuilder: $0.Course.create)
-    ..pc<$0.Course>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unpreferredClasses', $pb.PbFieldType.PM, protoName: 'unpreferredClasses', subBuilder: $0.Course.create)
-    ..pc<$0.Professor>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredProfs', $pb.PbFieldType.PM, protoName: 'preferredProfs', subBuilder: $0.Professor.create)
-    ..pc<$0.Professor>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unprefferedProfs', $pb.PbFieldType.PM, protoName: 'unprefferedProfs', subBuilder: $0.Professor.create)
+    ..aOM<$0.Major>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'major', subBuilder: $0.Major.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'semester')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minCredits', $pb.PbFieldType.O3, protoName: 'minCredits')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxCredits', $pb.PbFieldType.O3, protoName: 'maxCredits')
+    ..pc<$0.Course>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'previousClasses', $pb.PbFieldType.PM, protoName: 'previousClasses', subBuilder: $0.Course.create)
+    ..pc<$0.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredClasses', $pb.PbFieldType.PM, protoName: 'preferredClasses', subBuilder: $0.Course.create)
+    ..pc<$0.Course>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unpreferredClasses', $pb.PbFieldType.PM, protoName: 'unpreferredClasses', subBuilder: $0.Course.create)
+    ..pc<$0.Professor>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredProfs', $pb.PbFieldType.PM, protoName: 'preferredProfs', subBuilder: $0.Professor.create)
+    ..pc<$0.Professor>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unprefferedProfs', $pb.PbFieldType.PM, protoName: 'unprefferedProfs', subBuilder: $0.Professor.create)
     ..hasRequiredFields = false
   ;
 
   ScheduleRequest._() : super();
   factory ScheduleRequest({
-    $core.String? major,
+    $0.Major? major,
+    $core.String? semester,
+    $core.int? minCredits,
+    $core.int? maxCredits,
     $core.Iterable<$0.Course>? previousClasses,
     $core.Iterable<$0.Course>? preferredClasses,
     $core.Iterable<$0.Course>? unpreferredClasses,
@@ -93,6 +99,15 @@ class ScheduleRequest extends $pb.GeneratedMessage {
     final _result = create();
     if (major != null) {
       _result.major = major;
+    }
+    if (semester != null) {
+      _result.semester = semester;
+    }
+    if (minCredits != null) {
+      _result.minCredits = minCredits;
+    }
+    if (maxCredits != null) {
+      _result.maxCredits = maxCredits;
     }
     if (previousClasses != null) {
       _result.previousClasses.addAll(previousClasses);
@@ -133,28 +148,57 @@ class ScheduleRequest extends $pb.GeneratedMessage {
   static ScheduleRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get major => $_getSZ(0);
+  $0.Major get major => $_getN(0);
   @$pb.TagNumber(1)
-  set major($core.String v) { $_setString(0, v); }
+  set major($0.Major v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasMajor() => $_has(0);
   @$pb.TagNumber(1)
   void clearMajor() => clearField(1);
+  @$pb.TagNumber(1)
+  $0.Major ensureMajor() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $core.List<$0.Course> get previousClasses => $_getList(1);
+  $core.String get semester => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set semester($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSemester() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSemester() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.List<$0.Course> get preferredClasses => $_getList(2);
+  $core.int get minCredits => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set minCredits($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMinCredits() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMinCredits() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.List<$0.Course> get unpreferredClasses => $_getList(3);
+  $core.int get maxCredits => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set maxCredits($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMaxCredits() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMaxCredits() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.List<$0.Professor> get preferredProfs => $_getList(4);
+  $core.List<$0.Course> get previousClasses => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.List<$0.Professor> get unprefferedProfs => $_getList(5);
+  $core.List<$0.Course> get preferredClasses => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $core.List<$0.Course> get unpreferredClasses => $_getList(6);
+
+  @$pb.TagNumber(8)
+  $core.List<$0.Professor> get preferredProfs => $_getList(7);
+
+  @$pb.TagNumber(9)
+  $core.List<$0.Professor> get unprefferedProfs => $_getList(8);
 }
 
 class MajorRequest extends $pb.GeneratedMessage {
@@ -320,6 +364,7 @@ class Request extends $pb.GeneratedMessage {
     ..aOM<CourseRequest>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r4', subBuilder: CourseRequest.create)
     ..aOM<DebugRequest>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r5', subBuilder: DebugRequest.create)
     ..aOM<MajorRequest>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r6', subBuilder: MajorRequest.create)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -332,6 +377,7 @@ class Request extends $pb.GeneratedMessage {
     CourseRequest? r4,
     DebugRequest? r5,
     MajorRequest? r6,
+    $core.int? id,
   }) {
     final _result = create();
     if (type != null) {
@@ -354,6 +400,9 @@ class Request extends $pb.GeneratedMessage {
     }
     if (r6 != null) {
       _result.r6 = r6;
+    }
+    if (id != null) {
+      _result.id = id;
     }
     return _result;
   }
@@ -455,5 +504,14 @@ class Request extends $pb.GeneratedMessage {
   void clearR6() => clearField(7);
   @$pb.TagNumber(7)
   MajorRequest ensureR6() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  $core.int get id => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set id($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearId() => clearField(8);
 }
 
