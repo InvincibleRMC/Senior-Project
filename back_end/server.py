@@ -47,19 +47,109 @@ class DatabaseConnection:
         """Delete DataBaseConnection Object"""
         self.connection.close()
 
-    def get_version(self):
-        """Returns version of sqlite"""
-        return self.execute("select sqlite_version();")
+    def create_connection(db_file):
+        conn = None
+        try:
+            conn = sqlite3.connect(db_file)
+        except Error as e:
+            print(e)
 
-    def execute(self, query: str):
-        """Execute query"""
-        self.lock.acquire()
-        cursor: Cursor = self.connection.cursor()
-        cursor.execute(query)
-        record = cursor.fetchall()
-        cursor.close()
-        self.lock.release()
-        return record
+        return conn
+
+        #conn = create_connection('CSDS395.db')
+        # with conn:
+        #    print("1. Query task by priority:")
+        #   profslist = select_all_profs(conn)
+
+    def select_all_courses(conn):
+
+        cur = conn.cursor()
+        cur.execute("SELECT sub_cat_num FROM course")
+
+        rows = cur.fetchall()
+
+        listOfCourses = []
+        for row in rows:
+            listOfCourses.append(row[0])
+
+        return listOfCourses
+
+    def select_all_profs(conn):
+
+        cur = conn.cursor()
+        cur.execute("SELECT firstname,lastname FROM instructor")
+
+        rows = cur.fetchall()
+        listOfProfs = []
+        for row in rows:
+            listOfProfs.append(row[1]+ ", " + row[0])
+
+        return listOfProfs
+
+    def clearClassList(conn):
+
+        cur = conn.cursor()
+        cur.execute("DELETE FROM final_class_list")
+
+    def clearTakenList(conn):
+
+        cur = conn.cursor()
+        cur.execute("DELETE FROM classes_taken")
+
+    def addTakenClasses(conn,takenClassArray):
+
+        cur = conn.cursor()
+        sql = """SELECT num, sub_cat_num
+                       FROM course crs
+                       WHERE crs.sub_cat_num = ?"""
+        for classes in takenClassArray:
+            cur.execute(sql,(classes,))
+            sql2= '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
+        
+            rows = cur.fetchall()
+            for row in rows:
+                cur.execute(sql2, row)
+
+
+
+
+    def select_classes(conn, credits_total):
+        """
+        Query tasks by priority
+        :param conn: the Connection object
+        :param priority:
+        :return:
+        """
+        current_credits = 0
+        while(current_credits < credits_total - 1):
+            cur = conn.cursor()
+            cur.execute("""SELECT num, sub_cat_num, course_time, course_days
+                            FROM course crs, course_offered co, teacher_ratings tr
+                            WHERE crs.num = co.course_id
+                            AND co.prof_id = tr.instructor_id
+                            AND crs.num NOT IN (SELECT num FROM classes_taken ct)
+                            AND crs.sub_cat_num NOT IN (SELECT sub_cat_num FROM final_class_list ct)
+                            AND (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
+                            ORDER BY tr.rmp
+                            DESC LIMIT 1""")
+            save = (0,'','','')
+            rows = cur.fetchall()
+        
+            for row in rows:
+                print(row)
+                save = row
+
+            num, sub_cat_num, course_time, course_days = save
+            sql= '''INSERT OR REPLACE INTO final_class_list(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)'''
+            cur.execute(sql,save)
+        
+            cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.num =" + str(num))
+            rows = cur.fetchall()
+            save2 = 0
+            for row in rows:
+                print(row)
+                save2 = row[0]
+                current_credits += save2
 
 
 class WorkerThread:
