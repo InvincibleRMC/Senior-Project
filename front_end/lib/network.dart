@@ -28,6 +28,7 @@ class Network {
       requestHelper(req);
     }
   });
+
   // Set to prevent Duplicates
   static Set<Request> requests = {};
 
