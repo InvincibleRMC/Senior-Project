@@ -79,23 +79,23 @@ class DatabaseConnection:
 
         return listOfProfs
 
-    def clearClassList(self, conn):
+    def clear_class_list(self, conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM final_class_list")
 
-    def clearTakenList(self, conn):
+    def clear_taken_ist(self, conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM classes_taken")
 
-    def addTakenClasses(self, conn, takenClassArray):
+    def add_taken_classes(self, conn, taken_class_array):
 
         cur = conn.cursor()
         sql = """SELECT num, sub_cat_num
                        FROM course crs
                        WHERE crs.sub_cat_num = ?"""
-        for classes in takenClassArray:
+        for classes in taken_class_array:
             cur.execute(sql,(classes,))
             sql2= '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
 
