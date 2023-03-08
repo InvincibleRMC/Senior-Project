@@ -36,10 +36,10 @@ running: bool = True
 class DatabaseConnection:
     """DatabaseConnection is a connection to a sqlite database with helper functions for locking"""
 
-        #conn = create_connection('CSDS395.db')
-        # with conn:
-        #    print("1. Query task by priority:")
-        #   profslist = select_all_profs(conn)
+    # conn = create_connection('CSDS395.db')
+    # with conn:
+    #    print("1. Query task by priority:")
+    #   profslist = select_all_profs(conn)
 
     def create_connection(self,db_file):
         conn = None
@@ -53,6 +53,7 @@ class DatabaseConnection:
     def __del__(self):
         """Delete DataBaseConnection Object"""
         self.connection.close()
+
     def select_all_courses(self,conn):
 
         cur = conn.cursor()
@@ -78,17 +79,17 @@ class DatabaseConnection:
 
         return listOfProfs
 
-    def clearClassList(self,conn):
+    def clearClassList(self, conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM final_class_list")
 
-    def clearTakenList(self,conn):
+    def clearTakenList(self, conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM classes_taken")
 
-    def addTakenClasses(self,conn,takenClassArray):
+    def addTakenClasses(self, conn, takenClassArray):
 
         cur = conn.cursor()
         sql = """SELECT num, sub_cat_num
@@ -97,15 +98,12 @@ class DatabaseConnection:
         for classes in takenClassArray:
             cur.execute(sql,(classes,))
             sql2= '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
-        
+
             rows = cur.fetchall()
             for row in rows:
                 cur.execute(sql2, row)
 
-
-
-
-    def select_classes(self,conn, credits_total):
+    def select_classes(self, conn, credits_total):
         """
         Query tasks by priority
         :param conn: the Connection object
@@ -124,9 +122,9 @@ class DatabaseConnection:
                             AND (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
                             ORDER BY tr.rmp
                             DESC LIMIT 1""")
-            save = (0,'','','')
+            save = (0, '', '', '')
             rows = cur.fetchall()
-        
+
             for row in rows:
                 print(row)
                 save = row
@@ -134,7 +132,7 @@ class DatabaseConnection:
             num, sub_cat_num, course_time, course_days = save
             sql= '''INSERT OR REPLACE INTO final_class_list(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)'''
             cur.execute(sql,save)
-        
+
             cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.num =" + str(num))
             rows = cur.fetchall()
             save2 = 0
