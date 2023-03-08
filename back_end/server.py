@@ -41,7 +41,7 @@ class DatabaseConnection:
         #    print("1. Query task by priority:")
         #   profslist = select_all_profs(conn)
 
-    def create_connection(db_file):
+    def create_connection(self,db_file):
         conn = None
         try:
             conn = sqlite3.connect(db_file)
@@ -53,7 +53,7 @@ class DatabaseConnection:
     def __del__(self):
         """Delete DataBaseConnection Object"""
         self.connection.close()
-    def select_all_courses(conn):
+    def select_all_courses(self,conn):
 
         cur = conn.cursor()
         cur.execute("SELECT sub_cat_num FROM course")
@@ -66,7 +66,7 @@ class DatabaseConnection:
 
         return listOfCourses
 
-    def select_all_profs(conn):
+    def select_all_profs(self,conn):
 
         cur = conn.cursor()
         cur.execute("SELECT firstname,lastname FROM instructor")
@@ -78,17 +78,17 @@ class DatabaseConnection:
 
         return listOfProfs
 
-    def clearClassList(conn):
+    def clearClassList(self,conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM final_class_list")
 
-    def clearTakenList(conn):
+    def clearTakenList(self,conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM classes_taken")
 
-    def addTakenClasses(conn,takenClassArray):
+    def addTakenClasses(self,conn,takenClassArray):
 
         cur = conn.cursor()
         sql = """SELECT num, sub_cat_num
@@ -105,7 +105,7 @@ class DatabaseConnection:
 
 
 
-    def select_classes(conn, credits_total):
+    def select_classes(self,conn, credits_total):
         """
         Query tasks by priority
         :param conn: the Connection object
@@ -113,7 +113,7 @@ class DatabaseConnection:
         :return:
         """
         current_credits = 0
-        while(current_credits < credits_total - 1):
+        while current_credits < credits_total - 1:
             cur = conn.cursor()
             cur.execute("""SELECT num, sub_cat_num, course_time, course_days
                             FROM course crs, course_offered co, teacher_ratings tr
