@@ -17,11 +17,55 @@ export 'responses.pbenum.dart';
 
 class ScheduleResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduleResponse', createEmptyInstance: create)
+    ..pc<$0.Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall1', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring1', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall2', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring2', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall3', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring3', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall4', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$0.Course>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring4', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
     ..hasRequiredFields = false
   ;
 
   ScheduleResponse._() : super();
-  factory ScheduleResponse() => create();
+  factory ScheduleResponse({
+    $core.Iterable<$0.Course>? fall1,
+    $core.Iterable<$0.Course>? spring1,
+    $core.Iterable<$0.Course>? fall2,
+    $core.Iterable<$0.Course>? spring2,
+    $core.Iterable<$0.Course>? fall3,
+    $core.Iterable<$0.Course>? spring3,
+    $core.Iterable<$0.Course>? fall4,
+    $core.Iterable<$0.Course>? spring4,
+  }) {
+    final _result = create();
+    if (fall1 != null) {
+      _result.fall1.addAll(fall1);
+    }
+    if (spring1 != null) {
+      _result.spring1.addAll(spring1);
+    }
+    if (fall2 != null) {
+      _result.fall2.addAll(fall2);
+    }
+    if (spring2 != null) {
+      _result.spring2.addAll(spring2);
+    }
+    if (fall3 != null) {
+      _result.fall3.addAll(fall3);
+    }
+    if (spring3 != null) {
+      _result.spring3.addAll(spring3);
+    }
+    if (fall4 != null) {
+      _result.fall4.addAll(fall4);
+    }
+    if (spring4 != null) {
+      _result.spring4.addAll(spring4);
+    }
+    return _result;
+  }
   factory ScheduleResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ScheduleResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
@@ -42,6 +86,30 @@ class ScheduleResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ScheduleResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ScheduleResponse>(create);
   static ScheduleResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$0.Course> get fall1 => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.List<$0.Course> get spring1 => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.List<$0.Course> get fall2 => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.List<$0.Course> get spring2 => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.List<$0.Course> get fall3 => $_getList(4);
+
+  @$pb.TagNumber(6)
+  $core.List<$0.Course> get spring3 => $_getList(5);
+
+  @$pb.TagNumber(7)
+  $core.List<$0.Course> get fall4 => $_getList(6);
+
+  @$pb.TagNumber(8)
+  $core.List<$0.Course> get spring4 => $_getList(7);
 }
 
 class ProfessorResponse extends $pb.GeneratedMessage {
@@ -290,6 +358,7 @@ class Response extends $pb.GeneratedMessage {
     ..aOM<DebugResponse>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r4', subBuilder: DebugResponse.create)
     ..aOM<MajorResponse>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r5', subBuilder: MajorResponse.create)
     ..aOM<NotificationResponse>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r6', subBuilder: NotificationResponse.create)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -302,6 +371,7 @@ class Response extends $pb.GeneratedMessage {
     DebugResponse? r4,
     MajorResponse? r5,
     NotificationResponse? r6,
+    $core.int? id,
   }) {
     final _result = create();
     if (type != null) {
@@ -324,6 +394,9 @@ class Response extends $pb.GeneratedMessage {
     }
     if (r6 != null) {
       _result.r6 = r6;
+    }
+    if (id != null) {
+      _result.id = id;
     }
     return _result;
   }
@@ -425,5 +498,14 @@ class Response extends $pb.GeneratedMessage {
   void clearR6() => clearField(7);
   @$pb.TagNumber(7)
   NotificationResponse ensureR6() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  $core.int get id => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set id($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearId() => clearField(8);
 }
 
