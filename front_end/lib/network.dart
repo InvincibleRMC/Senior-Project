@@ -22,7 +22,12 @@ class Network {
   static List<Major> _majors = List.empty();
   static ScheduleResponse _schedule = ScheduleResponse();
   int id = 1;
-
+  static final Timer _timer =
+      Timer.periodic(const Duration(seconds: 5), (timer) {
+    for (var req in requests) {
+      requestHelper(req);
+    }
+  });
   // Set to prevent Duplicates
   static Set<Request> requests = {};
 
@@ -30,12 +35,11 @@ class Network {
   // because it promises to return _an_ object of this type
   // but it doesn't promise to make a new one.
   factory Network() {
-    Timer.periodic(const Duration(seconds: 5), (timer) {
-      for (var req in requests) {
-        requestHelper(req);
-      }
-    });
     return _instance;
+  }
+
+  static void dispose() {
+    _timer.cancel();
   }
 
   // This named constructor is the "real" constructor
