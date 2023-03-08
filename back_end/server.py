@@ -5,7 +5,7 @@ import socket
 import sys
 import time
 import sqlite3
-from sqlite3 import Connection, Cursor
+# from sqlite3 import Connection, Cursor
 from sqlite3 import Error
 from typing import List
 
@@ -42,6 +42,7 @@ class DatabaseConnection:
     #   profslist = select_all_profs(conn)
 
     def create_connection(self, db_file):
+        """created connection to databse"""
         conn = None
         try:
             conn = sqlite3.connect(db_file)
@@ -55,6 +56,7 @@ class DatabaseConnection:
         self.connection.close()
 
     def select_all_courses(self, conn):
+        """selects all courses"""
 
         cur = conn.cursor()
         cur.execute("SELECT sub_cat_num FROM course")
@@ -68,7 +70,7 @@ class DatabaseConnection:
         return list_of_courses
 
     def select_all_profs(self, conn):
-
+        """selects all profs"""
         cur = conn.cursor()
         cur.execute("SELECT firstname,lastname FROM instructor")
 
@@ -80,17 +82,17 @@ class DatabaseConnection:
         return list_of_profs
 
     def clear_class_list(self, conn):
-
+        """clears generated class list"""
         cur = conn.cursor()
         cur.execute("DELETE FROM final_class_list")
 
     def clear_taken_list(self, conn):
-
+        """clears class taken list"""
         cur = conn.cursor()
         cur.execute("DELETE FROM classes_taken")
 
     def add_taken_classes(self, conn, taken_class_array):
-
+        """adds classes taken to class list"""
         cur = conn.cursor()
         sql = """SELECT num, sub_cat_num
                        FROM course crs
@@ -104,12 +106,7 @@ class DatabaseConnection:
                 cur.execute(sql2, row)
 
     def select_classes(self, conn, credits_total):
-        """
-        Query tasks by priority
-        :param conn: the Connection object
-        :param priority:
-        :return:
-        """
+        """generates a schedule"""
         current_credits = 0
         while current_credits < credits_total - 1:
             cur = conn.cursor()
@@ -130,7 +127,7 @@ class DatabaseConnection:
                 save = row
 
             num, sub_cat_num, course_time, course_days = save
-            sql= '''INSERT OR REPLACE INTO final_class_list(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)'''
+            sql= """INSERT OR REPLACE INTO final_class_list(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)"""
             cur.execute(sql,save)
 
             cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.num =" + str(num))
