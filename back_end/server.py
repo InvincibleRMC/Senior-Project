@@ -54,7 +54,7 @@ class DatabaseConnection:
         """Delete DataBaseConnection Object"""
         self.connection.close()
 
-    def select_all_courses(self,conn):
+    def select_all_courses(self, conn):
 
         cur = conn.cursor()
         cur.execute("SELECT sub_cat_num FROM course")
@@ -67,7 +67,7 @@ class DatabaseConnection:
 
         return listOfCourses
 
-    def select_all_profs(self,conn):
+    def select_all_profs(self, conn):
 
         cur = conn.cursor()
         cur.execute("SELECT firstname,lastname FROM instructor")
