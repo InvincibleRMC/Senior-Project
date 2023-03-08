@@ -32,6 +32,8 @@ void main() {
 
         expect(find.byType(ClassReminderPage), findsOneWidget);
         expect(find.byType(HomePage), findsNothing);
+        // To wait out tcp connections
+        await tester.binding.delayed(const Duration(days: 999));
       });
 
       testWidgets('Home to Scheduler', (WidgetTester tester) async {
@@ -48,6 +50,8 @@ void main() {
 
         expect(find.byType(SchedulerPage), findsOneWidget);
         expect(find.byType(HomePage), findsNothing);
+        // To wait out tcp connections
+        await tester.binding.delayed(const Duration(days: 999));
       });
     });
     group('Scheduler Navigation tests', () {
@@ -77,6 +81,14 @@ void main() {
 
         //With Major entered allow access to Results Page
         await tester.tap(find.text("CS BS"));
+        await tester.pumpAndSettle();
+
+        // With Semester entered allow access to Results Page
+        await tester.tap(find.byKey(const Key("drop_down_search_semester")));
+        await tester.pumpAndSettle();
+
+        //With Major entered allow access to Results Page
+        await tester.tap(find.text("Fall1"));
         await tester.pumpAndSettle();
 
         await tester.tap(find.byKey(const Key("submit_button")));
@@ -113,6 +125,8 @@ void main() {
 
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ClassReminderPage), findsNothing);
+        // To wait out tcp connections
+        await tester.binding.delayed(const Duration(days: 999));
       });
       testWidgets('Class Reminder to Home Listen to Warning',
           (WidgetTester tester) async {
@@ -169,6 +183,8 @@ void main() {
 
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ResultsPage), findsNothing);
+        // To wait out tcp connections
+        await tester.binding.delayed(const Duration(days: 999));
       });
     });
   });

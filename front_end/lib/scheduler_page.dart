@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:front_end/network.dart';
 import 'package:front_end/results.dart';
 import 'package:front_end/standard_widgets.dart';
@@ -13,10 +14,19 @@ class SchedulerPage extends StatefulWidget {
 
 class _SchedulerPageState extends State<SchedulerPage> {
   String? _major;
-  //TODO not sure how to do concentrations
-  // string _concentration = "";
-  // string _minor = "";
-
+  final List<String> _semesterOptions = [
+    "Fall1",
+    "Spring1",
+    "Fall2",
+    "Spring2",
+    "Fall3",
+    "Spring3",
+    "Fall4",
+    "Spring4"
+  ];
+  String? _semester;
+  int? _minCredit;
+  int? _maxCredit;
   List<String>? _previousClasses;
   List<String>? _preferredProfessors;
   List<String>? _unpreferredProfessors;
@@ -43,6 +53,40 @@ class _SchedulerPageState extends State<SchedulerPage> {
                 ),
               ),
             ),
+            DropdownSearch<String>(
+              key: const Key("drop_down_search_semester"),
+              items: _semesterOptions,
+              popupProps: const PopupPropsMultiSelection.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (String? sem) => _semester = sem,
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Current Semester",
+                ),
+              ),
+            ),
+            TextField(
+              onChanged: (String min) => _minCredit = int.parse(min),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Input minimum amount of desired credit hours',
+              ),
+            ),
+            TextField(
+              onChanged: (String max) => _maxCredit = int.parse(max),
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Input Maximum amount of desired credit hours',
+              ),
+            ),
             DropdownSearch<String>.multiSelection(
               key: const Key("drop_down_search_courses"),
               items: Network().getCourseNames(),
@@ -52,6 +96,58 @@ class _SchedulerPageState extends State<SchedulerPage> {
               dropdownDecoratorProps: const DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(
                   labelText: "Input Previous Courses",
+                ),
+              ),
+            ),
+            DropdownSearch<String>.multiSelection(
+              key: const Key("drop_down_preferred_courses"),
+              items: Network().getCourseNames(),
+              popupProps: const PopupPropsMultiSelection.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (List<String> courses) =>
+                  {_preferredClasses = courses},
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Preferred Courses",
+                ),
+              ),
+            ),
+            DropdownSearch<String>.multiSelection(
+              key: const Key("drop_down_unpreferred_courses"),
+              items: Network().getCourseNames(),
+              popupProps: const PopupPropsMultiSelection.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (List<String> courses) =>
+                  {_unpreferredClasses = courses},
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Unpreferred Courses",
+                ),
+              ),
+            ),
+            DropdownSearch<String>.multiSelection(
+              key: const Key("drop_down_preferred_professors"),
+              items: Network().getProfessorNames(),
+              popupProps: const PopupPropsMultiSelection.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (List<String> professors) =>
+                  {_preferredProfessors = professors},
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Preferred Professors",
+                ),
+              ),
+            ),
+            DropdownSearch<String>.multiSelection(
+              key: const Key("drop_down_unpreferred_professors"),
+              items: Network().getProfessorNames(),
+              popupProps: const PopupPropsMultiSelection.menu(
+                  showSelectedItems: true, showSearchBox: true),
+              onChanged: (List<String> professors) =>
+                  {_unpreferredProfessors = professors},
+              dropdownDecoratorProps: const DropDownDecoratorProps(
+                dropdownSearchDecoration: InputDecoration(
+                  labelText: "Input Unpreferred Professors",
                 ),
               ),
             ),
@@ -73,15 +169,37 @@ class _SchedulerPageState extends State<SchedulerPage> {
                       ],
                     ),
                   );
-                }
-                // Passes information along and returns home
-                else {
-                  Network().sendScheduleRequest();
+                } else if (_semester == null) {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text('Must input semester'),
+                      actions: <Widget>[
+                        TextButton(
+                          key: const Key("ok_button"),
+                          onPressed: () => Navigator.pop(context, 'ok'),
+                          child: const Text('ok'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  Network().sendScheduleRequest(
+                      _major!,
+                      _semester!,
+                      _minCredit,
+                      _maxCredit,
+                      _previousClasses,
+                      _preferredClasses,
+                      _unpreferredClasses,
+                      _preferredProfessors,
+                      _unpreferredProfessors);
+                  // TODO Waiting page?
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const ResultsPage(key: Key("home")),
+                            const ResultsPage(key: Key("results")),
                       ));
                 }
               },

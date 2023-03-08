@@ -8,12 +8,15 @@ message NotificationRequest {
 }
 
 message ScheduleRequest {
-    string major = 1;
-    repeated Course previousClasses = 2;
-    repeated Course preferredClasses = 3;
-    repeated Course unpreferredClasses = 4;
-    repeated Professor preferredProfs = 5;
-    repeated Professor unprefferedProfs = 6;
+    Major major = 1;
+    string semester = 2;
+    int32 minCredits = 3;
+    int32 maxCredits = 4;
+    repeated Course previousClasses = 5;
+    repeated Course preferredClasses = 6;
+    repeated Course unpreferredClasses = 7;
+    repeated Professor preferredProfs = 8;
+    repeated Professor unprefferedProfs = 9;
 }
 
 message MajorRequest {}
@@ -45,4 +48,5 @@ message Request {
         DebugRequest r5 = 6;
         MajorRequest r6 = 7;
     }
+    int32 id = 8;
 }
