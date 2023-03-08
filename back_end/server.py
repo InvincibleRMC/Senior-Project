@@ -61,11 +61,11 @@ class DatabaseConnection:
 
         rows = cur.fetchall()
 
-        listOfCourses = []
+        list_of_courses = []
         for row in rows:
-            listOfCourses.append(row[0])
+            list_of_courses.append(row[0])
 
-        return listOfCourses
+        return list_of_courses
 
     def select_all_profs(self, conn):
 
@@ -73,11 +73,11 @@ class DatabaseConnection:
         cur.execute("SELECT firstname,lastname FROM instructor")
 
         rows = cur.fetchall()
-        listOfProfs = []
+        list_of_profs = []
         for row in rows:
-            listOfProfs.append(row[1]+ ", " + row[0])
+            list_of_profs.append(row[1]+ ", " + row[0])
 
-        return listOfProfs
+        return list_of_profs
 
     def clear_class_list(self, conn):
 
