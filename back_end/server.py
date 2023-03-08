@@ -84,7 +84,7 @@ class DatabaseConnection:
         cur = conn.cursor()
         cur.execute("DELETE FROM final_class_list")
 
-    def clear_taken_ist(self, conn):
+    def clear_taken_list(self, conn):
 
         cur = conn.cursor()
         cur.execute("DELETE FROM classes_taken")
