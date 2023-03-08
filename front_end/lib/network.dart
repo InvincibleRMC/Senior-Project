@@ -28,7 +28,6 @@ class Network {
       requestHelper(req);
     }
   });
-
   // Set to prevent Duplicates
   static Set<Request> requests = {};
 
@@ -49,6 +48,7 @@ class Network {
   Network._internal();
 
   static void messageReceived(String message) {
+    print("Starting messagedRecieved");
     var res = Response();
     res.clear();
 

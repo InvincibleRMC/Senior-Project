@@ -5,7 +5,7 @@ import socket
 import sys
 import time
 import sqlite3
-# from sqlite3 import Connection, Cursor
+from sqlite3 import Connection
 from sqlite3 import Error
 from typing import List
 
@@ -36,42 +36,57 @@ running: bool = True
 class DatabaseConnection:
     """DatabaseConnection is a connection to a sqlite database with helper functions for locking"""
 
-    # conn = create_connection('CSDS395.db')
-    # with conn:
-    #    print("1. Query task by priority:")
-    #   profslist = select_all_profs(conn)
+    def __init__(self, filepath: str):
+        """Create DatabaseConnection Object"""
+        self.conn: Connection = self.create_connection(filepath)
+        self.lock = mp.Lock()
 
-    def create_connection(self, db_file):
-        """created connection to databse"""
+    def create_connection(self, db_file: str) -> Connection:
+        """created connection to database"""
         conn = None
         try:
             conn = sqlite3.connect(db_file)
         except Error as error:
             print(error)
+            sys.exit()
 
         return conn
 
-    def __del__(self):
-        """Delete DataBaseConnection Object"""
-        self.connection.close()
+    # def __del__(self):
+    #     """Delete DataBaseConnection Object"""
+    #     self.connection.close()
 
-    def select_all_courses(self, conn):
+    def get_version(self):
+        """Returns version of sqlite"""
+        return self.execute("select sqlite_version();")
+
+    def execute(self, query: str):
+        """Execute query"""
+        self.lock.acquire()
+        cursor: Cursor = self.conn.cursor()
+        cursor.execute(query)
+        record = cursor.fetchall()
+        cursor.close()
+        self.lock.release()
+        return record
+
+    def select_all_courses(self) -> List[str]:
         """selects all courses"""
 
-        cur = conn.cursor()
+        cur = self.conn.cursor()
         cur.execute("SELECT sub_cat_num FROM course")
 
         rows = cur.fetchall()
 
-        list_of_courses = []
+        list_of_courses: List[str] = []
         for row in rows:
             list_of_courses.append(row[0])
 
         return list_of_courses
 
-    def select_all_profs(self, conn):
+    def select_all_profs(self):
         """selects all profs"""
-        cur = conn.cursor()
+        cur = self.conn.cursor()
         cur.execute("SELECT firstname,lastname FROM instructor")
 
         rows = cur.fetchall()
@@ -81,19 +96,19 @@ class DatabaseConnection:
 
         return list_of_profs
 
-    def clear_class_list(self, conn):
+    def clear_class_list(self):
         """clears generated class list"""
-        cur = conn.cursor()
+        cur = self.conn.cursor()
         cur.execute("DELETE FROM final_class_list")
 
-    def clear_taken_list(self, conn):
+    def clear_taken_list(self):
         """clears class taken list"""
-        cur = conn.cursor()
+        cur = self.conn.cursor()
         cur.execute("DELETE FROM classes_taken")
 
-    def add_taken_classes(self, conn, taken_class_array):
+    def add_taken_classes(self, taken_class_array):
         """adds classes taken to class list"""
-        cur = conn.cursor()
+        cur = self.conn.cursor()
         sql = """SELECT num, sub_cat_num
                        FROM course crs
                        WHERE crs.sub_cat_num = ?"""
@@ -105,11 +120,11 @@ class DatabaseConnection:
             for row in rows:
                 cur.execute(sql2, row)
 
-    def select_classes(self, conn, credits_total):
+    def select_classes(self, credits_total):
         """generates a schedule"""
         current_credits = 0
         while current_credits < credits_total - 1:
-            cur = conn.cursor()
+            cur = self.conn.cursor()
             cur.execute("""SELECT num, sub_cat_num, course_time, course_days
                             FROM course crs, course_offered co, teacher_ratings tr
                             WHERE crs.num = co.course_id
@@ -192,6 +207,7 @@ class WorkerThread:
 
             response.id = request.id
 
+            print(response)
             # send data
             data: bytes = response.SerializeToString()
             conn.send(data)
@@ -199,7 +215,7 @@ class WorkerThread:
             # close socket
             conn.close()
 
-    def create_course(self, ident: int, name: str, semester: str) -> Course:
+    def create_course(self, name: str, ident: int = 0, semester: str = "") -> Course:
         """Helper to create a Course object."""
         course = Course()
         course.Clear()
@@ -211,8 +227,15 @@ class WorkerThread:
     def handle_req_course(self, req: CourseRequest) -> CourseResponse:
         """Generates CourseResponse from CourseRequest"""
         res = CourseResponse()
-        res.courses.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
+
+        course_list: List[Course] = []
+        for class_name in self.db_conn.select_all_courses():
+            course_list.append(self.create_course(class_name))
+
+        course_list = course_list[:len(course_list)//5]
+        res.courses.extend(course_list)
+        # res.courses.extend([self.create_course("bruh"),
+        #                     self.create_course("yeet")])
         return res
 
     def handle_req_prof(self, req: ProfessorRequest) -> ProfessorResponse:
@@ -236,22 +259,22 @@ class WorkerThread:
         """Generates ScheduleResponse from ScheduleRequest"""
         res = ScheduleResponse()
         # TODO:
-        res.fall1.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring1.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.fall2.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring2.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.fall3.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring3.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.fall4.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring4.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
+        res.fall1.extend([self.create_course("bruh"),
+                          self.create_course("yeet")])
+        res.spring1.extend([self.create_course("bruh"),
+                            self.create_course("yeet")])
+        res.fall2.extend([self.create_course("bruh"),
+                          self.create_course("yeet")])
+        res.spring2.extend([self.create_course("bruh"),
+                            self.create_course("yeet")])
+        res.fall3.extend([self.create_course("bruh", ),
+                          self.create_course("yeet")])
+        res.spring3.extend([self.create_course("bruh"),
+                            self.create_course("yeet")])
+        res.fall4.extend([self.create_course("bruh"),
+                          self.create_course("yeet")])
+        res.spring4.extend([self.create_course("bruh"),
+                            self.create_course("yeet")])
         return res
 
     def handle_req_noti(self, req: NotificationRequest) -> NotificationResponse:
