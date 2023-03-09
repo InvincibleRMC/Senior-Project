@@ -1,24 +1,27 @@
 import 'dart:async' as flutter_async;
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/proto/data.pbserver.dart';
 import 'package:front_end/proto/service.pbgrpc.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
-import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 import 'package:protobuf/protobuf.dart';
 
 import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
 import 'package:grpc/grpc.dart' as grpc;
+// import 'package:grpc/grpc_web.dart';
 
 import 'package:front_end/proto/service.pb.dart';
 import 'package:front_end/proto/service.pbserver.dart';
 
 class Network {
+  static const String _host = "localhost";
   static const int _port = 50000;
 
   static final Network _instance = Network._internal();
@@ -27,7 +30,7 @@ class Network {
     return _instance;
   }
 
-  grpc.ClientChannel? _channel;
+  GrpcOrGrpcWebClientChannel? _channel;
   ServiceClient? _client;
   flutter_async.StreamSubscription<grpc.ConnectionState>?
       _connectionStatusStream;
@@ -38,14 +41,23 @@ class Network {
   Network._internal();
 
   void connect() {
-    var channel = GrpcOrGrpcWebClientChannel.grpc(
-      "localhost",
-      port: _port,
-      options: const grpc.ChannelOptions(
-          credentials: grpc.ChannelCredentials.insecure()),
-    );
-    _channel = channel;
-    _client = ServiceClient(channel);
+    // if (kIsWeb) {
+    //   // _channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
+    //   //     host: _host, port: _port, transportSecure: false);
+    // } else {
+    //   _channel = GrpcOrGrpcWebClientChannel.grpc(_host,
+    //       port: _port,
+    //       options: const grpc.ChannelOptions(
+    //           credentials: grpc.ChannelCredentials.insecure()));
+    // }
+    _channel = GrpcOrGrpcWebClientChannel.toSeparatePorts(
+        host: _host,
+        grpcPort: _port,
+        grpcTransportSecure: false,
+        grpcWebPort: 8080,
+        grpcWebTransportSecure: false);
+
+    _client = ServiceClient(_channel!);
 
     // monitor connection
     _connectionStatusStream =

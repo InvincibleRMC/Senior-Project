@@ -124,6 +124,7 @@ def serve(port: int):
 
     signal.signal(signal.SIGINT, handler)
     print("Adding service handler")
+    # server.add_generic_rpc_handlers();
     add_ServiceServicer_to_server(Service(), server)
     print(f"Listening on localhost at port {port}")
     server.add_insecure_port(f"[::]:{port}")
