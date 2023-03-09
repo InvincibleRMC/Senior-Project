@@ -13,9 +13,6 @@ from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_serve
 # import sqlite3
 
 from proto.data_pb2 import Course, Professor, Major
-from proto.requests_pb2 import (MajorRequest,
-                                NotificationRequest, ScheduleRequest, CourseRequest,
-                                ProfessorRequest)
 from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
                                  NotificationResponse, ScheduleResponse, CourseResponse,
                                  ProfessorResponse)
@@ -118,6 +115,6 @@ def serve(port: int):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: server <port>")
-        exit(1)
-    port: int = int(sys.argv[1])
-    serve(port)
+        sys.exit(1)
+    port_num: int = int(sys.argv[1])
+    serve(port_num)
