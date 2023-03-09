@@ -11,46 +11,39 @@ class ResultsPage extends StatefulWidget {
 }
 
 class _ResultsPageState extends State<ResultsPage> {
-  List<List<String>> schedule = Network().getSchedule();
+  Map<String, List<String>> schedule = Network().getSchedule();
 
-  Column displayHelper(List<String> courses) {
+  Column semesterHelper(MapEntry<String, List<String>> semester) {
     List<Text> text = List.generate(
-      courses.length,
-      (int index) => Text(
-        courses[index],
-        style: const TextStyle(fontSize: 25),
+      semester.value.length,
+      (index) => Text(
+        semester.value[index],
+        style: const TextStyle(fontSize: 16),
         textAlign: TextAlign.center,
       ),
     );
 
-    return Column(
-      children: text,
-    );
+    text.insert(
+        0,
+        Text(
+          semester.key,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ));
+    return Column(children: text);
   }
 
-  Column displayHelperLarge(List<List<String>> schedule) {
-    List<Column> textSchedule = List<Column>.generate(
-        schedule.length, (int index) => displayHelper(schedule[index]));
-    var col =
-        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [textSchedule[0], textSchedule[1]],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [textSchedule[2], textSchedule[3]],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [textSchedule[4], textSchedule[5]],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [textSchedule[6], textSchedule[7]],
-      ),
-    ]);
-    return col;
+  Row displayHelperLarge2(Map<String, List<String>> schedule) {
+    List<Column> textSchedule = List.empty(growable: true);
+
+    for (final entry in schedule.entries) {
+      textSchedule.add(semesterHelper(entry));
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: textSchedule,
+    );
   }
 
   @override
@@ -61,7 +54,7 @@ class _ResultsPageState extends State<ResultsPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            displayHelperLarge(schedule),
+            displayHelperLarge2(schedule),
             ElevatedButton(
               key: const Key("home_button"),
               onPressed: () {
