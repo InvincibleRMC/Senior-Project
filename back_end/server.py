@@ -73,11 +73,7 @@ class DatabaseConnection:
     def select_all_courses(self) -> List[str]:
         """selects all courses"""
 
-        cur = self.conn.cursor()
-        cur.execute("SELECT sub_cat_num FROM course")
-
-        rows = cur.fetchall()
-
+        rows = self.execute("SELECT sub_cat_num FROM course")
         list_of_courses: List[str] = []
         for row in rows:
             list_of_courses.append(row[0])
@@ -86,10 +82,8 @@ class DatabaseConnection:
 
     def select_all_profs(self) -> List[str]:
         """selects all profs"""
-        cur = self.conn.cursor()
-        cur.execute("SELECT firstname,lastname FROM instructor")
 
-        rows = cur.fetchall()
+        rows = self.execute("SELECT firstname,lastname FROM instructor")
         list_of_profs: List[str] = []
         for row in rows:
             list_of_profs.append(row[1] + ", " + row[0])
@@ -98,13 +92,11 @@ class DatabaseConnection:
 
     def clear_class_list(self):
         """clears generated class list"""
-        cur = self.conn.cursor()
-        cur.execute("DELETE FROM final_class_list")
+        self.execute("DELETE FROM final_class_list")
 
     def clear_taken_list(self):
         """clears class taken list"""
-        cur = self.conn.cursor()
-        cur.execute("DELETE FROM classes_taken")
+        self.execute("DELETE FROM classes_taken")
 
     def add_taken_classes(self, taken_class_array: List[str]):
         """adds classes taken to class list"""
