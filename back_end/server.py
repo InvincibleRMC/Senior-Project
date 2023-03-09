@@ -24,12 +24,7 @@ class Service(ServiceServicer):
     @staticmethod
     def create_course(ident: int, name: str, semester: str) -> Course:
         """Helper to create a Course object."""
-        course = Course()
-        course.Clear()
-        course.id = ident
-        course.name = name
-        course.semester = semester
-        return course
+        return Course(id=ident, name=name, semester=semester)
 
     def GetSchedule(self, request, context) -> ScheduleResponse:
         print(f"Received Schedule request: {repr(request)}")
@@ -41,8 +36,7 @@ class Service(ServiceServicer):
         course_map["spring2"] = CourseList(courses=[self.create_course(3, "bruh211","spring"), self.create_course(4, "yeet221", "spring")])
 
 
-        res = ScheduleResponse(course_map=course_map)
-        return res
+        return ScheduleResponse(course_map=course_map)
 
     def RegisterNotifications(self, request, context) -> NotificationResponse:
         print(f"Received notification registration: {repr(request)}")
@@ -51,12 +45,7 @@ class Service(ServiceServicer):
     @staticmethod
     def create_prof(ident: int, first: str, last: str) -> Professor:
         """Helper to create a Professor object."""
-        prof = Professor()
-        prof.Clear()
-        prof.id = ident
-        prof.first = first
-        prof.last = last
-        return prof
+        return Professor(id=ident,first=first, last=last)
 
     def GetProfessors(self, request, context) -> ProfessorResponse:
         """Generates ProfessorResponse from ProfessorRequest"""
@@ -76,11 +65,7 @@ class Service(ServiceServicer):
     @staticmethod
     def create_major(ident: int, name: str) -> Major:
         """Helper to create a Major object."""
-        major = Major()
-        major.Clear()
-        major.id = ident
-        major.name = name
-        return major
+        return Major(id=ident, name=name)
 
     def GetMajors(self, request, context) -> MajorResponse:
         print(f"Received major request: {repr(request)}")
