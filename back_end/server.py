@@ -1,21 +1,17 @@
 #!/bin/python3
-
+"""Server Backend for handling Requests and sending Responses"""
 import sys
 import signal
-
 from concurrent.futures import ThreadPoolExecutor
-
 from typing import Dict
 
 import grpc
 from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_server
-
-# import sqlite3
-
 from proto.data_pb2 import Course, Professor, Major
 from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
                                  NotificationResponse, ScheduleResponse, CourseResponse,
                                  ProfessorResponse)
+# import sqlite3
 
 
 class Service(ServiceServicer):
@@ -59,7 +55,7 @@ class Service(ServiceServicer):
 
     def GetProfessors(self, request, context) -> ProfessorResponse:
         """Generates ProfessorResponse from ProfessorRequest"""
-        print(f"Received professor request:", request)
+        print(f"Received professor request: {repr(request)}")
         res = ProfessorResponse()
         res.professors.extend([self.create_prof(1, "Ronald", "Loui"),
                                self.create_prof(2, "Harold", "Connamacher")])
@@ -72,7 +68,7 @@ class Service(ServiceServicer):
                             self.create_course(2, "yeet", "fall")])
         return res
 
-    @staticmethod    
+    @staticmethod
     def create_major(ident: int, name: str) -> Major:
         """Helper to create a Major object."""
         major = Major()
@@ -93,6 +89,7 @@ class Service(ServiceServicer):
 
 
 def serve(port: int):
+    """Starts up grpc connection"""
     # this doesn't work apparently
     # server = grpc.server(ProcessPoolExecutor(max_workers=10))
     server = grpc.server(ThreadPoolExecutor(max_workers=10))
