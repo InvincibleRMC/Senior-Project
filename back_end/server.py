@@ -12,12 +12,10 @@ from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_serve
 import sqlite3
 
 from proto.data_pb2 import Course, Professor, Major
-from proto.requests_pb2 import (Request, REQ_DEBUG, REQ_COURSE, REQ_NOTIFICATION,
-                                REQ_SCHEDULE, REQ_PROFESSOR, REQ_MAJOR, MajorRequest,
+from proto.requests_pb2 import (MajorRequest,
                                 NotificationRequest, ScheduleRequest, CourseRequest,
                                 ProfessorRequest)
-from proto.responses_pb2 import (Response, DebugResponse, RES_DEBUG, RES_COURSES, RES_MAJOR,
-                                 RES_NOTI, RES_PROFS, RES_SCHEDULE, MajorResponse,
+from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
                                  NotificationResponse, ScheduleResponse, CourseResponse,
                                  ProfessorResponse)
 
@@ -42,22 +40,25 @@ class Service(ServiceServicer):
         print(f"Received Schedule request: {repr(request)}")
         res = ScheduleResponse()
         # TODO:
-        res.fall1.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring1.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.fall2.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring2.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.fall3.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring3.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.fall4.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
-        res.spring4.extend([self.create_course(1, "bruh", "spring"),
-                            self.create_course(2, "yeet", "fall")])
+        res.course_map = {}
+        res.course_map["fall1"] = CourseList(courses=[])
+
+        # res.course_map.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.spring1.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.fall2.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.spring2.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.fall3.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.spring3.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.fall4.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
+        # res.spring4.extend([self.create_course(1, "bruh", "spring"),
+        #                     self.create_course(2, "yeet", "fall")])
         return res
     
     def RegisterNotifications(self, request, context):
