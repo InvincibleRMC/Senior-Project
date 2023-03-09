@@ -4,10 +4,9 @@ import sys
 import sqlite3
 from sqlite3 import Connection, Cursor
 from sqlite3 import Error
-from typing import List
+from typing import List, Dict
 import atexit
 import signal
-from typing import Dict
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 
