@@ -1,0 +1,13 @@
+syntax="proto3";
+
+import "proto/requests.proto";
+import "proto/responses.proto";
+
+service Service {
+    rpc GetSchedule (ScheduleRequest) returns (ScheduleResponse) {}
+    rpc RegisterNotifications (NotificationRequest) returns (NotificationResponse) {}
+    rpc GetProfessors (ProfessorRequest) returns (ProfessorResponse) {}
+    rpc GetCourses (CourseRequest) returns (CourseResponse) {}
+    rpc GetMajors (MajorRequest) returns (MajorResponse) {}
+    rpc Debug (DebugRequest) returns (DebugResponse) {}
+}

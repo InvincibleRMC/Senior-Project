@@ -9,23 +9,24 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'data.pb.dart' as $0;
+import 'data.pb.dart' as $2;
 
 import 'requests.pbenum.dart';
 
+export 'data.pb.dart';
 export 'requests.pbenum.dart';
 
 class NotificationRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'NotificationRequest', createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'email')
-    ..pc<$0.Course>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'classes', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$2.Course>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'classes', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
     ..hasRequiredFields = false
   ;
 
   NotificationRequest._() : super();
   factory NotificationRequest({
     $core.String? email,
-    $core.Iterable<$0.Course>? classes,
+    $core.Iterable<$2.Course>? classes,
   }) {
     final _result = create();
     if (email != null) {
@@ -67,34 +68,34 @@ class NotificationRequest extends $pb.GeneratedMessage {
   void clearEmail() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<$0.Course> get classes => $_getList(1);
+  $core.List<$2.Course> get classes => $_getList(1);
 }
 
 class ScheduleRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduleRequest', createEmptyInstance: create)
-    ..aOM<$0.Major>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'major', subBuilder: $0.Major.create)
+    ..aOM<$2.Major>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'major', subBuilder: $2.Major.create)
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'semester')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minCredits', $pb.PbFieldType.O3, protoName: 'minCredits')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxCredits', $pb.PbFieldType.O3, protoName: 'maxCredits')
-    ..pc<$0.Course>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'previousClasses', $pb.PbFieldType.PM, protoName: 'previousClasses', subBuilder: $0.Course.create)
-    ..pc<$0.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredClasses', $pb.PbFieldType.PM, protoName: 'preferredClasses', subBuilder: $0.Course.create)
-    ..pc<$0.Course>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unpreferredClasses', $pb.PbFieldType.PM, protoName: 'unpreferredClasses', subBuilder: $0.Course.create)
-    ..pc<$0.Professor>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredProfs', $pb.PbFieldType.PM, protoName: 'preferredProfs', subBuilder: $0.Professor.create)
-    ..pc<$0.Professor>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unprefferedProfs', $pb.PbFieldType.PM, protoName: 'unprefferedProfs', subBuilder: $0.Professor.create)
+    ..pc<$2.Course>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'previousClasses', $pb.PbFieldType.PM, protoName: 'previousClasses', subBuilder: $2.Course.create)
+    ..pc<$2.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredClasses', $pb.PbFieldType.PM, protoName: 'preferredClasses', subBuilder: $2.Course.create)
+    ..pc<$2.Course>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unpreferredClasses', $pb.PbFieldType.PM, protoName: 'unpreferredClasses', subBuilder: $2.Course.create)
+    ..pc<$2.Professor>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'preferredProfs', $pb.PbFieldType.PM, protoName: 'preferredProfs', subBuilder: $2.Professor.create)
+    ..pc<$2.Professor>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'unprefferedProfs', $pb.PbFieldType.PM, protoName: 'unprefferedProfs', subBuilder: $2.Professor.create)
     ..hasRequiredFields = false
   ;
 
   ScheduleRequest._() : super();
   factory ScheduleRequest({
-    $0.Major? major,
+    $2.Major? major,
     $core.String? semester,
     $core.int? minCredits,
     $core.int? maxCredits,
-    $core.Iterable<$0.Course>? previousClasses,
-    $core.Iterable<$0.Course>? preferredClasses,
-    $core.Iterable<$0.Course>? unpreferredClasses,
-    $core.Iterable<$0.Professor>? preferredProfs,
-    $core.Iterable<$0.Professor>? unprefferedProfs,
+    $core.Iterable<$2.Course>? previousClasses,
+    $core.Iterable<$2.Course>? preferredClasses,
+    $core.Iterable<$2.Course>? unpreferredClasses,
+    $core.Iterable<$2.Professor>? preferredProfs,
+    $core.Iterable<$2.Professor>? unprefferedProfs,
   }) {
     final _result = create();
     if (major != null) {
@@ -148,15 +149,15 @@ class ScheduleRequest extends $pb.GeneratedMessage {
   static ScheduleRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $0.Major get major => $_getN(0);
+  $2.Major get major => $_getN(0);
   @$pb.TagNumber(1)
-  set major($0.Major v) { setField(1, v); }
+  set major($2.Major v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasMajor() => $_has(0);
   @$pb.TagNumber(1)
   void clearMajor() => clearField(1);
   @$pb.TagNumber(1)
-  $0.Major ensureMajor() => $_ensure(0);
+  $2.Major ensureMajor() => $_ensure(0);
 
   @$pb.TagNumber(2)
   $core.String get semester => $_getSZ(1);
@@ -186,19 +187,19 @@ class ScheduleRequest extends $pb.GeneratedMessage {
   void clearMaxCredits() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.List<$0.Course> get previousClasses => $_getList(4);
+  $core.List<$2.Course> get previousClasses => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.List<$0.Course> get preferredClasses => $_getList(5);
+  $core.List<$2.Course> get preferredClasses => $_getList(5);
 
   @$pb.TagNumber(7)
-  $core.List<$0.Course> get unpreferredClasses => $_getList(6);
+  $core.List<$2.Course> get unpreferredClasses => $_getList(6);
 
   @$pb.TagNumber(8)
-  $core.List<$0.Professor> get preferredProfs => $_getList(7);
+  $core.List<$2.Professor> get preferredProfs => $_getList(7);
 
   @$pb.TagNumber(9)
-  $core.List<$0.Professor> get unprefferedProfs => $_getList(8);
+  $core.List<$2.Professor> get unprefferedProfs => $_getList(8);
 }
 
 class MajorRequest extends $pb.GeneratedMessage {

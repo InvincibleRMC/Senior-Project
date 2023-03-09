@@ -6,6 +6,10 @@ message Course {
    string semester = 3;
 }
 
+message CourseList {
+    repeated Course courses = 1;
+}
+
 message Major {
     int32 id = 1;
     string name = 2;

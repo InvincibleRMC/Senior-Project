@@ -47,7 +47,7 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                   showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Warning No email inputted'),
+                      title: const Text('Warning: No email entered'),
                       actions: <Widget>[
                         TextButton(
                           key: const Key("cancel_button"),
