@@ -71,7 +71,7 @@ class Service(ServiceServicer):
         """Helper to create a Major object."""
         return Major(id=ident, name=name)
 
-    def GetMajors(self, request, context):
+    def GetMajors(self, request, context) -> MajorResponse:
         print(f"Received major request: {repr(request)}")
         res = MajorResponse()
         res.majors.extend([self.create_major(1, "CS"), self.create_major(2, "CE")])
