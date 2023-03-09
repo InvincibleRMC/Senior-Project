@@ -4,6 +4,7 @@
 import socket
 import sys
 import time
+import math
 
 from sqlite3 import Connection, Cursor
 import sqlite3
@@ -31,7 +32,7 @@ from proto.data_pb2 import Course, Professor, Major
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
 
 running: bool = True
-
+max_packet_len: int = 1024 * 8 # 8 kb
 
 class DatabaseConnection:
     """DatabaseConnection is a connection to a sqlite database with helper functions for locking"""
@@ -117,6 +118,14 @@ class WorkerThread:
             # send data
             data: bytes = response.SerializeToString()
             conn.send(data)
+
+            n_bytes = len(data)
+            num_packets = int(math.ceil(float(n_bytes) / float(max_packet_len)))
+            
+            for i in range(num_packets):
+                chunk: bytes = bytes([0])
+                chunk = chunk.join(data[i * max_packet_len:(i + 1) * max_packet_len])
+                conn.send(chunk)
 
             # close socket
             conn.close()
