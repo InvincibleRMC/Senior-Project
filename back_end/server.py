@@ -1,32 +1,27 @@
 #!/bin/python3
-
+"""Module for Backend server handling requests and sending responses"""
 import sys
 import signal
 
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 
 import grpc 
 from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_server
-
-
-import sqlite3
-
 from proto.data_pb2 import Course, Professor, Major
-from proto.requests_pb2 import (MajorRequest,
-                                NotificationRequest, ScheduleRequest, CourseRequest,
-                                ProfessorRequest)
 from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
                                  NotificationResponse, ScheduleResponse, CourseResponse,
                                  ProfessorResponse)
+# import sqlite3
+
 
 class Service(ServiceServicer):
-
+    """Custom Service Object with response implementations"""
     def __init__(self):
         self.db_lock = Lock()
         # self.db_conn = sqlite3.Connection()
         # self.db_conn = sqlite3.Connection()
-        # self.db_lock = None 
+        # self.db_lock = None
 
     @staticmethod
     def create_course(ident: int, name: str, semester: str) -> Course:
@@ -46,13 +41,11 @@ class Service(ServiceServicer):
         course_map["spring2"] = CourseList(courses=[self.create_course(3, "bruh211","spring"),
                                                     self.create_course(4, "yeet221", "spring")])
 
-
         return ScheduleResponse(course_map=course_map)
 
     def RegisterNotifications(self, request, context) -> NotificationResponse:
         print(f"Received notification registration: {repr(request)}")
         return NotificationResponse(success=True)
-    
 
     @staticmethod
     def create_prof(ident: int, first: str, last: str) -> Professor:
@@ -66,8 +59,7 @@ class Service(ServiceServicer):
         res.professors.extend([self.create_prof(1, "Ronald", "Loui"),
                                self.create_prof(2, "Harold", "Connamacher")])
         return res
-        # return super().GetProfessors(request, context)
-    
+
     def GetCourses(self, request, context):
         print(f"Received course request: {repr(request)}")
         res = CourseResponse()
@@ -75,7 +67,7 @@ class Service(ServiceServicer):
                             self.create_course(2, "yeet", "fall")])
         return res
 
-    @staticmethod    
+    @staticmethod
     def create_major(ident: int, name: str) -> Major:
         """Helper to create a Major object."""
         return Major(id=ident, name=name)
@@ -85,14 +77,14 @@ class Service(ServiceServicer):
         res = MajorResponse()
         res.majors.extend([self.create_major(1, "CS"), self.create_major(2, "CE")])
         return res
-    
+
     def Debug(self, request, context):
         print(f"Received {request.msg}")
         return DebugResponse(msg="pong")
 
 
-
 def serve(port: int):
+    """Starts grpc server"""
     # this doesn't work apparently
     # server = grpc.server(ProcessPoolExecutor(max_workers=10))
     server = grpc.server(ThreadPoolExecutor(max_workers=10))
