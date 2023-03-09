@@ -42,13 +42,13 @@ class Service(ServiceServicer):
         print(f"Received Schedule request: {repr(request)}")
         res = ScheduleResponse()
         # TODO:
-        res.course_map: Dict[string, CourseList] = {}
+        res.course_map: Dict[str, CourseList] = {}
         res.course_map["fall1"] = CourseList(courses=[])
         return res
 
     def RegisterNotifications(self, request, context) -> NotificationResponse:
         print(f"Received notification registration: {repr(request)}")
-        return NotificationResponse(True)  
+        return NotificationResponse(True)
 
     @staticmethod
     def create_prof(ident: int, first: str, last: str) -> Professor:
