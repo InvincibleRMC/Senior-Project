@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:async' as flutter_async;
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -13,7 +13,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
-import 'package:grpc/grpc.dart';
+import 'package:grpc/grpc.dart' as grpc;
 
 import 'package:front_end/proto/service.pb.dart';
 import 'package:front_end/proto/service.pbserver.dart';
@@ -27,8 +27,13 @@ class Network {
     return _instance;
   }
 
-  ClientChannel? _channel;
+  grpc.ClientChannel? _channel;
   ServiceClient? _client;
+  flutter_async.StreamSubscription<grpc.ConnectionState>?
+      _connectionStatusStream;
+
+  flutter_async.StreamSubscription<grpc.ConnectionState>?
+      get connectionStatusStream => _connectionStatusStream;
 
   Network._internal();
 
@@ -36,10 +41,17 @@ class Network {
     var channel = GrpcOrGrpcWebClientChannel.grpc(
       "localhost",
       port: _port,
-      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+      options: const grpc.ChannelOptions(
+          credentials: grpc.ChannelCredentials.insecure()),
     );
     _channel = channel;
     _client = ServiceClient(channel);
+
+    // monitor connection
+    _connectionStatusStream =
+        _channel!.onConnectionStateChanged.listen((grpc.ConnectionState event) {
+      print("Connection state: $event");
+    });
   }
 
   void dispose() async {
