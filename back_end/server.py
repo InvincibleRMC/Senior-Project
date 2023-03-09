@@ -25,7 +25,7 @@ from proto.data_pb2 import Course, Professor, Major
 # from proto.requests_pb2 import *
 # from proto.responses_pb2 import *
 # from proto.data_pb2 import *
-
+import atexit
 
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
@@ -40,6 +40,7 @@ class DatabaseConnection:
         """Create DatabaseConnection Object"""
         self.conn: Connection = self.create_connection(filepath)
         self.lock = mp.Lock()
+        atexit.register(self.conn.close)
 
     def create_connection(self, db_file: str) -> Connection:
         """created connection to database"""
@@ -51,10 +52,6 @@ class DatabaseConnection:
             sys.exit()
 
         return conn
-
-    # def __del__(self):
-    #     """Delete DataBaseConnection Object"""
-    #     self.connection.close()
 
     def get_version(self):
         """Returns version of sqlite"""
