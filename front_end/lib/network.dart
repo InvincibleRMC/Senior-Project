@@ -168,11 +168,6 @@ class Network {
   }
 
   Map<String, List<String>> getSchedule() {
-    // List<List<String>> schedule =
-    //     List<List<String>>.filled(8, List<String>.empty());
-
-    // _schedule.courseMap.
-
     Map<String, List<String>> schedule = <String, List<String>>{};
 
     for (final entry in _schedule.courseMap.entries) {
@@ -185,5 +180,10 @@ class Network {
   @visibleForTesting
   void setMajors() {
     _majors = [Major(name: "CS BS")];
+  }
+
+  @visibleForTesting
+  void setCourses() {
+    _courses = [Course(name: "CSDS 132")];
   }
 }

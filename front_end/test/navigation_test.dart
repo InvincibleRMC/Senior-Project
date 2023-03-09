@@ -32,8 +32,6 @@ void main() {
 
         expect(find.byType(ClassReminderPage), findsOneWidget);
         expect(find.byType(HomePage), findsNothing);
-        // To wait out tcp connections
-        await tester.binding.delayed(const Duration(days: 999));
       });
 
       testWidgets('Home to Scheduler', (WidgetTester tester) async {
@@ -50,8 +48,6 @@ void main() {
 
         expect(find.byType(SchedulerPage), findsOneWidget);
         expect(find.byType(HomePage), findsNothing);
-        // To wait out tcp connections
-        await tester.binding.delayed(const Duration(days: 999));
       });
     });
     group('Scheduler Navigation tests', () {
@@ -96,14 +92,10 @@ void main() {
 
         expect(find.byType(ResultsPage), findsOneWidget);
         expect(find.byType(SchedulerPage), findsNothing);
-
-        // To wait out tcp connections
-        await tester.binding.delayed(const Duration(days: 999));
       });
     });
     group('Class Reminder Navigation tests', () {
-      testWidgets('Class Reminder to Home Ignore Warning',
-          (WidgetTester tester) async {
+      testWidgets('Class Reminder to Home Back', (WidgetTester tester) async {
         await tester.pumpWidget(MaterialApp(
           home: const ClassReminderPage(),
 
@@ -113,23 +105,15 @@ void main() {
         ));
 
         // Hit submit but no email provided
-        await tester.tap(find.byKey(const Key("submit_button")));
-        await tester.pumpAndSettle();
-
-        expect(find.byType(ClassReminderPage), findsOneWidget);
-        expect(find.byType(HomePage), findsNothing);
-
-        //Ignore warning and return to Home
-        await tester.tap(find.byKey(const Key("continue_anyway_button")));
+        await tester.tap(find.byKey(const Key("back_button")));
         await tester.pumpAndSettle();
 
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ClassReminderPage), findsNothing);
-        // To wait out tcp connections
-        await tester.binding.delayed(const Duration(days: 999));
       });
-      testWidgets('Class Reminder to Home Listen to Warning',
+      testWidgets('Class Reminder to Home Filled out data',
           (WidgetTester tester) async {
+        Network().setCourses();
         await tester.pumpWidget(MaterialApp(
           home: const ClassReminderPage(),
 
@@ -146,13 +130,24 @@ void main() {
         expect(find.byType(HomePage), findsNothing);
 
         //Cancel Submission
-        await tester.tap(find.byKey(const Key("cancel_button")));
+        await tester.tap(find.byKey(const Key("ok_button")));
         await tester.pumpAndSettle();
 
         expect(find.byType(ClassReminderPage), findsOneWidget);
         expect(find.byType(HomePage), findsNothing);
 
-        //Cancel Submission
+        //Open Drop Down Search Bar
+        await tester.tap(find.byKey(const Key("drop_down_courses")));
+        await tester.pumpAndSettle();
+
+        //With Major entered allow access to Results Page
+        await tester.tap(find.text("CSDS 132"));
+        await tester.pumpAndSettle();
+
+        await tester.tap(find.text("OK"));
+        await tester.pumpAndSettle();
+
+        //add email
         await tester.enterText(
             find.byKey(const Key("email_input_field")), "test@test.com");
         await tester.pumpAndSettle();
@@ -163,9 +158,6 @@ void main() {
 
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ClassReminderPage), findsNothing);
-
-        // To wait out tcp connections
-        await tester.binding.delayed(const Duration(days: 999));
       });
     });
     group('Results Navigation tests', () {
@@ -183,8 +175,6 @@ void main() {
 
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ResultsPage), findsNothing);
-        // To wait out tcp connections
-        await tester.binding.delayed(const Duration(days: 999));
       });
     });
   });
