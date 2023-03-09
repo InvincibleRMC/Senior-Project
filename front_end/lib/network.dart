@@ -1,154 +1,83 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:async' as flutter_async;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:front_end/proto/data.pbserver.dart';
-import 'dart:io';
-import 'package:protobuf/protobuf.dart';
+import 'package:front_end/proto/service.pbgrpc.dart';
+import 'package:grpc/grpc_or_grpcweb.dart';
 
 import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
+import 'package:grpc/grpc.dart' as grpc;
+
 class Network {
+  static const String _host = "localhost";
   static const int _port = 50000;
-  static const Utf8Decoder _decoder = Utf8Decoder();
-  // TcpSocketConnection? _connection;
 
   static final Network _instance = Network._internal();
-  static List<Course> _classes = List.empty();
-  static List<Professor> _professors = List.empty();
-  static List<Major> _majors = List.empty();
-  static ScheduleResponse _schedule = ScheduleResponse();
-  int id = 1;
-  static final Timer _timer =
-      Timer.periodic(const Duration(seconds: 5), (timer) {
-    for (var req in requests) {
-      requestHelper(req);
-    }
-  });
-  // Set to prevent Duplicates
-  static Set<Request> requests = {};
-
-  // using a factory is important
-  // because it promises to return _an_ object of this type
-  // but it doesn't promise to make a new one.
   factory Network() {
     return _instance;
   }
 
-  static void dispose() {
-    _timer.cancel();
-  }
+  GrpcOrGrpcWebClientChannel? _channel;
+  ServiceClient? _client;
+  flutter_async.StreamSubscription<grpc.ConnectionState>?
+      _connectionStatusStream;
 
-  // This named constructor is the "real" constructor
-  // It'll be called exactly once, by the static property assignment above
-  // it's also private, so it can only be called in this class
+  flutter_async.StreamSubscription<grpc.ConnectionState>?
+      get connectionStatusStream => _connectionStatusStream;
+
   Network._internal();
 
-  static void messageReceived(Uint8List message) {
-    print("Starting messagedRecieved");
-    var res = Response();
-    res.clear();
+  void connect() {
+    _channel = GrpcOrGrpcWebClientChannel.toSeparatePorts(
+        host: _host,
+        grpcPort: _port,
+        grpcTransportSecure: false,
+        grpcWebPort: 8080,
+        grpcWebTransportSecure: false);
 
-    var read = CodedBufferReader(message);
-    res.mergeFromCodedBufferReader(read);
+    _client = ServiceClient(_channel!);
 
-    requests.removeWhere((Request req) => req.id == res.id);
-
-    print("Message Received");
-    print(res);
-    switch (res.type) {
-      case ResponseType.RES_DEBUG:
-        {
-          print("DEBUG Received");
-        }
-        break;
-      case ResponseType.RES_COURSES:
-        {
-          _classes = res.r3.courses;
-        }
-        break;
-      case ResponseType.RES_PROFS:
-        {
-          _professors = res.r2.professors;
-        }
-        break;
-      case ResponseType.RES_MAJOR:
-        {
-          _majors = res.r5.majors;
-        }
-        break;
-      case ResponseType.RES_SCHEDULE:
-        {
-          _schedule = res.r1;
-        }
-        break;
-      case ResponseType.RES_NOTI:
-        {
-          // TODO notifiy sender?
-        }
-        break;
-    }
+    // monitor connection
+    _connectionStatusStream =
+        _channel!.onConnectionStateChanged.listen((grpc.ConnectionState event) {
+      print("Connection state: $event");
+    });
   }
 
-  static void requestHelper(Request req) async {
-    requests.add(req);
-    Socket socket = await Socket.connect("localhost", _port);
-    Uint8List out = req.writeToBuffer();
-    socket.write(_decoder.convert(out));
-    print("Sending Request ${req.toString()}");
-
-    // Todo this might be a memory leak
-    socket.listen(
-      (Uint8List event) {
-        messageReceived(event);
-      },
-      onError: (error) {
-        print(error);
-        socket.destroy();
-      },
-
-      // handle server ending connection
-      onDone: () {
-        print('Server left.');
-        socket.destroy();
-      },
-    );
+  void dispose() async {
+    await _channel?.shutdown();
   }
 
-  void sendMajorRequest() {
-    var req = Request();
-    req.type = RequestType.REQ_MAJOR;
-    req.r6 = MajorRequest();
-    req.id = id++;
-    requestHelper(req);
+  List<Course> _courses = List.empty();
+  List<Professor> _professors = List.empty();
+  List<Major> _majors = List.empty();
+  ScheduleResponse _schedule = ScheduleResponse();
+
+  void sendMajorRequest() async {
+    var res = await _client?.getMajors(MajorRequest());
+    _majors = res?.majors ?? _majors;
   }
 
-  void sendProfessorRequest() {
-    var req = Request();
-    req.type = RequestType.REQ_PROFESSOR;
-    req.r3 = ProfessorRequest();
-    req.id = id++;
-    requestHelper(req);
+  void sendProfessorRequest() async {
+    var res = await _client?.getProfessors(ProfessorRequest());
+    _professors = res?.professors ?? _professors;
   }
 
-  void sendCourseRequest() {
-    var req = Request();
-    req.type = RequestType.REQ_COURSE;
-    req.r4 = CourseRequest();
-    req.id = id++;
-    requestHelper(req);
+  void sendCourseRequest() async {
+    var res = await _client?.getCourses(CourseRequest());
+    _courses = res?.courses ?? _courses;
   }
 
-  void sendNotificationRequest(String email, List<String> className) {
-    var req = Request();
-    req.type = RequestType.REQ_NOTIFICATION;
-    req.r2 = NotificationRequest(
+  void sendNotificationRequest(String email, List<String> className) async {
+    var req = NotificationRequest(
         email: email,
         classes: List<Course>.generate(
             className.length, (int index) => Course(name: className[index])));
-    req.id = id++;
-    requestHelper(req);
+    await _client?.registerNotifications(req);
+    // TODO: Check result?
+    // return res;
   }
 
   // TODO:
@@ -161,7 +90,7 @@ class Network {
       List<String>? preferredClasses,
       List<String>? unpreferredClasses,
       List<String>? preferredProfessors,
-      List<String>? unpreferredProfessors) {
+      List<String>? unpreferredProfessors) async {
     List<Course>? previousCourse;
     List<Course>? preferredCourse;
     List<Course>? unpreferredCourse;
@@ -199,9 +128,7 @@ class Network {
               last: unpreferredProfessors[index].split(' ')[1]));
     }
 
-    var req = Request();
-    req.type = RequestType.REQ_SCHEDULE;
-    req.r1 = ScheduleRequest(
+    var req = ScheduleRequest(
         major: Major(name: major),
         semester: semester,
         minCredits: minCredit,
@@ -211,13 +138,14 @@ class Network {
         unpreferredClasses: unpreferredCourse,
         preferredProfs: preferredProfs,
         unprefferedProfs: unpreferredProfs);
-    req.id = id++;
-    requestHelper(req);
+
+    var res = await _client?.getSchedule(req);
+    _schedule = res ?? _schedule;
   }
 
   List<String> getCourseNames() {
     // TODO Error handling
-    return courseToString(_classes);
+    return courseToString(_courses);
   }
 
   List<String> getProfessorNames() {
@@ -235,21 +163,15 @@ class Network {
 
   List<String> courseToString(List<Course> courseList) {
     return List<String>.generate(
-        _classes.length, (int index) => _classes[index].name);
+        _courses.length, (int index) => _courses[index].name);
   }
 
-  List<List<String>> getSchedule() {
-    List<List<String>> schedule =
-        List<List<String>>.filled(8, List<String>.empty());
+  Map<String, List<String>> getSchedule() {
+    Map<String, List<String>> schedule = <String, List<String>>{};
 
-    schedule[0] = courseToString(_schedule.fall1);
-    schedule[1] = courseToString(_schedule.spring1);
-    schedule[2] = courseToString(_schedule.fall2);
-    schedule[3] = courseToString(_schedule.spring2);
-    schedule[4] = courseToString(_schedule.fall3);
-    schedule[5] = courseToString(_schedule.spring3);
-    schedule[6] = courseToString(_schedule.fall4);
-    schedule[7] = courseToString(_schedule.spring4);
+    for (final entry in _schedule.courseMap.entries) {
+      schedule[entry.key] = courseToString(entry.value.courses);
+    }
 
     return schedule;
   }
@@ -257,5 +179,10 @@ class Network {
   @visibleForTesting
   void setMajors() {
     _majors = [Major(name: "CS BS")];
+  }
+
+  @visibleForTesting
+  void setCourses() {
+    _courses = [Course(name: "CSDS 132")];
   }
 }

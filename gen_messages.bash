@@ -1,3 +1,3 @@
 #!/bin/bash
 
-protoc --python_out=back_end/ --dart_out=front_end/lib proto/*.proto
+python3 -m grpc_tools.protoc -I. --python_out=back_end/ --dart_out=grpc:front_end/lib/ --grpc_python_out=back_end/ proto/*.proto
