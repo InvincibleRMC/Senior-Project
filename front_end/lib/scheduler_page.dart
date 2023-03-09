@@ -41,7 +41,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
     return Scaffold(
         appBar: StandardWidgets.standardAppBar(),
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: screenPercentage * MediaQuery.of(context).size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
