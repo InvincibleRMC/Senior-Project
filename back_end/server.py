@@ -105,6 +105,6 @@ def serve(port: int):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: server <port>")
-        exit(1)
-    port: int = int(sys.argv[1])
-    serve(port)
+        sys.exit(1)
+    port_num: int = int(sys.argv[1])
+    serve(port_num)
