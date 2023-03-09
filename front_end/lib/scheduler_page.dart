@@ -34,196 +34,201 @@ class _SchedulerPageState extends State<SchedulerPage> {
   List<String>? _preferredClasses;
   List<String>? _unpreferredClasses;
 
+  final double screenPercentage = 0.8;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: StandardWidgets.standardAppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            DropdownSearch<String>(
-              key: const Key("drop_down_search_major"),
-              items: Network().getMajors(),
-              popupProps: const PopupProps.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (String? major) => _major = major,
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Major",
+        appBar: StandardWidgets.standardAppBar(),
+        body: Center(
+          child: Container(
+            width: screenPercentage * MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                DropdownSearch<String>(
+                  key: const Key("drop_down_search_major"),
+                  items: Network().getMajors(),
+                  popupProps: const PopupProps.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (String? major) => _major = major,
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Major",
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            DropdownSearch<String>(
-              key: const Key("drop_down_search_semester"),
-              items: _semesterOptions,
-              popupProps: const PopupPropsMultiSelection.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (String? sem) => _semester = sem,
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Current Semester",
+                DropdownSearch<String>(
+                  key: const Key("drop_down_search_semester"),
+                  items: _semesterOptions,
+                  popupProps: const PopupPropsMultiSelection.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (String? sem) => _semester = sem,
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Current Semester",
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            TextField(
-              onChanged: (String min) => _minCredit = int.parse(min),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Input minimum amount of desired credit hours',
-              ),
-            ),
-            TextField(
-              onChanged: (String max) => _maxCredit = int.parse(max),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Input Maximum amount of desired credit hours',
-              ),
-            ),
-            DropdownSearch<String>.multiSelection(
-              key: const Key("drop_down_search_courses"),
-              items: Network().getCourseNames(),
-              popupProps: const PopupPropsMultiSelection.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (List<String> courses) => {_previousClasses = courses},
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Previous Courses",
+                TextField(
+                  onChanged: (String min) => _minCredit = int.parse(min),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Input minimum amount of desired credit hours',
+                  ),
                 ),
-              ),
-            ),
-            DropdownSearch<String>.multiSelection(
-              key: const Key("drop_down_preferred_courses"),
-              items: Network().getCourseNames(),
-              popupProps: const PopupPropsMultiSelection.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (List<String> courses) =>
-                  {_preferredClasses = courses},
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Preferred Courses",
+                TextField(
+                  onChanged: (String max) => _maxCredit = int.parse(max),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Input Maximum amount of desired credit hours',
+                  ),
                 ),
-              ),
-            ),
-            DropdownSearch<String>.multiSelection(
-              key: const Key("drop_down_unpreferred_courses"),
-              items: Network().getCourseNames(),
-              popupProps: const PopupPropsMultiSelection.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (List<String> courses) =>
-                  {_unpreferredClasses = courses},
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Unpreferred Courses",
+                DropdownSearch<String>.multiSelection(
+                  key: const Key("drop_down_search_courses"),
+                  items: Network().getCourseNames(),
+                  popupProps: const PopupPropsMultiSelection.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (List<String> courses) =>
+                      {_previousClasses = courses},
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Previous Courses",
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            DropdownSearch<String>.multiSelection(
-              key: const Key("drop_down_preferred_professors"),
-              items: Network().getProfessorNames(),
-              popupProps: const PopupPropsMultiSelection.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (List<String> professors) =>
-                  {_preferredProfessors = professors},
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Preferred Professors",
+                DropdownSearch<String>.multiSelection(
+                  key: const Key("drop_down_preferred_courses"),
+                  items: Network().getCourseNames(),
+                  popupProps: const PopupPropsMultiSelection.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (List<String> courses) =>
+                      {_preferredClasses = courses},
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Preferred Courses",
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            DropdownSearch<String>.multiSelection(
-              key: const Key("drop_down_unpreferred_professors"),
-              items: Network().getProfessorNames(),
-              popupProps: const PopupPropsMultiSelection.menu(
-                  showSelectedItems: true, showSearchBox: true),
-              onChanged: (List<String> professors) =>
-                  {_unpreferredProfessors = professors},
-              dropdownDecoratorProps: const DropDownDecoratorProps(
-                dropdownSearchDecoration: InputDecoration(
-                  labelText: "Input Unpreferred Professors",
+                DropdownSearch<String>.multiSelection(
+                  key: const Key("drop_down_unpreferred_courses"),
+                  items: Network().getCourseNames(),
+                  popupProps: const PopupPropsMultiSelection.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (List<String> courses) =>
+                      {_unpreferredClasses = courses},
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Unpreferred Courses",
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                    key: const Key("back_button"),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const HomePage(key: Key("home"))));
-                    },
-                    child: const Text("Back")),
-                ElevatedButton(
-                  key: const Key("submit_button"),
-                  onPressed: () {
-                    // Ensures a Major is chosen
-                    if (_major == null) {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Must input major'),
-                          actions: <Widget>[
-                            TextButton(
-                              key: const Key("ok_button"),
-                              onPressed: () => Navigator.pop(context, 'ok'),
-                              child: const Text('ok'),
+                DropdownSearch<String>.multiSelection(
+                  key: const Key("drop_down_preferred_professors"),
+                  items: Network().getProfessorNames(),
+                  popupProps: const PopupPropsMultiSelection.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (List<String> professors) =>
+                      {_preferredProfessors = professors},
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Preferred Professors",
+                    ),
+                  ),
+                ),
+                DropdownSearch<String>.multiSelection(
+                  key: const Key("drop_down_unpreferred_professors"),
+                  items: Network().getProfessorNames(),
+                  popupProps: const PopupPropsMultiSelection.menu(
+                      showSelectedItems: true, showSearchBox: true),
+                  onChanged: (List<String> professors) =>
+                      {_unpreferredProfessors = professors},
+                  dropdownDecoratorProps: const DropDownDecoratorProps(
+                    dropdownSearchDecoration: InputDecoration(
+                      labelText: "Input Unpreferred Professors",
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        key: const Key("back_button"),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const HomePage(key: Key("home"))));
+                        },
+                        child: const Text("Back")),
+                    ElevatedButton(
+                      key: const Key("submit_button"),
+                      onPressed: () {
+                        // Ensures a Major is chosen
+                        if (_major == null) {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Must input major'),
+                              actions: <Widget>[
+                                TextButton(
+                                  key: const Key("ok_button"),
+                                  onPressed: () => Navigator.pop(context, 'ok'),
+                                  child: const Text('ok'),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    } else if (_semester == null) {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Must input semester'),
-                          actions: <Widget>[
-                            TextButton(
-                              key: const Key("ok_button"),
-                              onPressed: () => Navigator.pop(context, 'ok'),
-                              child: const Text('ok'),
+                          );
+                        } else if (_semester == null) {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Must input semester'),
+                              actions: <Widget>[
+                                TextButton(
+                                  key: const Key("ok_button"),
+                                  onPressed: () => Navigator.pop(context, 'ok'),
+                                  child: const Text('ok'),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      Network().sendScheduleRequest(
-                          _major!,
-                          _semester!,
-                          _minCredit,
-                          _maxCredit,
-                          _previousClasses,
-                          _preferredClasses,
-                          _unpreferredClasses,
-                          _preferredProfessors,
-                          _unpreferredProfessors);
-                      // TODO Waiting page?
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const ResultsPage(key: Key("results")),
-                          ));
-                    }
-                  },
-                  child: const Text("Submit"),
-                ),
+                          );
+                        } else {
+                          Network().sendScheduleRequest(
+                              _major!,
+                              _semester!,
+                              _minCredit,
+                              _maxCredit,
+                              _previousClasses,
+                              _preferredClasses,
+                              _unpreferredClasses,
+                              _preferredProfessors,
+                              _unpreferredProfessors);
+                          // TODO Waiting page?
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ResultsPage(key: Key("results")),
+                              ));
+                        }
+                      },
+                      child: const Text("Submit"),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          ),
+        ));
   }
 }
