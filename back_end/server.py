@@ -30,10 +30,14 @@ class Service(ServiceServicer):
         print(f"Received Schedule request: {repr(request)}")
 
         course_map: Dict[str, CourseList] = {}
-        course_map["fall1"] = CourseList(courses=[self.create_course(1, "bruh121","fall"), self.create_course(2, "yeet121", "fall")])
-        course_map["spring1"] = CourseList(courses=[self.create_course(3, "bruh211","spring"), self.create_course(4, "yeet221", "spring")])
-        course_map["fall2"] = CourseList(courses=[self.create_course(1, "bruh121","fall"), self.create_course(2, "yeet121", "fall")])
-        course_map["spring2"] = CourseList(courses=[self.create_course(3, "bruh211","spring"), self.create_course(4, "yeet221", "spring")])
+        course_map["fall1"] = CourseList(courses=[self.create_course(1, "bruh121","fall"), 
+                                                  self.create_course(2, "yeet121", "fall")])
+        course_map["spring1"] = CourseList(courses=[self.create_course(3, "bruh211","spring"), 
+                                                    self.create_course(4, "yeet221", "spring")])
+        course_map["fall2"] = CourseList(courses=[self.create_course(1, "bruh121","fall"), 
+                                                  self.create_course(2, "yeet121", "fall")])
+        course_map["spring2"] = CourseList(courses=[self.create_course(3, "bruh211","spring"), 
+                                                    self.create_course(4, "yeet221", "spring")])
 
 
         return ScheduleResponse(course_map=course_map)
