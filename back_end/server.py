@@ -48,12 +48,14 @@ class DatabaseConnection:
 
     def execute(self, query: str) -> List[str]:
         """Execute query"""
-        self.lock.acquire()
-        cursor: Cursor = self.conn.cursor()
-        cursor.execute(query)
-        record = cursor.fetchall()
-        cursor.close()
-        self.lock.release()
+
+        # https://www.bogotobogo.com/python/Multithread/python_multithreading_Using_Locks_with_statement_Context_Manager.php
+        # With statements are cool
+        with self.lock:
+            cursor: Cursor = self.conn.cursor()
+            cursor.execute(query)
+            record = cursor.fetchall()
+            cursor.close()
         return record
 
     def select_all_courses(self) -> List[str]:
