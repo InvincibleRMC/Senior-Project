@@ -167,18 +167,17 @@ class Network {
         _courses.length, (int index) => _courses[index].name);
   }
 
-  List<List<String>> getSchedule() {
-    List<List<String>> schedule =
-        List<List<String>>.filled(8, List<String>.empty());
+  Map<String, List<String>> getSchedule() {
+    // List<List<String>> schedule =
+    //     List<List<String>>.filled(8, List<String>.empty());
 
-    schedule[0] = courseToString(_schedule.fall1);
-    schedule[1] = courseToString(_schedule.spring1);
-    schedule[2] = courseToString(_schedule.fall2);
-    schedule[3] = courseToString(_schedule.spring2);
-    schedule[4] = courseToString(_schedule.fall3);
-    schedule[5] = courseToString(_schedule.spring3);
-    schedule[6] = courseToString(_schedule.fall4);
-    schedule[7] = courseToString(_schedule.spring4);
+    // _schedule.courseMap.
+
+    Map<String, List<String>> schedule = <String, List<String>>{};
+
+    for (final entry in _schedule.courseMap.entries) {
+      schedule[entry.key] = courseToString(entry.value.courses);
+    }
 
     return schedule;
   }

@@ -3,6 +3,7 @@ syntax = "proto3";
 import public "proto/data.proto";
 
 message ScheduleResponse {
+    // map from semester string to course list
     map<string, CourseList> course_map = 1;
 }
 
