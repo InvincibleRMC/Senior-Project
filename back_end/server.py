@@ -4,6 +4,7 @@ import sys
 import signal
 
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from threading import Lock
 
 import grpc 
 from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_server
@@ -22,7 +23,8 @@ from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
 class Service(ServiceServicer):
 
     def __init__(self):
-        pass
+        self.db_lock = Lock()
+        # self.db_conn = sqlite3.Connection()
         # self.db_conn = sqlite3.Connection()
         # self.db_lock = None 
 
@@ -71,7 +73,7 @@ class Service(ServiceServicer):
     
     def RegisterNotifications(self, request, context):
         print(f"Received notification registration: {repr(request)}")
-        return NotificationResponse(True)
+        return NotificationResponse(success=True)
     
 
     @staticmethod

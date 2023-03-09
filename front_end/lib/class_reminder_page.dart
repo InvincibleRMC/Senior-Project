@@ -15,6 +15,8 @@ class ClassReminderPage extends StatefulWidget {
 class _ClassReminderPageState extends State<ClassReminderPage> {
   List<String> _selectedClasses = [];
   String? _email;
+  // this regex might be dumb
+  static final RegExp _emailRegex = RegExp(r'(\w|\.)+@\w+(.\w+)+');
 
   @override
   Widget build(BuildContext context) {
@@ -41,45 +43,86 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                   labelText: "email",
                 ),
                 onChanged: (String emailData) => {_email = emailData}),
-            ElevatedButton(
-              key: const Key("submit_button"),
-              onPressed: () {
-                if (_email == null) {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Warning: No email entered'),
-                      actions: <Widget>[
-                        TextButton(
-                          key: const Key("cancel_button"),
-                          onPressed: () =>
-                              Navigator.pop(context, 'cancel submissin'),
-                          child: const Text('cancel'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    key: const Key("back_button"),
+                    // TODO: eventually make this a different color
+                    // style: ButtonStyle(backgroundColor: )
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const HomePage(key: Key("home"))));
+                    },
+                    child: const Text("Back")),
+                ElevatedButton(
+                  key: const Key("submit_button"),
+                  onPressed: () {
+                    if (_selectedClasses.length < 1) {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title:
+                              const Text('Please select at least one course.'),
+                          actions: <Widget>[
+                            TextButton(
+                              key: const Key("ok_button"),
+                              onPressed: () =>
+                                  Navigator.pop(context, 'cancel submission'),
+                              child: const Text('Ok'),
+                            ),
+                          ],
                         ),
-                        TextButton(
-                          key: const Key("continue_anyway_button"),
-                          onPressed: () => Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const HomePage(key: Key("home")),
-                              )),
-                          child: const Text('Continue anyway'),
+                      );
+                    } else if (_email == null) {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Please enter your email.'),
+                          actions: <Widget>[
+                            TextButton(
+                              key: const Key("ok_button"),
+                              onPressed: () =>
+                                  Navigator.pop(context, 'cancel submission'),
+                              child: const Text('Ok'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                } else {
-                  // Can do NonNull assertion because inside of an not null check
-                  Network().sendNotificationRequest(_email!, _selectedClasses);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(key: Key("home")),
-                      ));
-                }
-              },
-              child: const Text("Submit"),
+                      );
+                    } else if (!_emailRegex.hasMatch(_email!)) {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title:
+                              const Text('Please enter a valid email address.'),
+                          actions: <Widget>[
+                            TextButton(
+                              key: const Key("ok_button"),
+                              onPressed: () =>
+                                  Navigator.pop(context, 'cancel submission'),
+                              child: const Text('Ok'),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      // Can do NonNull assertion because inside of an not null check
+                      Network()
+                          .sendNotificationRequest(_email!, _selectedClasses);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const HomePage(key: Key("home")),
+                          ));
+                    }
+                  },
+                  child: const Text("Submit"),
+                ),
+              ],
             ),
           ],
         ),
