@@ -6,7 +6,7 @@ import signal
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 
-import grpc 
+import grpc
 from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_server
 from proto.data_pb2 import Course, Professor, Major
 from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
@@ -19,7 +19,6 @@ class Service(ServiceServicer):
     """Custom Service Object with response implementations"""
     def __init__(self):
         self.db_lock = Lock()
-        # self.db_conn = sqlite3.Connection()
         # self.db_conn = sqlite3.Connection()
         # self.db_lock = None
 
