@@ -1,8 +1,10 @@
 #!/bin/python3
 
 import sys
+import signal
 
 from concurrent.futures import ThreadPoolExecutor
+
 import grpc 
 from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_server
 
@@ -107,8 +109,17 @@ class Service(ServiceServicer):
 
 def serve(port: int):
     server = grpc.server(ThreadPoolExecutor(max_workers=10))
+
+    def handler(signum, frame):
+        print("Shutting down server...", signum)
+        server.stop(True)
+
+    signal.signal(signal.SIGINT, handler)
+    print("Adding service handler")
     add_ServiceServicer_to_server(Service(), server)
+    print(f"Listening on localhost at port {port}")
     server.add_insecure_port(f"[::]:{port}")
+    print("Starting server")
     server.start()
     server.wait_for_termination()
 
