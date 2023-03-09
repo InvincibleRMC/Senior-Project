@@ -31,8 +31,6 @@ from proto.data_pb2 import Course, Professor, Major
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
 
-running: bool = True
-
 
 class DatabaseConnection:
     """DatabaseConnection is a connection to a sqlite database with helper functions for locking"""
@@ -318,7 +316,7 @@ class Server:  # pylint: disable=too-few-public-methods
 
     def run(self):
         """Run Server"""
-        while running:
+        while True:
             conn, addr = self.socket.accept()
             data = conn.recv(4096)
 
