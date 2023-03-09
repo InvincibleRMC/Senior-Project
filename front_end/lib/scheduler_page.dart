@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:front_end/main.dart';
 import 'package:front_end/network.dart';
 import 'package:front_end/results.dart';
 import 'package:front_end/standard_widgets.dart';
@@ -151,60 +152,75 @@ class _SchedulerPageState extends State<SchedulerPage> {
                 ),
               ),
             ),
-            ElevatedButton(
-              key: const Key("submit_button"),
-              onPressed: () {
-                // Ensures a Major is chosen
-                if (_major == null) {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Must input major'),
-                      actions: <Widget>[
-                        TextButton(
-                          key: const Key("ok_button"),
-                          onPressed: () => Navigator.pop(context, 'ok'),
-                          child: const Text('ok'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    key: const Key("back_button"),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const HomePage(key: Key("home"))));
+                    },
+                    child: const Text("Back")),
+                ElevatedButton(
+                  key: const Key("submit_button"),
+                  onPressed: () {
+                    // Ensures a Major is chosen
+                    if (_major == null) {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Must input major'),
+                          actions: <Widget>[
+                            TextButton(
+                              key: const Key("ok_button"),
+                              onPressed: () => Navigator.pop(context, 'ok'),
+                              child: const Text('ok'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                } else if (_semester == null) {
-                  showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Must input semester'),
-                      actions: <Widget>[
-                        TextButton(
-                          key: const Key("ok_button"),
-                          onPressed: () => Navigator.pop(context, 'ok'),
-                          child: const Text('ok'),
+                      );
+                    } else if (_semester == null) {
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Must input semester'),
+                          actions: <Widget>[
+                            TextButton(
+                              key: const Key("ok_button"),
+                              onPressed: () => Navigator.pop(context, 'ok'),
+                              child: const Text('ok'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
-                } else {
-                  Network().sendScheduleRequest(
-                      _major!,
-                      _semester!,
-                      _minCredit,
-                      _maxCredit,
-                      _previousClasses,
-                      _preferredClasses,
-                      _unpreferredClasses,
-                      _preferredProfessors,
-                      _unpreferredProfessors);
-                  // TODO Waiting page?
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const ResultsPage(key: Key("results")),
-                      ));
-                }
-              },
-              child: const Text("Submit"),
-            ),
+                      );
+                    } else {
+                      Network().sendScheduleRequest(
+                          _major!,
+                          _semester!,
+                          _minCredit,
+                          _maxCredit,
+                          _previousClasses,
+                          _preferredClasses,
+                          _unpreferredClasses,
+                          _preferredProfessors,
+                          _unpreferredProfessors);
+                      // TODO Waiting page?
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const ResultsPage(key: Key("results")),
+                          ));
+                    }
+                  },
+                  child: const Text("Submit"),
+                ),
+              ],
+            )
           ],
         ),
       ),
