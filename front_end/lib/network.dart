@@ -15,6 +15,7 @@ class Network {
   static const int _port = 50000;
 
   static final Network _instance = Network._internal();
+
   factory Network() {
     return _instance;
   }
