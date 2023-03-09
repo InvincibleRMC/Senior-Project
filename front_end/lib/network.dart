@@ -181,4 +181,9 @@ class Network {
   void setMajors() {
     _majors = [Major(name: "CS BS")];
   }
+
+  @visibleForTesting
+  void setCourses() {
+    _courses = [Course(name: "CSDS 132")];
+  }
 }

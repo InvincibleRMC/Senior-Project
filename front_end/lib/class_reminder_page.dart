@@ -36,6 +36,7 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                   textAlign: TextAlign.center,
                 ),
                 DropdownSearch<String>.multiSelection(
+                    key: const Key("drop_down_courses"),
                     items: Network().getCourseNames(),
                     popupProps: const PopupPropsMultiSelection.menu(
                         showSelectedItems: true, showSearchBox: true),
