@@ -5,7 +5,7 @@ import socket
 import sys
 import time
 import sqlite3
-from sqlite3 import Connection
+from sqlite3 import Connection, Cursor
 from sqlite3 import Error
 from typing import List
 
@@ -84,15 +84,15 @@ class DatabaseConnection:
 
         return list_of_courses
 
-    def select_all_profs(self):
+    def select_all_profs(self) -> List[str]:
         """selects all profs"""
         cur = self.conn.cursor()
         cur.execute("SELECT firstname,lastname FROM instructor")
 
         rows = cur.fetchall()
-        list_of_profs = []
+        list_of_profs: List[str] = []
         for row in rows:
-            list_of_profs.append(row[1]+ ", " + row[0])
+            list_of_profs.append(row[1] + ", " + row[0])
 
         return list_of_profs
 
@@ -106,21 +106,21 @@ class DatabaseConnection:
         cur = self.conn.cursor()
         cur.execute("DELETE FROM classes_taken")
 
-    def add_taken_classes(self, taken_class_array):
+    def add_taken_classes(self, taken_class_array: List[str]):
         """adds classes taken to class list"""
         cur = self.conn.cursor()
         sql = """SELECT num, sub_cat_num
                        FROM course crs
                        WHERE crs.sub_cat_num = ?"""
         for classes in taken_class_array:
-            cur.execute(sql,(classes,))
-            sql2= '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
+            cur.execute(sql, (classes,))
+            sql2 = '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
 
             rows = cur.fetchall()
             for row in rows:
                 cur.execute(sql2, row)
 
-    def select_classes(self, credits_total):
+    def select_classes(self, credits_total: int):
         """generates a schedule"""
         current_credits = 0
         while current_credits < credits_total - 1:
@@ -207,9 +207,9 @@ class WorkerThread:
 
             response.id = request.id
 
-            print(response)
             # send data
             data: bytes = response.SerializeToString()
+
             conn.send(data)
 
             # close socket
@@ -227,32 +227,32 @@ class WorkerThread:
     def handle_req_course(self, req: CourseRequest) -> CourseResponse:
         """Generates CourseResponse from CourseRequest"""
         res = CourseResponse()
-
         course_list: List[Course] = []
         for class_name in self.db_conn.select_all_courses():
             course_list.append(self.create_course(class_name))
 
-        course_list = course_list[:len(course_list)//5]
         res.courses.extend(course_list)
-        # res.courses.extend([self.create_course("bruh"),
-        #                     self.create_course("yeet")])
         return res
+
+    def create_prof(self, name: str, ident: int = 0) -> Professor:
+        """Helper to create a Professor object."""
+        prof = Professor()
+
+        name_list = name.split(",")
+        prof.Clear()
+        prof.id = ident
+        prof.first = name_list[0]
+        prof.last = name_list[1]
+        return prof
 
     def handle_req_prof(self, req: ProfessorRequest) -> ProfessorResponse:
         """Generates ProfessorResponse from ProfessorRequest"""
         res = ProfessorResponse()
+        prof_list: List[Professor] = []
+        for prof in self.db_conn.select_all_profs():
+            prof_list.append(self.create_prof(prof))
 
-        def create_prof(ident: int, first: str, last: str) -> Professor:
-            """Helper to create a Professor object."""
-            prof = Professor()
-            prof.Clear()
-            prof.id = ident
-            prof.first = first
-            prof.last = last
-            return prof
-
-        res.professors.extend([create_prof(1, "Ronald", "Loui"),
-                               create_prof(2, "Harold", "Connamacher")])
+        res.professors.extend(prof_list)
         return res
 
     def handle_req_schedule(self, req: ScheduleRequest) -> ScheduleResponse:

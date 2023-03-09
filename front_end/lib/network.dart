@@ -5,7 +5,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:front_end/proto/data.pbserver.dart';
-import 'package:tcp_socket_connection/tcp_socket_connection.dart';
+// import 'package:tcp_socket_connection/tcp_socket_connection.dart';
+import 'dart:io';
 import 'package:protobuf/protobuf.dart';
 
 import 'package:front_end/proto/requests.pb.dart';
@@ -47,12 +48,12 @@ class Network {
   // it's also private, so it can only be called in this class
   Network._internal();
 
-  static void messageReceived(String message) {
+  static void messageReceived(Uint8List message) {
     print("Starting messagedRecieved");
     var res = Response();
     res.clear();
 
-    var read = CodedBufferReader(message.codeUnits);
+    var read = CodedBufferReader(message);
     res.mergeFromCodedBufferReader(read);
 
     requests.removeWhere((Request req) => req.id == res.id);
@@ -94,19 +95,28 @@ class Network {
   }
 
   static void requestHelper(Request req) async {
-    TcpSocketConnection connection = TcpSocketConnection("localhost", _port);
-    // For Debug
-    connection.enableConsolePrint(true);
     requests.add(req);
-    // 1 sec seems to have been short
-    int timeOut = 3;
-    int attempts = 1000;
-    if (await connection.canConnect(timeOut, attempts: attempts)) {
-      await connection.connect(timeOut, messageReceived);
-      Uint8List out = req.writeToBuffer();
-      connection.sendMessage(_decoder.convert(out));
-      print("Sending Request ${req.toString()}");
-    }
+    Socket socket = await Socket.connect("localhost", _port);
+    Uint8List out = req.writeToBuffer();
+    socket.write(_decoder.convert(out));
+    print("Sending Request ${req.toString()}");
+
+    // Todo this might be a memory leak
+    socket.listen(
+      (Uint8List event) {
+        messageReceived(event);
+      },
+      onError: (error) {
+        print(error);
+        socket.destroy();
+      },
+
+      // handle server ending connection
+      onDone: () {
+        print('Server left.');
+        socket.destroy();
+      },
+    );
   }
 
   void sendMajorRequest() {
