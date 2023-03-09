@@ -2,7 +2,7 @@
 """Module for Backend server handling requests and sending responses"""
 import sys
 import signal
-
+from typing import Dict
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 

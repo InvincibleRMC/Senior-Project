@@ -495,4 +495,4 @@ overgeneral-exceptions=BaseException,
                        Exception
 
 [Custom]
-diable=no-name-in-module
+disable=no-name-in-module
