@@ -7,6 +7,7 @@ import 'package:front_end/standard_widgets.dart';
 import 'class_reminder_page.dart';
 
 void main() async {
+  Network().connect();
   Network().sendProfessorRequest();
   Network().sendCourseRequest();
   Network().sendMajorRequest();
@@ -24,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     super.dispose();
-    Network.dispose();
+    Network().dispose();
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/network.dart';
+import 'package:front_end/proto/service.pbgrpc.dart';
 import 'package:front_end/standard_widgets.dart';
 import 'main.dart';
 
@@ -47,7 +48,7 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                   showDialog<String>(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Warning No email inputted'),
+                      title: const Text('Warning: No email entered'),
                       actions: <Widget>[
                         TextButton(
                           key: const Key("cancel_button"),

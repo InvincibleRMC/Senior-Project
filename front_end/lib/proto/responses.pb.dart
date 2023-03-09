@@ -9,7 +9,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'data.pb.dart' as $0;
+import 'data.pb.dart' as $2;
 
 import 'responses.pbenum.dart';
 
@@ -17,27 +17,27 @@ export 'responses.pbenum.dart';
 
 class ScheduleResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduleResponse', createEmptyInstance: create)
-    ..pc<$0.Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall1', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring1', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall2', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring2', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall3', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring3', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall4', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
-    ..pc<$0.Course>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring4', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$2.Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall1', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring1', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall2', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring2', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall3', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring3', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fall4', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
+    ..pc<$2.Course>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'spring4', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
     ..hasRequiredFields = false
   ;
 
   ScheduleResponse._() : super();
   factory ScheduleResponse({
-    $core.Iterable<$0.Course>? fall1,
-    $core.Iterable<$0.Course>? spring1,
-    $core.Iterable<$0.Course>? fall2,
-    $core.Iterable<$0.Course>? spring2,
-    $core.Iterable<$0.Course>? fall3,
-    $core.Iterable<$0.Course>? spring3,
-    $core.Iterable<$0.Course>? fall4,
-    $core.Iterable<$0.Course>? spring4,
+    $core.Iterable<$2.Course>? fall1,
+    $core.Iterable<$2.Course>? spring1,
+    $core.Iterable<$2.Course>? fall2,
+    $core.Iterable<$2.Course>? spring2,
+    $core.Iterable<$2.Course>? fall3,
+    $core.Iterable<$2.Course>? spring3,
+    $core.Iterable<$2.Course>? fall4,
+    $core.Iterable<$2.Course>? spring4,
   }) {
     final _result = create();
     if (fall1 != null) {
@@ -88,39 +88,39 @@ class ScheduleResponse extends $pb.GeneratedMessage {
   static ScheduleResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.Course> get fall1 => $_getList(0);
+  $core.List<$2.Course> get fall1 => $_getList(0);
 
   @$pb.TagNumber(2)
-  $core.List<$0.Course> get spring1 => $_getList(1);
+  $core.List<$2.Course> get spring1 => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.List<$0.Course> get fall2 => $_getList(2);
+  $core.List<$2.Course> get fall2 => $_getList(2);
 
   @$pb.TagNumber(4)
-  $core.List<$0.Course> get spring2 => $_getList(3);
+  $core.List<$2.Course> get spring2 => $_getList(3);
 
   @$pb.TagNumber(5)
-  $core.List<$0.Course> get fall3 => $_getList(4);
+  $core.List<$2.Course> get fall3 => $_getList(4);
 
   @$pb.TagNumber(6)
-  $core.List<$0.Course> get spring3 => $_getList(5);
+  $core.List<$2.Course> get spring3 => $_getList(5);
 
   @$pb.TagNumber(7)
-  $core.List<$0.Course> get fall4 => $_getList(6);
+  $core.List<$2.Course> get fall4 => $_getList(6);
 
   @$pb.TagNumber(8)
-  $core.List<$0.Course> get spring4 => $_getList(7);
+  $core.List<$2.Course> get spring4 => $_getList(7);
 }
 
 class ProfessorResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ProfessorResponse', createEmptyInstance: create)
-    ..pc<$0.Professor>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'professors', $pb.PbFieldType.PM, subBuilder: $0.Professor.create)
+    ..pc<$2.Professor>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'professors', $pb.PbFieldType.PM, subBuilder: $2.Professor.create)
     ..hasRequiredFields = false
   ;
 
   ProfessorResponse._() : super();
   factory ProfessorResponse({
-    $core.Iterable<$0.Professor>? professors,
+    $core.Iterable<$2.Professor>? professors,
   }) {
     final _result = create();
     if (professors != null) {
@@ -150,18 +150,18 @@ class ProfessorResponse extends $pb.GeneratedMessage {
   static ProfessorResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.Professor> get professors => $_getList(0);
+  $core.List<$2.Professor> get professors => $_getList(0);
 }
 
 class CourseResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CourseResponse', createEmptyInstance: create)
-    ..pc<$0.Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'courses', $pb.PbFieldType.PM, subBuilder: $0.Course.create)
+    ..pc<$2.Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'courses', $pb.PbFieldType.PM, subBuilder: $2.Course.create)
     ..hasRequiredFields = false
   ;
 
   CourseResponse._() : super();
   factory CourseResponse({
-    $core.Iterable<$0.Course>? courses,
+    $core.Iterable<$2.Course>? courses,
   }) {
     final _result = create();
     if (courses != null) {
@@ -191,7 +191,7 @@ class CourseResponse extends $pb.GeneratedMessage {
   static CourseResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.Course> get courses => $_getList(0);
+  $core.List<$2.Course> get courses => $_getList(0);
 }
 
 class DebugResponse extends $pb.GeneratedMessage {
@@ -243,13 +243,13 @@ class DebugResponse extends $pb.GeneratedMessage {
 
 class MajorResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MajorResponse', createEmptyInstance: create)
-    ..pc<$0.Major>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'majors', $pb.PbFieldType.PM, subBuilder: $0.Major.create)
+    ..pc<$2.Major>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'majors', $pb.PbFieldType.PM, subBuilder: $2.Major.create)
     ..hasRequiredFields = false
   ;
 
   MajorResponse._() : super();
   factory MajorResponse({
-    $core.Iterable<$0.Major>? majors,
+    $core.Iterable<$2.Major>? majors,
   }) {
     final _result = create();
     if (majors != null) {
@@ -279,7 +279,7 @@ class MajorResponse extends $pb.GeneratedMessage {
   static MajorResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.Major> get majors => $_getList(0);
+  $core.List<$2.Major> get majors => $_getList(0);
 }
 
 class NotificationResponse extends $pb.GeneratedMessage {
