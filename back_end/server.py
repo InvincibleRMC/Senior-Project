@@ -8,6 +8,7 @@ import sqlite3
 from sqlite3 import Connection, Cursor
 from sqlite3 import Error
 from typing import List
+import atexit
 
 import multiprocessing as mp
 from multiprocessing.synchronize import Lock
@@ -25,7 +26,7 @@ from proto.data_pb2 import Course, Professor, Major
 # from proto.requests_pb2 import *
 # from proto.responses_pb2 import *
 # from proto.data_pb2 import *
-import atexit
+
 
 # TODO: thread pool
 # resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
