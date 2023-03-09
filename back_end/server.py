@@ -3,13 +3,12 @@
 import sys
 import signal
 
-from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
+from concurrent.futures import ThreadPoolExecutor
 
-import grpc 
+import grpc
 from proto.service_pb2_grpc import ServiceServicer, add_ServiceServicer_to_server
 
-
-import sqlite3
+# import sqlite3
 
 from proto.data_pb2 import Course, Professor, Major
 from proto.requests_pb2 import (MajorRequest,
@@ -24,7 +23,7 @@ class Service(ServiceServicer):
     def __init__(self):
         pass
         # self.db_conn = sqlite3.Connection()
-        # self.db_lock = None 
+        # self.db_lock = None
 
     @staticmethod
     def create_course(ident: int, name: str, semester: str) -> Course:
@@ -106,11 +105,10 @@ class Service(ServiceServicer):
         res = MajorResponse()
         res.majors.extend([self.create_major(1, "CS"), self.create_major(2, "CE")])
         return res
-    
+
     def Debug(self, request, context):
         print(f"Received {request.msg}")
         return DebugResponse(msg="pong")
-
 
 
 def serve(port: int):

@@ -1,24 +1,14 @@
 import 'dart:async' as flutter_async;
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:front_end/proto/data.pbserver.dart';
 import 'package:front_end/proto/service.pbgrpc.dart';
 import 'package:grpc/grpc_or_grpcweb.dart';
-import 'package:protobuf/protobuf.dart';
 
 import 'package:front_end/proto/requests.pb.dart';
 import 'package:front_end/proto/responses.pb.dart';
 
 import 'package:grpc/grpc.dart' as grpc;
-// import 'package:grpc/grpc_web.dart';
-
-import 'package:front_end/proto/service.pb.dart';
-import 'package:front_end/proto/service.pbserver.dart';
 
 class Network {
   static const String _host = "localhost";
@@ -41,15 +31,6 @@ class Network {
   Network._internal();
 
   void connect() {
-    // if (kIsWeb) {
-    //   // _channel = GrpcOrGrpcWebClientChannel.toSingleEndpoint(
-    //   //     host: _host, port: _port, transportSecure: false);
-    // } else {
-    //   _channel = GrpcOrGrpcWebClientChannel.grpc(_host,
-    //       port: _port,
-    //       options: const grpc.ChannelOptions(
-    //           credentials: grpc.ChannelCredentials.insecure()));
-    // }
     _channel = GrpcOrGrpcWebClientChannel.toSeparatePorts(
         host: _host,
         grpcPort: _port,
@@ -67,7 +48,7 @@ class Network {
   }
 
   void dispose() async {
-    await _channel!.shutdown();
+    await _channel?.shutdown();
   }
 
   List<Course> _courses = List.empty();
@@ -76,20 +57,18 @@ class Network {
   ScheduleResponse _schedule = ScheduleResponse();
 
   void sendMajorRequest() async {
-    var req = MajorRequest();
-    var res = await _client!.getMajors(req);
-
-    _majors = res.majors;
+    var res = await _client?.getMajors(MajorRequest());
+    _majors = res?.majors ?? _majors;
   }
 
   void sendProfessorRequest() async {
-    var res = await _client!.getProfessors(ProfessorRequest());
-    _professors = res.professors;
+    var res = await _client?.getProfessors(ProfessorRequest());
+    _professors = res?.professors ?? _professors;
   }
 
   void sendCourseRequest() async {
-    var res = await _client!.getCourses(CourseRequest());
-    _courses = res.courses;
+    var res = await _client?.getCourses(CourseRequest());
+    _courses = res?.courses ?? _courses;
   }
 
   void sendNotificationRequest(String email, List<String> className) async {
@@ -97,7 +76,7 @@ class Network {
         email: email,
         classes: List<Course>.generate(
             className.length, (int index) => Course(name: className[index])));
-    var res = await _client!.registerNotifications(req);
+    await _client?.registerNotifications(req);
     // TODO: Check result?
     // return res;
   }
@@ -161,8 +140,8 @@ class Network {
         preferredProfs: preferredProfs,
         unprefferedProfs: unpreferredProfs);
 
-    var res = await _client!.getSchedule(req);
-    _schedule = res;
+    var res = await _client?.getSchedule(req);
+    _schedule = res ?? _schedule;
   }
 
   List<String> getCourseNames() {
