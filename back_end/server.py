@@ -28,7 +28,7 @@ class Service(ServiceServicer):
         """Helper to create a Course object."""
         return Course(id=ident, name=name, semester=semester)
 
-    def GetSchedule(self, request, context):
+    def GetSchedule(self, request, context) -> ScheduleResponse:
         print(f"Received Schedule request: {repr(request)}")
 
         course_map: Dict[str, CourseList] = {}
@@ -52,15 +52,15 @@ class Service(ServiceServicer):
         """Helper to create a Professor object."""
         return Professor(id=ident,first=first, last=last)
 
-    def GetProfessors(self, request, context):
+    def GetProfessors(self, request, context) -> ProfessorResponse:
         """Generates ProfessorResponse from ProfessorRequest"""
-        print(f"Received professor request:", request)
+        print(f"Received professor request: {repr(request)}")
         res = ProfessorResponse()
         res.professors.extend([self.create_prof(1, "Ronald", "Loui"),
                                self.create_prof(2, "Harold", "Connamacher")])
         return res
 
-    def GetCourses(self, request, context):
+    def GetCourses(self, request, context) -> CourseResponse:
         print(f"Received course request: {repr(request)}")
         res = CourseResponse()
         res.courses.extend([self.create_course(1, "bruh", "spring"),
@@ -78,7 +78,7 @@ class Service(ServiceServicer):
         res.majors.extend([self.create_major(1, "CS"), self.create_major(2, "CE")])
         return res
 
-    def Debug(self, request, context):
+    def Debug(self, request, context) -> DebugResponse:
         print(f"Received {request.msg}")
         return DebugResponse(msg="pong")
 

@@ -493,3 +493,6 @@ valid-metaclass-classmethod-first-arg=cls
 # "BaseException, Exception".
 overgeneral-exceptions=BaseException,
                        Exception
+
+[Custom]
+diable=no-name-in-module
