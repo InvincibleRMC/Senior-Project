@@ -15,15 +15,13 @@ from proto import data_pb2 as proto_dot_data__pb2
 
 from proto.data_pb2 import *
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14proto/requests.proto\x1a\x10proto/data.proto\">\n\x13NotificationRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x18\n\x07\x63lasses\x18\x02 \x03(\x0b\x32\x07.Course\"\x96\x02\n\x0fScheduleRequest\x12\x15\n\x05major\x18\x01 \x01(\x0b\x32\x06.Major\x12\x10\n\x08semester\x18\x02 \x01(\t\x12\x12\n\nminCredits\x18\x03 \x01(\x05\x12\x12\n\nmaxCredits\x18\x04 \x01(\x05\x12 \n\x0fpreviousClasses\x18\x05 \x03(\x0b\x32\x07.Course\x12!\n\x10preferredClasses\x18\x06 \x03(\x0b\x32\x07.Course\x12#\n\x12unpreferredClasses\x18\x07 \x03(\x0b\x32\x07.Course\x12\"\n\x0epreferredProfs\x18\x08 \x03(\x0b\x32\n.Professor\x12$\n\x10unprefferedProfs\x18\t \x03(\x0b\x32\n.Professor\"\x0e\n\x0cMajorRequest\"\x12\n\x10ProfessorRequest\"\x0f\n\rCourseRequest\"\x1b\n\x0c\x44\x65\x62ugRequest\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\xf5\x01\n\x07Request\x12\x1a\n\x04type\x18\x01 \x01(\x0e\x32\x0c.RequestType\x12\x1e\n\x02r1\x18\x02 \x01(\x0b\x32\x10.ScheduleRequestH\x00\x12\"\n\x02r2\x18\x03 \x01(\x0b\x32\x14.NotificationRequestH\x00\x12\x1f\n\x02r3\x18\x04 \x01(\x0b\x32\x11.ProfessorRequestH\x00\x12\x1c\n\x02r4\x18\x05 \x01(\x0b\x32\x0e.CourseRequestH\x00\x12\x1b\n\x02r5\x18\x06 \x01(\x0b\x32\r.DebugRequestH\x00\x12\x1b\n\x02r6\x18\x07 \x01(\x0b\x32\r.MajorRequestH\x00\x12\n\n\x02id\x18\x08 \x01(\x05\x42\x05\n\x03msg*v\n\x0bRequestType\x12\x10\n\x0cREQ_SCHEDULE\x10\x00\x12\x14\n\x10REQ_NOTIFICATION\x10\x01\x12\x11\n\rREQ_PROFESSOR\x10\x02\x12\x0e\n\nREQ_COURSE\x10\x03\x12\r\n\tREQ_DEBUG\x10\x04\x12\r\n\tREQ_MAJOR\x10\x05P\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14proto/requests.proto\x1a\x10proto/data.proto\">\n\x13NotificationRequest\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x18\n\x07\x63lasses\x18\x02 \x03(\x0b\x32\x07.Course\"\x96\x02\n\x0fScheduleRequest\x12\x15\n\x05major\x18\x01 \x01(\x0b\x32\x06.Major\x12\x10\n\x08semester\x18\x02 \x01(\t\x12\x12\n\nminCredits\x18\x03 \x01(\x05\x12\x12\n\nmaxCredits\x18\x04 \x01(\x05\x12 \n\x0fpreviousClasses\x18\x05 \x03(\x0b\x32\x07.Course\x12!\n\x10preferredClasses\x18\x06 \x03(\x0b\x32\x07.Course\x12#\n\x12unpreferredClasses\x18\x07 \x03(\x0b\x32\x07.Course\x12\"\n\x0epreferredProfs\x18\x08 \x03(\x0b\x32\n.Professor\x12$\n\x10unprefferedProfs\x18\t \x03(\x0b\x32\n.Professor\"\x0e\n\x0cMajorRequest\"\x12\n\x10ProfessorRequest\"\x0f\n\rCourseRequest\"\x1b\n\x0c\x44\x65\x62ugRequest\x12\x0b\n\x03msg\x18\x01 \x01(\tP\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'proto.requests_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _REQUESTTYPE._serialized_start=717
-  _REQUESTTYPE._serialized_end=835
   _NOTIFICATIONREQUEST._serialized_start=42
   _NOTIFICATIONREQUEST._serialized_end=104
   _SCHEDULEREQUEST._serialized_start=107
@@ -36,6 +34,4 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _COURSEREQUEST._serialized_end=438
   _DEBUGREQUEST._serialized_start=440
   _DEBUGREQUEST._serialized_end=467
-  _REQUEST._serialized_start=470
-  _REQUEST._serialized_end=715
 # @@protoc_insertion_point(module_scope)
