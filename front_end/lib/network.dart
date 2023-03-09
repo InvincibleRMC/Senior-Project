@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:front_end/proto/data.pbserver.dart';
-// import 'package:tcp_socket_connection/tcp_socket_connection.dart';
 import 'dart:io';
 import 'package:protobuf/protobuf.dart';
 
