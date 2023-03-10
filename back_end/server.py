@@ -1,9 +1,9 @@
 #!/bin/python3
 """Module for Backend server handling requests and sending responses"""
+from os import path
 import sys
 import sqlite3
-from sqlite3 import Connection, Cursor
-from sqlite3 import Error
+from sqlite3 import Connection, Cursor, Error
 from typing import List, Dict
 import atexit
 import signal
@@ -33,6 +33,9 @@ class DatabaseConnection:
 
     def _create_connection(self, db_file: str) -> Connection:
         """created connection to database"""
+        if not path.exists(db_file):
+            raise FileNotFoundError
+
         conn = None
         try:
             conn = sqlite3.connect(db_file, check_same_thread=False)
@@ -46,17 +49,21 @@ class DatabaseConnection:
         """Returns version of sqlite"""
         return self.execute("select sqlite_version();")
 
-    def execute(self, query: str) -> List[str]:
+    def execute(self, query: str, params=None) -> List[str]:
         """Execute query"""
 
         # https://www.bogotobogo.com/python/Multithread/python_multithreading_Using_Locks_with_statement_Context_Manager.php
         # With statements are cool
         with self.lock:
             cursor: Cursor = self.conn.cursor()
-            cursor.execute(query)
+            if params is None:
+                cursor.execute(query)
+            else:
+                cursor.execute(query, params)
+
             record = cursor.fetchall()
             cursor.close()
-        return record
+            return record
 
     def select_all_courses(self) -> List[str]:
         """selects all courses"""
@@ -100,9 +107,12 @@ class DatabaseConnection:
             for row in rows:
                 cur.execute(sql2, row)
 
-    def select_classes(self, credits_total: int):
+    # TODO actually check average credits
+    def select_classes(self, credits_total: int = 15):
         """generates a schedule"""
         current_credits = 0
+        classes: List[str] = []
+
         while current_credits < credits_total - 1:
             cur = self.conn.cursor()
             cur.execute("""SELECT num, sub_cat_num, course_time, course_days
@@ -116,9 +126,11 @@ class DatabaseConnection:
                             DESC LIMIT 1""")
             save = (0, '', '', '')
             rows = cur.fetchall()
+            # classes.append(rows[1])
 
             for row in rows:
                 print(row)
+                classes.append(row[1])
                 save = row
 
             num, sub_cat_num, course_time, course_days = save
@@ -128,11 +140,15 @@ class DatabaseConnection:
 
             cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.num =" + str(num))
             rows = cur.fetchall()
-            save2 = 0
+
             for row in rows:
-                print(row)
-                save2 = row[0]
+                # print(row)
+                save2: int = row[0]
                 current_credits += save2
+
+        self.clear_taken_list()
+        self.clear_class_list()
+        return classes
 
 
 class Service(ServiceServicer):
@@ -149,14 +165,31 @@ class Service(ServiceServicer):
         print(f"Received Schedule request: {repr(request)}")
 
         course_map: Dict[str, CourseList] = {}
-        course_map["fall1"] = CourseList(courses=[self.create_course("bruh121"),
-                                                  self.create_course("yeet121")])
-        course_map["spring1"] = CourseList(courses=[self.create_course("bruh211"),
-                                                    self.create_course("yeet221")])
-        course_map["fall2"] = CourseList(courses=[self.create_course("bruh121"),
-                                                  self.create_course("yeet121")])
-        course_map["spring2"] = CourseList(courses=[self.create_course("bruh211"),
-                                                    self.create_course("yeet221")])
+
+        # credits: int = (request.minCredits + request.maxCredits)/2
+
+        course_list: List[str] = []
+
+        for course in request.previousClasses:
+            course_list.append(course.name)
+
+
+        self.db_conn.add_taken_classes(course_list)
+        courses_from_database: List[str] = self.db_conn.select_classes()
+
+        print(courses_from_database)
+
+        courses_converted: List[Course] = []
+        for course in courses_from_database:
+            courses_converted.append(self.create_course(course))
+
+        course_map["fall1"] = CourseList(courses=courses_converted)
+        # course_map["spring1"] = CourseList(courses=[self.create_course("bruh211"),
+        #                                             self.create_course("yeet221")])
+        # course_map["fall2"] = CourseList(courses=[self.create_course("bruh121"),
+        #                                           self.create_course("yeet121")])
+        # course_map["spring2"] = CourseList(courses=[self.create_course("bruh211"),
+        #                                             self.create_course("yeet221")])
 
         return ScheduleResponse(course_map=course_map)
 

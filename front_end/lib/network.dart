@@ -164,16 +164,16 @@ class Network {
 
   List<String> courseToString(List<Course> courseList) {
     return List<String>.generate(
-        _courses.length, (int index) => _courses[index].name);
+        courseList.length, (int index) => courseList[index].name);
   }
 
   Map<String, List<String>> getSchedule() {
+    print(_schedule);
     Map<String, List<String>> schedule = <String, List<String>>{};
-
     for (final entry in _schedule.courseMap.entries) {
       schedule[entry.key] = courseToString(entry.value.courses);
     }
-
+    print(schedule);
     return schedule;
   }
 
