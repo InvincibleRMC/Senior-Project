@@ -41,7 +41,6 @@ dependencies:
   test: ^1.22.0
   dropdown_search: ^5.0.6
   mockito: ^5.3.2
-  tcp_socket_connection: ^0.3.1
   protobuf: ^2.1.0
   protoc_plugin: ^20.0.1
   flutter_launcher_icons: ^0.12.0
