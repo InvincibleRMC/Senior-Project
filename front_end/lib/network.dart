@@ -168,12 +168,10 @@ class Network {
   }
 
   Map<String, List<String>> getSchedule() {
-    print(_schedule);
     Map<String, List<String>> schedule = <String, List<String>>{};
     for (final entry in _schedule.courseMap.entries) {
       schedule[entry.key] = courseToString(entry.value.courses);
     }
-    print(schedule);
     return schedule;
   }
 

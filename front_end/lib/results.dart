@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/network.dart';
+import 'package:front_end/proto/responses.pb.dart';
 import 'package:front_end/standard_widgets.dart';
 import 'main.dart';
+import 'dart:async';
 
 class ResultsPage extends StatefulWidget {
   const ResultsPage({Key? key}) : super(key: key);
@@ -12,6 +14,20 @@ class ResultsPage extends StatefulWidget {
 
 class _ResultsPageState extends State<ResultsPage> {
   Map<String, List<String>> schedule = Network().getSchedule();
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (Network().getSchedule().isEmpty) {
+        setState(() {
+          print(Network().getSchedule());
+        });
+      } else {
+        timer.cancel();
+      }
+    });
+  }
 
   Column semesterHelper(MapEntry<String, List<String>> semester) {
     List<Text> text = List.generate(
