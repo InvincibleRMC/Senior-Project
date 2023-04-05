@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front_end/network.dart';
-import 'package:front_end/proto/responses.pb.dart';
 import 'package:front_end/standard_widgets.dart';
 import 'main.dart';
 import 'dart:async';
