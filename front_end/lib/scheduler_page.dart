@@ -361,6 +361,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
                               _preferredProfessors,
                               _unpreferredProfessors);
                           // TODO Waiting page?
+
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
