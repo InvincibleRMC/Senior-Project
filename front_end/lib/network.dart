@@ -184,4 +184,8 @@ class Network {
   void setCourses() {
     _courses = [Course(name: "CSDS 132")];
   }
+
+  void clearSchedule() {
+    _schedule = ScheduleResponse();
+  }
 }

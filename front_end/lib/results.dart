@@ -73,6 +73,7 @@ class _ResultsPageState extends State<ResultsPage> {
             ElevatedButton(
               key: const Key("home_button"),
               onPressed: () {
+                Network().clearSchedule();
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
