@@ -14,10 +14,12 @@ class ResultsPage extends StatefulWidget {
 class _ResultsPageState extends State<ResultsPage> {
   Map<String, List<String>> schedule = Network().getSchedule();
 
+  Timer? t;
+
   @override
   void initState() {
     super.initState();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    t = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (Network().getSchedule().isEmpty) {
         setState(() {
           print(Network().getSchedule());
@@ -26,6 +28,12 @@ class _ResultsPageState extends State<ResultsPage> {
         timer.cancel();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    t?.cancel();
   }
 
   Column semesterHelper(MapEntry<String, List<String>> semester) {
