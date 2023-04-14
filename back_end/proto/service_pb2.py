@@ -17,6 +17,10 @@ try:
 except AttributeError:
   proto_dot_data__pb2 = proto_dot_requests__pb2.proto.data_pb2
 from proto import responses_pb2 as proto_dot_responses__pb2
+try:
+  proto_dot_data__pb2 = proto_dot_responses__pb2.proto_dot_data__pb2
+except AttributeError:
+  proto_dot_data__pb2 = proto_dot_responses__pb2.proto.data_pb2
 
 
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13proto/service.proto\x1a\x14proto/requests.proto\x1a\x15proto/responses.proto2\xca\x02\n\x07Service\x12\x34\n\x0bGetSchedule\x12\x10.ScheduleRequest\x1a\x11.ScheduleResponse\"\x00\x12\x46\n\x15RegisterNotifications\x12\x14.NotificationRequest\x1a\x15.NotificationResponse\"\x00\x12\x38\n\rGetProfessors\x12\x11.ProfessorRequest\x1a\x12.ProfessorResponse\"\x00\x12/\n\nGetCourses\x12\x0e.CourseRequest\x1a\x0f.CourseResponse\"\x00\x12,\n\tGetMajors\x12\r.MajorRequest\x1a\x0e.MajorResponse\"\x00\x12(\n\x05\x44\x65\x62ug\x12\r.DebugRequest\x1a\x0e.DebugResponse\"\x00\x62\x06proto3')
