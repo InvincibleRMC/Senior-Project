@@ -178,8 +178,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
         body: Center(
           child: SizedBox(
             width: screenPercentage * MediaQuery.of(context).size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: ListView(
               children: <Widget>[
                 DropdownSearch<String>(
                   key: const Key("drop_down_search_major"),
