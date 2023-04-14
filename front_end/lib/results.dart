@@ -14,6 +14,7 @@ class ResultsPage extends StatefulWidget {
 class _ResultsPageState extends State<ResultsPage> {
   Map<String, List<String>> schedule = Network().getSchedule();
 
+
   Timer? t;
 
   @override
