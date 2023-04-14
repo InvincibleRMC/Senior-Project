@@ -23,20 +23,21 @@ final $typed_data.Uint8List notificationRequestDescriptor = $convert.base64Decod
 const ScheduleRequest$json = const {
   '1': 'ScheduleRequest',
   '2': const [
-    const {'1': 'major', '3': 1, '4': 1, '5': 11, '6': '.Major', '10': 'major'},
-    const {'1': 'semester', '3': 2, '4': 1, '5': 9, '10': 'semester'},
-    const {'1': 'minCredits', '3': 3, '4': 1, '5': 5, '10': 'minCredits'},
-    const {'1': 'maxCredits', '3': 4, '4': 1, '5': 5, '10': 'maxCredits'},
-    const {'1': 'previousClasses', '3': 5, '4': 3, '5': 11, '6': '.Course', '10': 'previousClasses'},
-    const {'1': 'preferredClasses', '3': 6, '4': 3, '5': 11, '6': '.Course', '10': 'preferredClasses'},
-    const {'1': 'unpreferredClasses', '3': 7, '4': 3, '5': 11, '6': '.Course', '10': 'unpreferredClasses'},
-    const {'1': 'preferredProfs', '3': 8, '4': 3, '5': 11, '6': '.Professor', '10': 'preferredProfs'},
-    const {'1': 'unprefferedProfs', '3': 9, '4': 3, '5': 11, '6': '.Professor', '10': 'unprefferedProfs'},
+    const {'1': 'school', '3': 1, '4': 1, '5': 9, '10': 'school'},
+    const {'1': 'department', '3': 2, '4': 1, '5': 9, '10': 'department'},
+    const {'1': 'semester', '3': 3, '4': 1, '5': 9, '10': 'semester'},
+    const {'1': 'minCredits', '3': 4, '4': 1, '5': 5, '10': 'minCredits'},
+    const {'1': 'maxCredits', '3': 5, '4': 1, '5': 5, '10': 'maxCredits'},
+    const {'1': 'previousClasses', '3': 6, '4': 3, '5': 11, '6': '.Course', '10': 'previousClasses'},
+    const {'1': 'preferredClasses', '3': 7, '4': 3, '5': 11, '6': '.Course', '10': 'preferredClasses'},
+    const {'1': 'unpreferredClasses', '3': 8, '4': 3, '5': 11, '6': '.Course', '10': 'unpreferredClasses'},
+    const {'1': 'preferredProfs', '3': 9, '4': 3, '5': 11, '6': '.Professor', '10': 'preferredProfs'},
+    const {'1': 'unprefferedProfs', '3': 10, '4': 3, '5': 11, '6': '.Professor', '10': 'unprefferedProfs'},
   ],
 };
 
 /// Descriptor for `ScheduleRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSHAoFbWFqb3IYASABKAsyBi5NYWpvclIFbWFqb3ISGgoIc2VtZXN0ZXIYAiABKAlSCHNlbWVzdGVyEh4KCm1pbkNyZWRpdHMYAyABKAVSCm1pbkNyZWRpdHMSHgoKbWF4Q3JlZGl0cxgEIAEoBVIKbWF4Q3JlZGl0cxIxCg9wcmV2aW91c0NsYXNzZXMYBSADKAsyBy5Db3Vyc2VSD3ByZXZpb3VzQ2xhc3NlcxIzChBwcmVmZXJyZWRDbGFzc2VzGAYgAygLMgcuQ291cnNlUhBwcmVmZXJyZWRDbGFzc2VzEjcKEnVucHJlZmVycmVkQ2xhc3NlcxgHIAMoCzIHLkNvdXJzZVISdW5wcmVmZXJyZWRDbGFzc2VzEjIKDnByZWZlcnJlZFByb2ZzGAggAygLMgouUHJvZmVzc29yUg5wcmVmZXJyZWRQcm9mcxI2ChB1bnByZWZmZXJlZFByb2ZzGAkgAygLMgouUHJvZmVzc29yUhB1bnByZWZmZXJlZFByb2Zz');
+final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSFgoGc2Nob29sGAEgASgJUgZzY2hvb2wSHgoKZGVwYXJ0bWVudBgCIAEoCVIKZGVwYXJ0bWVudBIaCghzZW1lc3RlchgDIAEoCVIIc2VtZXN0ZXISHgoKbWluQ3JlZGl0cxgEIAEoBVIKbWluQ3JlZGl0cxIeCgptYXhDcmVkaXRzGAUgASgFUgptYXhDcmVkaXRzEjEKD3ByZXZpb3VzQ2xhc3NlcxgGIAMoCzIHLkNvdXJzZVIPcHJldmlvdXNDbGFzc2VzEjMKEHByZWZlcnJlZENsYXNzZXMYByADKAsyBy5Db3Vyc2VSEHByZWZlcnJlZENsYXNzZXMSNwoSdW5wcmVmZXJyZWRDbGFzc2VzGAggAygLMgcuQ291cnNlUhJ1bnByZWZlcnJlZENsYXNzZXMSMgoOcHJlZmVycmVkUHJvZnMYCSADKAsyCi5Qcm9mZXNzb3JSDnByZWZlcnJlZFByb2ZzEjYKEHVucHJlZmZlcmVkUHJvZnMYCiADKAsyCi5Qcm9mZXNzb3JSEHVucHJlZmZlcmVkUHJvZnM=');
 @$core.Deprecated('Use majorRequestDescriptor instead')
 const MajorRequest$json = const {
   '1': 'MajorRequest',

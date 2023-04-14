@@ -84,6 +84,47 @@ class Course extends $pb.GeneratedMessage {
   void clearSemester() => clearField(3);
 }
 
+class CourseList extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CourseList', createEmptyInstance: create)
+    ..pc<Course>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'courses', $pb.PbFieldType.PM, subBuilder: Course.create)
+    ..hasRequiredFields = false
+  ;
+
+  CourseList._() : super();
+  factory CourseList({
+    $core.Iterable<Course>? courses,
+  }) {
+    final _result = create();
+    if (courses != null) {
+      _result.courses.addAll(courses);
+    }
+    return _result;
+  }
+  factory CourseList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CourseList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CourseList clone() => CourseList()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CourseList copyWith(void Function(CourseList) updates) => super.copyWith((message) => updates(message as CourseList)) as CourseList; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CourseList create() => CourseList._();
+  CourseList createEmptyInstance() => create();
+  static $pb.PbList<CourseList> createRepeated() => $pb.PbList<CourseList>();
+  @$core.pragma('dart2js:noInline')
+  static CourseList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CourseList>(create);
+  static CourseList? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Course> get courses => $_getList(0);
+}
+
 class Major extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Major', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id', $pb.PbFieldType.O3)

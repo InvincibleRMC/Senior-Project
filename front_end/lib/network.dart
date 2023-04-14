@@ -83,7 +83,8 @@ class Network {
 
   // TODO:
   void sendScheduleRequest(
-      String major,
+      String school,
+      String department,
       String semester,
       int? minCredit,
       int? maxCredit,
@@ -130,7 +131,8 @@ class Network {
     }
 
     var req = ScheduleRequest(
-        major: Major(name: major),
+        school: school,
+        department: department,
         semester: semester,
         minCredits: minCredit,
         maxCredits: maxCredit,

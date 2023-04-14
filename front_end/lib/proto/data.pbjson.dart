@@ -20,6 +20,16 @@ const Course$json = const {
 
 /// Descriptor for `Course`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List courseDescriptor = $convert.base64Decode('CgZDb3Vyc2USDgoCaWQYASABKA1SAmlkEhIKBG5hbWUYAiABKAlSBG5hbWUSGgoIc2VtZXN0ZXIYAyABKAlSCHNlbWVzdGVy');
+@$core.Deprecated('Use courseListDescriptor instead')
+const CourseList$json = const {
+  '1': 'CourseList',
+  '2': const [
+    const {'1': 'courses', '3': 1, '4': 3, '5': 11, '6': '.Course', '10': 'courses'},
+  ],
+};
+
+/// Descriptor for `CourseList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List courseListDescriptor = $convert.base64Decode('CgpDb3Vyc2VMaXN0EiEKB2NvdXJzZXMYASADKAsyBy5Db3Vyc2VSB2NvdXJzZXM=');
 @$core.Deprecated('Use majorDescriptor instead')
 const Major$json = const {
   '1': 'Major',
