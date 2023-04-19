@@ -17,9 +17,6 @@ from proto.responses_pb2 import (CourseList, DebugResponse,MajorResponse,
                                  NotificationResponse, ScheduleResponse, CourseResponse,
                                  ProfessorResponse)
 
-# TODO: thread pool
-# resource: https://superfastpython.com/threadpool-python/#ThreadPool_Example
-
 
 class DatabaseConnection:
     """DatabaseConnection is a connection to a sqlite database with helper functions for locking"""
