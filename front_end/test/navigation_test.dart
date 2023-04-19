@@ -72,11 +72,19 @@ void main() {
         await tester.pumpAndSettle();
 
         //Open Drop Down Search Bar
-        await tester.tap(find.byKey(const Key("drop_down_search_major")));
+        await tester.tap(find.byKey(const Key("drop_down_search_school")));
         await tester.pumpAndSettle();
 
         //With Major entered allow access to Results Page
-        await tester.tap(find.text("CS BS"));
+        await tester.tap(find.text("Case School of Engineering"));
+        await tester.pumpAndSettle();
+
+        //Open Drop Down Search Bar
+        await tester.tap(find.byKey(const Key("drop_down_search_department")));
+        await tester.pumpAndSettle();
+
+        //With Major entered allow access to Results Page
+        await tester.tap(find.text("CSDS"));
         await tester.pumpAndSettle();
 
         // With Semester entered allow access to Results Page
