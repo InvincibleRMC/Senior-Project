@@ -170,7 +170,6 @@ class Service(ServiceServicer):
         for course in request.previousClasses:
             course_list.append(course.name)
 
-
         self.db_conn.add_taken_classes(course_list)
         courses_from_database: List[str] = self.db_conn.select_classes()
 
@@ -197,7 +196,7 @@ class Service(ServiceServicer):
     @staticmethod
     def create_prof(first: str, last: str, ident: int = 0) -> Professor:
         """Helper to create a Professor object."""
-        return Professor(id=ident,first=first, last=last)
+        return Professor(id=ident, first=first, last=last)
 
     def GetProfessors(self, request, context) -> ProfessorResponse:
         """Generates ProfessorResponse from ProfessorRequest"""
