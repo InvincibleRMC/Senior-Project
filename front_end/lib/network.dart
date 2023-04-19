@@ -177,6 +177,10 @@ class Network {
     return schedule;
   }
 
+  void clearSchedule() {
+    _schedule = ScheduleResponse();
+  }
+
   @visibleForTesting
   void setMajors() {
     _majors = [Major(name: "CS BS")];
@@ -185,9 +189,5 @@ class Network {
   @visibleForTesting
   void setCourses() {
     _courses = [Course(name: "CSDS 132")];
-  }
-
-  void clearSchedule() {
-    _schedule = ScheduleResponse();
   }
 }
