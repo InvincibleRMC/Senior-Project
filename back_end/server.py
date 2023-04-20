@@ -63,89 +63,414 @@ class DatabaseConnection:
             return record
 
     def select_all_courses(self) -> List[str]:
-        """selects all courses"""
+        cur = self.conn.cursor()
+        cur.execute("SELECT distinct sub_cat_num_name FROM course")
 
-        rows = self.execute("SELECT sub_cat_num FROM course")
-        list_of_courses: List[str] = []
+        rows = cur.fetchall()
+
+        listOfCourses: List[str] = []
         for row in rows:
-            list_of_courses.append(row[0])
+            listOfCourses.append(row[0])
 
-        return list_of_courses
+        return listOfCourses
 
     def select_all_profs(self) -> List[str]:
-        """selects all profs"""
 
-        rows = self.execute("SELECT firstname,lastname FROM instructor")
-        list_of_profs: List[str] = []
-        for row in rows:
-            list_of_profs.append(row[1] + ", " + row[0])
-
-        return list_of_profs
-
-    def clear_class_list(self):
-        """clears generated class list"""
-        self.conn.cursor().execute("DELETE FROM final_class_list").fetchall()
-
-    def clear_taken_list(self):
-        """clears class taken list"""
-        self.conn.cursor().execute("DELETE FROM classes_taken").fetchall()
-
-    def add_taken_classes(self, taken_class_array: List[str]):
-        """adds classes taken to class list"""
         cur = self.conn.cursor()
-        sql = """SELECT num, sub_cat_num
-                       FROM course crs
-                       WHERE crs.sub_cat_num = ?"""
-        for classes in taken_class_array:
-            cur.execute(sql, (classes,))
-            sql2 = '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
+        cur.execute("SELECT lastname_firstname FROM teacher")
 
-            rows = cur.fetchall()
-            for row in rows:
-                cur.execute(sql2, row)
+        rows = cur.fetchall()
+        # listOfProfs: List[str] = []
+
+        # for row in rows:
+        #     print(row)
+        #     listOfProfs.append(row)
+
+        # print(listOfProfs)
+        return rows
+
+    # def clear_class_list(self):
+    #     """clears generated class list"""
+    #     self.conn.cursor().execute("DELETE FROM final_class_list").fetchall()
+
+    # def clear_taken_list(self):
+    #     """clears class taken list"""
+    #     self.conn.cursor().execute("DELETE FROM classes_taken").fetchall()
+
+    # def add_taken_classes(self, taken_class_array: List[str]):
+    #     """adds classes taken to class list"""
+    #     cur = self.conn.cursor()
+    #     sql = """SELECT num, sub_cat_num
+    #                    FROM course crs
+    #                    WHERE crs.sub_cat_num = ?"""
+    #     for classes in taken_class_array:
+    #         cur.execute(sql, (classes,))
+    #         sql2 = '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
+
+    #         rows = cur.fetchall()
+    #         for row in rows:
+    #             cur.execute(sql2, row)
+
+    def add_taken_classes(self, takenClassArray: List[str]):
+        cur = self.conn.cursor()
+        for classes in takenClassArray:
+            sql2 = '''INSERT OR REPLACE INTO classes_taken(sub_cat_num_name) VALUES (?)'''
+            cur.execute(sql2, (classes,))
+
+    def add_wanted_subjects(self, subjectsArray: List[str]):
+
+        cur = self.conn.cursor()
+        for subjects in subjectsArray:
+
+            sql = '''INSERT OR REPLACE INTO subjects(sub_cat_name) VALUES (?)'''
+            cur.execute(sql, (subjects,))
 
     # TODO actually check average credits
     def select_classes(self, credits_total: int = 15):
-        """generates a schedule"""
-        current_credits = 0
-        classes: List[str] = []
+        """
+        Query tasks by priority
+        :param conn: the Connection object
+        :param priority:
+        :return:
+        """
 
-        while current_credits < credits_total - 1:
-            cur = self.conn.cursor()
-            cur.execute("""SELECT num, sub_cat_num, course_time, course_days
-                            FROM course crs, course_offered co, teacher_ratings tr
-                            WHERE crs.num = co.course_id
-                            AND co.prof_id = tr.instructor_id
-                            AND crs.num NOT IN (SELECT num FROM classes_taken ct)
-                            AND crs.sub_cat_num NOT IN (SELECT sub_cat_num FROM final_class_list ct)
+        conn = self.conn
+        current_credits = 0
+        cur = conn.cursor()
+
+        print(credits_total)
+
+        while (current_credits < credits_total - 1):
+            cur.execute("""SELECT sub_cat_num_name_type, crs.sub_cat_num_name, course_time, course_days, title, prof_name
+                            FROM course crs, course_offered co, teacher tr, course_rating cr
+                            WHERE crs.sub_cat_num_name_type = co.course_id
+                            AND co.prof_name = tr.lastname_firstname
+                            AND crs.sub_cat_num_name NOT IN (SELECT sub_cat_num_name FROM classes_taken ct)
+                            AND crs.cat_name IN (SELECT sub_cat_name from subjects s)
+                            AND crs.sub_cat_num_name NOT IN (SELECT sub_cat_num_name FROM cannotTake cant)
+                            AND crs.sub_cat_num_name NOT IN (SELECT sub_cat_num_name FROM final_class_list ct)
                             AND (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
-                            ORDER BY tr.rmp
-                            DESC LIMIT 1""")
-            save = (0, '', '', '')
+                            ORDER BY (0.3*cr.sis)+(0.2*tr.rmp)+(0.3*tr.sis)+(0.2*tr.difficulty) DESC 
+                            LIMIT 1""")
+            save = ('', '', '', '', '', '')
             rows = cur.fetchall()
-            # classes.append(rows[1])
+
+            for row in rows:
+                print("class selected")
+                print(row)
+
+                save = row
+
+            sub_cat_num_name_type, sub_cat_num_name, _, _, _, _ = save
+
+            cur.execute("""SELECT COUNT(*)
+                        FROM course crs, course_offered co
+                        WHERE crs.sub_cat_num_name_type = co.course_id
+                        AND (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
+                        AND crs.sub_cat_num_name = '""" + sub_cat_num_name + "'")
+            rows = cur.fetchall()
+            # this is the finding of rec/lec other than the class picked
+            save3 = 0
+            for row in rows:
+                print('wtf')
+                print(row[0])
+                save3 = row[0]
+
+            if save3 > 1:
+                cur.execute("""SELECT sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name
+                        FROM course crs, course_offered co
+                        WHERE (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
+                        AND crs.sub_cat_num_name = '""" + sub_cat_num_name + "' AND crs.sub_cat_num_name_type != '"+ sub_cat_num_name_type+ "' LIMIT 1")
+                save5 = ('', '', '', '', '', '')
+                canTakerec = False
+                rows = cur.fetchall()
+
+                for row in rows:
+                    print("has possible recitations")
+                    canTakerec = True
+                    save5 = row
+
+                # sub_cat_num_name_type2, sub_cat_num_name2, course_time2, course_days2, title, prof_name = save5
+                if canTakerec:
+                    # check prereqs
+                    # new shit here
+                    cur.execute("""SELECT prereq
+                            FROM course_prereq pr
+                            WHERE pr.sub_cat_num_name = '""" + sub_cat_num_name + "'")
+
+                    save6 = ''
+                    hasPrereq = False
+                    rows = cur.fetchall()
+
+                    for row in rows:
+                        print(row[0] + " this is the pre req")
+                        prereq = row[0]
+                        hasPrereq = True
+
+                    if hasPrereq:
+                        prereq = save6
+                        length = len(prereq)
+                        if length < 9:
+                            cur.execute("""SELECT COUNT(*)
+                                FROM classes_taken ct
+                                WHERE ct.sub_cat_num_name = '""" + prereq + "'")
+                            taken = 0
+                            rows = cur.fetchall()
+
+                            for row in rows:
+                                print(row[0])
+                                taken = row[0]
+                            if taken > 0:
+                                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                                cur.execute(sql, save)
+                                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                                cur.execute(sql, save5)
+                                print("inserted1 " + str(current_credits))
+                                cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                                rows = cur.fetchall()
+                                save2 = 0
+                                for row in rows:
+                                    print(row)
+                                    save2 = row[0]
+                                    current_credits += save2
+                            else:
+                                sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                                listed = (sub_cat_num_name,)
+                                cur.execute(sql, listed)
+                                print("does not meet prereqs 1")
+                    else:
+                        prereq1 = ''
+                        prereq2 = ''
+                        operation = ''
+                        operationfound = False
+                        for c in length:
+                            if (prereq[c] != '|' or prereq[c] != '&') and not operationfound:
+                                prereq1 += prereq1[c]
+                            elif (prereq[c] != '|' or prereq[c] != '&') and operationfound:
+                                prereq2 += prereq2[c]
+                            elif prereq[c] == '|':
+                                operation = 'or'
+                                operationfound = True
+                            else:
+                                operation = 'and'
+                                operationfound = True
+                        if operation == 'or':
+                            cur.execute("""SELECT COUNT(*)
+                            FROM classes_taken ct
+                            WHERE ct.sub_cat_num_name = '""" + prereq1 + "' OR ct.sub_cat_num_name = '"+ prereq1 + "'")
+                            taken = 0
+                            rows = cur.fetchall()
+
+                            for row in rows:
+                                print(row)
+                                taken = row[0]
+                            if taken > 0:
+                                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                                cur.execute(sql, save)
+                                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                                cur.execute(sql, save5)
+                                print("inserted2 " + str(current_credits))
+                                cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                                rows = cur.fetchall()
+                                save2 = 0
+                                for row in rows:
+                                    print(row)
+                                    save2 = row[0]
+                                    current_credits += save2
+                            else:
+                                sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                                listed = (sub_cat_num_name,)
+                                cur.execute(sql, listed)
+                                print("does not meet prereqs 2")
+                        else:
+                            cur.execute("""SELECT COUNT(*)
+                            FROM classes_taken ct
+                            WHERE ct.sub_cat_num_name = '""" + prereq1 + "' AND ct.sub_cat_num_name = '"+ prereq1 + "'")
+                            taken = 0
+                            rows = cur.fetchall()
+
+                            for row in rows:
+                                print(row)
+                                taken = row[0]
+                            if taken > 0:
+                                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                                cur.execute(sql, save)
+                                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                                cur.execute(sql, save5)
+                                print("inserted3 " + str(current_credits))
+                                cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                                rows = cur.fetchall()
+                                save2 = 0
+                                for row in rows:
+                                    print(row)
+                                    save2 = row[0]
+                                    current_credits += save2
+                            else:
+                                sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                                listed = (sub_cat_num_name,)
+                                cur.execute(sql, listed)
+                                print("does not meet prereqs 3")
+                else:
+                    sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                    cur.execute(sql, save)
+                    sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                    cur.execute(sql, save5)
+                    print("inserted4 " + str(current_credits))
+                    cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                    rows = cur.fetchall()
+                    save2 = 0
+                    for row in rows:
+                        print(row)
+                        save2 = row[0]
+                        current_credits += save2
+            else:
+                # create add to not able to take list?
+                sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                listed = (sub_cat_num_name,)
+                cur.execute(sql, listed)
+                print("time conflict")
+
+        else:
+            print("no recitations")
+        # check pre reqs
+
+            cur.execute("""SELECT prereq
+                    FROM course_prereq pr
+                    WHERE pr.sub_cat_num_name = '""" + sub_cat_num_name + "'")
+
+            save6 = ''
+            hasPrereq = False
+            rows = cur.fetchall()
 
             for row in rows:
                 print(row)
-                classes.append(row[1])
-                save = row
+                prereq = row[0]
+                hasPrereq = True
 
-            num, sub_cat_num, course_time, course_days = save
-            sql1 = """INSERT OR REPLACE INTO final_class_list"""
-            sql2 = """(num, sub_cat_num, course_time, course_days) VALUES (?,?,?,?)"""
-            cur.execute(sql1+sql2, save)
+            if hasPrereq:
+                prereq = save6
+                length = len(prereq)
+                if length < 9:
+                    cur.execute("""SELECT COUNT(*)
+                        FROM classes_taken ct
+                        WHERE ct.sub_cat_num_name = '""" + prereq + "'")
+                    taken = 0
+                    rows = cur.fetchall()
 
-            cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.num =" + str(num))
-            rows = cur.fetchall()
+                    for row in rows:
+                        print(row)
+                        taken = row[0]
+                    if taken > 0:
+                        sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                        cur.execute(sql, save)
+                        print("inserted5 " + str(current_credits))
+                        cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                        rows = cur.fetchall()
+                        save2 = 0
+                        for row in rows:
+                            print(row)
+                            save2 = row[0]
+                            current_credits += save2
+                    else:
+                        sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                        listed = (sub_cat_num_name,)
+                        cur.execute(sql,listed)
+                        print("does not meet prereqs 4")
+                else:
+                    prereq1 = ''
+                    prereq2 = ''
+                    operation = ''
+                    operationfound = False
+                    for c in length:
+                        if (prereq[c] != '|' or prereq[c] != '&') and not operationfound:
+                            prereq1 += prereq1[c]
+                        elif (prereq[c] != '|' or prereq[c] != '&') and operationfound:
+                            prereq2 += prereq2[c]
+                        elif prereq[c] == '|':
+                            operation = 'or'
+                            operationfound = True
+                        else:
+                            operation = 'and'
+                            operationfound = True
+                    if operation == 'or':
+                        cur.execute("""SELECT COUNT(*)
+                        FROM classes_taken ct
+                        WHERE ct.sub_cat_num_name = '""" + prereq1 + "' OR ct.sub_cat_num_name = '"+ prereq1 + "'")
+                        taken = 0
+                        rows = cur.fetchall()
 
-            for row in rows:
-                # print(row)
-                save2: int = row[0]
-                current_credits += save2
+                        for row in rows:
+                            print(row)
+                            taken = row[0]
+                        if taken > 0:
+                            sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                            cur.execute(sql, save)
+                            print("inserted6 " + str(current_credits))
+                            cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                            rows = cur.fetchall()
+                            save2 = 0
+                            for row in rows:
+                                print(row)
+                                save2 = row[0]
+                                current_credits += save2
+                        else:
+                            sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                            listed = (sub_cat_num_name,)
+                            cur.execute(sql, listed)
+                            print("does not meet prereqs 5")
+                    else:
+                        cur.execute("""SELECT COUNT(*)
+                        FROM classes_taken ct
+                        WHERE ct.sub_cat_num_name = '""" + prereq1 + "' AND ct.sub_cat_num_name = '"+ prereq1 + "'")
+                        taken = 0
+                        rows = cur.fetchall()
 
-        self.clear_taken_list()
-        self.clear_class_list()
-        return classes
+                        for row in rows:
+                            print(row)
+                            taken = row[0]
+                        if taken > 0:
+                            sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                            cur.execute(sql, save)
+                            print("inserted7 " + str(current_credits))
+                            cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                            rows = cur.fetchall()
+                            save2 = 0
+                            for row in rows:
+                                print(row)
+                                save2 = row[0]
+                                current_credits += save2
+                        else:
+                            sql = '''INSERT OR REPLACE INTO cannotTake(sub_cat_num_name) VALUES (?)'''
+                            listed = (sub_cat_num_name,)
+                            cur.execute(sql, listed)
+                            print("does not meet prereqs 6")
+            else:
+                sql = '''INSERT OR REPLACE INTO final_class_list(sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name) VALUES (?,?,?,?,?,?)'''
+                cur.execute(sql, save)
+                print("inserted8 " + str(current_credits))
+                print(sub_cat_num_name)
+                cur.execute("SELECT SUM(credits) FROM course crs WHERE crs.sub_cat_num_name = '" + sub_cat_num_name + "'")
+                rows2 = cur.fetchall()
+                save2 = 0
+                for row in rows2:
+                    print(row)
+                    save2 = row[0]
+                    print(save2)
+                    current_credits += save2
+
+    def clear_data(self):
+        cur = self.conn.cursor()
+        cur.execute('''DELETE FROM subjects''')
+        cur.execute('''DELETE FROM classes_taken''')
+        cur.execute('''DELETE FROM cannotTake''')
+
+    def get_classes(self) -> List[str]:
+        cur = self.conn.cursor()
+        cur.execute("""SELECT * FROM final_class_list""")
+        rows = cur.fetchall()
+        # for row in rows:
+        #     #sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name
+        return rows
 
 
 class Service(ServiceServicer):
@@ -163,16 +488,27 @@ class Service(ServiceServicer):
 
         course_map: Dict[str, CourseList] = {}
 
-        # credits: int = (request.minCredits + request.maxCredits)/2
+        credits: int = (request.minCredits + request.maxCredits)/2
 
         course_list: List[str] = []
+
 
         for course in request.previousClasses:
             course_list.append(course.name)
 
+        # Added taken classes
         self.db_conn.add_taken_classes(course_list)
-        courses_from_database: List[str] = self.db_conn.select_classes()
+        print("Added previouse courses")
 
+        # add subjects
+        self.db_conn.add_wanted_subjects([request.department])
+        print("Added wanted subjects")
+
+        # Run algorithm
+        self.db_conn.select_classes(credits)
+        print("Ran algorithm")
+
+        courses_from_database: List[str] = self.db_conn.get_classes()
         print(courses_from_database)
 
         courses_converted: List[Course] = []
@@ -186,6 +522,8 @@ class Service(ServiceServicer):
         #                                           self.create_course("yeet121")])
         # course_map["spring2"] = CourseList(courses=[self.create_course("bruh211"),
         #                                             self.create_course("yeet221")])
+
+        self.db_conn.clear_data()
 
         return ScheduleResponse(course_map=course_map)
 
@@ -203,9 +541,15 @@ class Service(ServiceServicer):
         print(f"Received professor request: {repr(request)}")
         res = ProfessorResponse()
         prof_list: List[Professor] = []
+
         for prof in self.db_conn.select_all_profs():
-            split_prof = prof.split(",")
-            prof_list.append(self.create_prof(split_prof[0], split_prof[1]))
+
+            element = prof[0]
+
+            splitted = element.split(",")
+
+            prof_list.append(self.create_prof(splitted[1], splitted[0]))
+
         res.professors.extend(prof_list)
         return res
 
