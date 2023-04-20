@@ -43,7 +43,7 @@ dependencies:
   mockito: ^5.4.0
   protobuf: ^2.1.0
   protoc_plugin: ^20.0.1
-  flutter_launcher_icons: ^0.13.0
+  flutter_launcher_icons: ^0.13.1
   grpc: ^3.1.0
   animated_text_kit: ^4.2.2
 
