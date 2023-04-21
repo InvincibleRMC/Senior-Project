@@ -168,7 +168,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
 
   String? _semester;
   String? _school;
-  String? _dept;
+  List<String>? _dept;
   int? _minCredit;
   int? _maxCredit;
   List<String>? _previousClasses;
@@ -212,12 +212,12 @@ class _SchedulerPageState extends State<SchedulerPage> {
                 //     ),
                 //   ),
                 // ),
-                DropdownSearch<String>(
+                DropdownSearch<String>.multiSelection(
                   key: const Key("drop_down_search_department"),
                   items: _departmentOptions,
-                  popupProps: const PopupProps.menu(
+                  popupProps: const PopupPropsMultiSelection.menu(
                       showSelectedItems: true, showSearchBox: true),
-                  onChanged: (String? dept) => _dept = dept,
+                  onChanged: (List<String> dept) => _dept = dept,
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Input Department Options",

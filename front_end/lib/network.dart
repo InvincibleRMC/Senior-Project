@@ -81,7 +81,7 @@ class Network {
 
   void sendScheduleRequest(
       String school,
-      String department,
+      List<String> department,
       String semester,
       int? minCredit,
       int? maxCredit,
@@ -130,7 +130,7 @@ class Network {
     var req = ScheduleRequest(
         school: school,
         department: department,
-        semester: semester,
+        semester: [semester],
         minCredits: minCredit,
         maxCredits: maxCredit,
         previousClasses: previousCourse,
@@ -162,6 +162,7 @@ class Network {
   List<String> courseToString(List<Course> courseList) {
     return List<String>.generate(
         courseList.length, (int index) => courseList[index].name
+        // TODO
         // '${courseList[index].name} ${courseList[index].semester}'
         );
   }

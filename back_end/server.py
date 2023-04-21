@@ -471,10 +471,12 @@ class Service(ServiceServicer):
         semester_options = ["Fall1", "Spring1", "Fall2", "Spring2", "Fall3",
                             "Spring3", "Fall4", "Spring4"]
 
-        if request.semester == "Spring4":
+        sem: str = request.semester[0]
+
+        if sem == "Spring4":
             next_sem = "Spring4"
         else:
-            next_sem = semester_options[semester_options.index(request.semester) + 1]
+            next_sem = semester_options[semester_options.index(sem) + 1]
 
         print(f"Received Schedule request: {repr(request)}")
 
@@ -492,7 +494,7 @@ class Service(ServiceServicer):
         print("Added previous courses")
 
         # add subjects
-        self.db_conn.add_wanted_subjects([request.department])
+        self.db_conn.add_wanted_subjects(request.department)
         print("Added wanted subjects")
 
         # Run algorithm

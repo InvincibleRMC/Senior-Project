@@ -11,6 +11,7 @@ message ScheduleRequest {
     // Major major = 1;
     string school = 1;
     repeated string department = 2;
+    // TODO fix
     repeated string semester = 3;
     int32 minCredits = 4;
     int32 maxCredits = 5;
