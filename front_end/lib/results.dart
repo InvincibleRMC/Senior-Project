@@ -14,19 +14,22 @@ class ResultsPage extends StatefulWidget {
 class _ResultsPageState extends State<ResultsPage> {
   Map<String, List<String>> schedule = Network().getSchedule();
 
-
   Timer? t;
 
   @override
   void initState() {
     super.initState();
     t = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (Network().getSchedule().isEmpty) {
+      if (schedule.isEmpty) {
         setState(() {
+          schedule = Network().getSchedule();
           print(Network().getSchedule());
         });
       } else {
+        print("timer cancelled");
+        schedule = Network().getSchedule();
         timer.cancel();
+        // setState(() {});
       }
     });
   }
