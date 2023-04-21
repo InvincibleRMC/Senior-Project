@@ -19,7 +19,7 @@ class _ResultsPageState extends State<ResultsPage> {
   @override
   void initState() {
     super.initState();
-    t = Timer.periodic(const Duration(seconds: 1), (timer) {
+    t = Timer.periodic(const Duration(milliseconds: 25), (timer) {
       if (schedule.isEmpty) {
         setState(() {
           schedule = Network().getSchedule();
@@ -29,7 +29,6 @@ class _ResultsPageState extends State<ResultsPage> {
         print("timer cancelled");
         schedule = Network().getSchedule();
         timer.cancel();
-        // setState(() {});
       }
     });
   }

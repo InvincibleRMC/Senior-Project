@@ -77,11 +77,8 @@ class Network {
         classes: List<Course>.generate(
             className.length, (int index) => Course(name: className[index])));
     await _client?.registerNotifications(req);
-    // TODO: Check result?
-    // return res;
   }
 
-  // TODO:
   void sendScheduleRequest(
       String school,
       String department,
@@ -147,12 +144,10 @@ class Network {
   }
 
   List<String> getCourseNames() {
-    // TODO Error handling
     return courseToString(_courses);
   }
 
   List<String> getProfessorNames() {
-    // TODO Error handling
     return List<String>.generate(
         _professors.length,
         (int index) =>
@@ -168,7 +163,7 @@ class Network {
     return List<String>.generate(
         courseList.length,
         (int index) =>
-            courseList[index].name + " " + courseList[index].semester);
+            '${courseList[index].name} ${courseList[index].semester}');
   }
 
   Map<String, List<String>> getSchedule() {
@@ -181,11 +176,6 @@ class Network {
 
   void clearSchedule() {
     _schedule = ScheduleResponse();
-  }
-
-  @visibleForTesting
-  void setMajors() {
-    _majors = [Major(name: "CS BS")];
   }
 
   @visibleForTesting

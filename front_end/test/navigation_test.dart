@@ -52,7 +52,6 @@ void main() {
     });
     group('Scheduler Navigation tests', () {
       testWidgets('Scheduler to Results', (WidgetTester tester) async {
-        Network().setMajors();
         await tester.pumpWidget(MaterialApp(
           home: const SchedulerPage(),
 
@@ -122,6 +121,7 @@ void main() {
       testWidgets('Class Reminder to Home Filled out data',
           (WidgetTester tester) async {
         Network().setCourses();
+
         await tester.pumpWidget(MaterialApp(
           home: const ClassReminderPage(),
 
@@ -148,7 +148,7 @@ void main() {
         await tester.tap(find.byKey(const Key("drop_down_courses")));
         await tester.pumpAndSettle();
 
-        //With Major entered allow access to Results Page
+        // Select Course
         await tester.tap(find.text("CSDS 132"));
         await tester.pumpAndSettle();
 
