@@ -11,7 +11,7 @@ message ScheduleRequest {
     // Major major = 1;
     string school = 1;
     string department = 2;
-    string semester = 3;
+    repeated string semester = 3;
     int32 minCredits = 4;
     int32 maxCredits = 5;
     repeated Course previousClasses = 6;
