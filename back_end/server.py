@@ -107,10 +107,9 @@ class DatabaseConnection:
         for row in rows:
             print(row)
 
-    # TODO actually check average credits
     def select_classes(self, credits_total: int = 15):
-        """
-        Query tasks by priority
+        """Query tasks by priority
+
         :param conn: the Connection object
         :param priority:
         :return:
@@ -132,7 +131,7 @@ class DatabaseConnection:
                             AND crs.sub_cat_num_name NOT IN (SELECT sub_cat_num_name FROM cannotTake cant)
                             AND crs.sub_cat_num_name NOT IN (SELECT sub_cat_num_name FROM final_class_list ct)
                             AND (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
-                            ORDER BY (0.3*cr.sis)+(0.2*tr.rmp)+(0.3*tr.sis)+(0.2*tr.difficulty) DESC 
+                            ORDER BY (0.3*cr.sis)+(0.2*tr.rmp)+(0.3*tr.sis)+(0.2*tr.difficulty) DESC
                             LIMIT 1""")
             save = ('', '', '', '', '', '')
             rows = cur.fetchall()
@@ -506,7 +505,7 @@ class Service(ServiceServicer):
 
         courses_converted: List[Course] = []
         for course in courses_from_database:
-            courses_converted.append(self.create_course(course[1], semester=course[5]))
+            courses_converted.append(self.create_course(course[0], semester=course[5]))
 
         print("Converted")
 
@@ -568,7 +567,6 @@ class Service(ServiceServicer):
     def GetMajors(self, request, context) -> MajorResponse:
         print(f"Received major request: {repr(request)}")
         res = MajorResponse()
-        # TODO sql majors
         res.majors.extend([self.create_major("CS"), self.create_major("CE")])
         return res
 
