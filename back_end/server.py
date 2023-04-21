@@ -71,11 +71,11 @@ class DatabaseConnection:
 
         rows = cur.fetchall()
 
-        listOfCourses: List[str] = []
+        list_of_courses: List[str] = []
         for row in rows:
-            listOfCourses.append(row[0])
+            list_of_courses.append(row[0])
 
-        return listOfCourses
+        return list_of_courses
 
     def select_all_profs(self) -> List[str]:
         """Returns list of all Profs"""
@@ -85,19 +85,19 @@ class DatabaseConnection:
 
         return cur.fetchall()
 
-    def add_taken_classes(self, takenClassArray: List[str]):
+    def add_taken_classes(self, taken_class_array: List[str]):
         """Adds classes taken"""
 
         cur = self.conn.cursor()
-        for classes in takenClassArray:
+        for classes in taken_class_array:
             sql2 = '''INSERT OR REPLACE INTO classes_taken(sub_cat_num_name) VALUES (?)'''
             cur.execute(sql2, (classes,))
 
-    def add_wanted_subjects(self, subjectsArray: List[str]):
+    def add_wanted_subjects(self, subjects_array: List[str]):
         """Adds wanted subjects"""
 
         cur = self.conn.cursor()
-        for subjects in subjectsArray:
+        for subjects in subjects_array:
 
             sql = '''INSERT OR REPLACE INTO subjects(sub_cat_name) VALUES (?)'''
             cur.execute(sql, (subjects,))
@@ -122,7 +122,7 @@ class DatabaseConnection:
 
         print(credits_total)
 
-        while (current_credits < credits_total - 1):
+        while current_credits < credits_total - 1:
             cur.execute("""SELECT sub_cat_num_name_type, crs.sub_cat_num_name, course_time, course_days, title, prof_name
                             FROM course crs, course_offered co, teacher tr, course_rating cr
                             WHERE crs.sub_cat_num_name_type = co.course_id
@@ -164,16 +164,16 @@ class DatabaseConnection:
                             WHERE (co.course_time NOT IN(SELECT course_time FROM final_class_list fcl) AND co.course_days NOT IN(SELECT course_days FROM final_class_list fcl))
                             AND crs.sub_cat_num_name = '""" + sub_cat_num_name + "' AND crs.sub_cat_num_name_type != '"+ sub_cat_num_name_type+ "' LIMIT 1")
                     save5 = ('', '', '', '', '', '')
-                    canTakerec = False
+                    can_takerec = False
                     rows = cur.fetchall()
 
                     for row in rows:
                         print("has possible recitations")
-                        canTakerec = True
+                        can_takerec = True
                         save5 = row
 
                     # sub_cat_num_name_type2, sub_cat_num_name2, course_time2, course_days2, title, prof_name = save5
-                    if canTakerec:
+                    if can_takerec:
                         # check prereqs
                         # new shit here
                         cur.execute("""SELECT prereq
@@ -181,15 +181,15 @@ class DatabaseConnection:
                                 WHERE pr.sub_cat_num_name = '""" + sub_cat_num_name + "'")
 
                         save6 = ''
-                        hasPrereq = False
+                        has_prereq = False
                         rows = cur.fetchall()
 
                         for row in rows:
                             print(row[0] + " this is the pre req")
                             prereq = row[0]
-                            hasPrereq = True
+                            has_prereq = True
 
-                        if hasPrereq:
+                        if has_prereq:
                             prereq = save6
                             length = len(prereq)
                             if length < 9:
@@ -321,15 +321,15 @@ class DatabaseConnection:
                             WHERE pr.sub_cat_num_name = '""" + sub_cat_num_name + "'")
 
                     save6 = ''
-                    hasPrereq = False
+                    has_prereq = False
                     rows = cur.fetchall()
 
                     for row in rows:
                         print(row)
                         prereq = row[0]
-                        hasPrereq = True
+                        has_prereq = True
 
-                    if hasPrereq:
+                    if has_prereq:
                         prereq = save6
                         length = len(prereq)
                         if length < 9:
@@ -481,7 +481,7 @@ class Service(ServiceServicer):
 
         course_map: Dict[str, CourseList] = {}
 
-        credits: int = max((request.minCredits + request.maxCredits)/2, 12)
+        num_credits: int = max((request.minCredits + request.maxCredits)/2, 12)
 
         course_list: List[str] = []
 
@@ -497,7 +497,7 @@ class Service(ServiceServicer):
         print("Added wanted subjects")
 
         # Run algorithm
-        self.db_conn.select_classes(credits)
+        self.db_conn.select_classes(num_credits)
         print("Ran algorithm")
 
         courses_from_database: List[str] = self.db_conn.get_classes()
