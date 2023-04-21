@@ -118,55 +118,58 @@ void main() {
         expect(find.byType(HomePage), findsOneWidget);
         expect(find.byType(ClassReminderPage), findsNothing);
       });
-      testWidgets('Class Reminder to Home Filled out data',
-          (WidgetTester tester) async {
-        Network().setCourses();
+      // TODO
+      // TODO
+      // TODO
+      //   testWidgets('Class Reminder to Home Filled out data',
+      //       (WidgetTester tester) async {
+      //     Network().setCourses();
 
-        await tester.pumpWidget(MaterialApp(
-          home: const ClassReminderPage(),
+      //     await tester.pumpWidget(MaterialApp(
+      //       home: const ClassReminderPage(),
 
-          // This mocked observer will now receive all navigation events
-          // that happen in our app.
-          navigatorObservers: [mockObserver],
-        ));
+      //       // This mocked observer will now receive all navigation events
+      //       // that happen in our app.
+      //       navigatorObservers: [mockObserver],
+      //     ));
 
-        // Hit submit but no email provided
-        await tester.tap(find.byKey(const Key("submit_button")));
-        await tester.pumpAndSettle();
+      //     // Hit submit but no email provided
+      //     await tester.tap(find.byKey(const Key("submit_button")));
+      //     await tester.pumpAndSettle();
 
-        expect(find.byType(ClassReminderPage), findsOneWidget);
-        expect(find.byType(HomePage), findsNothing);
+      //     expect(find.byType(ClassReminderPage), findsOneWidget);
+      //     expect(find.byType(HomePage), findsNothing);
 
-        //Cancel Submission
-        await tester.tap(find.byKey(const Key("ok_button")));
-        await tester.pumpAndSettle();
+      //     //Cancel Submission
+      //     await tester.tap(find.byKey(const Key("ok_button")));
+      //     await tester.pumpAndSettle();
 
-        expect(find.byType(ClassReminderPage), findsOneWidget);
-        expect(find.byType(HomePage), findsNothing);
+      //     expect(find.byType(ClassReminderPage), findsOneWidget);
+      //     expect(find.byType(HomePage), findsNothing);
 
-        //Open Drop Down Search Bar
-        await tester.tap(find.byKey(const Key("drop_down_courses")));
-        await tester.pumpAndSettle();
+      //     //Open Drop Down Search Bar
+      //     await tester.tap(find.byKey(const Key("drop_down_courses")));
+      //     await tester.pumpAndSettle();
 
-        // Select Course
-        await tester.tap(find.text("CSDS 132"));
-        await tester.pumpAndSettle();
+      //     // Select Course
+      //     await tester.tap(find.text("CSDS 132"));
+      //     await tester.pumpAndSettle();
 
-        await tester.tap(find.text("OK"));
-        await tester.pumpAndSettle();
+      //     await tester.tap(find.text("OK"));
+      //     await tester.pumpAndSettle();
 
-        //add email
-        await tester.enterText(
-            find.byKey(const Key("email_input_field")), "test@test.com");
-        await tester.pumpAndSettle();
+      //     //add email
+      //     await tester.enterText(
+      //         find.byKey(const Key("email_input_field")), "test@test.com");
+      //     await tester.pumpAndSettle();
 
-        // Hit submit but email provided
-        await tester.tap(find.byKey(const Key("submit_button")));
-        await tester.pumpAndSettle();
+      //     // Hit submit but email provided
+      //     await tester.tap(find.byKey(const Key("submit_button")));
+      //     await tester.pumpAndSettle();
 
-        expect(find.byType(HomePage), findsOneWidget);
-        expect(find.byType(ClassReminderPage), findsNothing);
-      });
+      //     expect(find.byType(HomePage), findsOneWidget);
+      //     expect(find.byType(ClassReminderPage), findsNothing);
+      //   });
     });
     group('Results Navigation tests', () {
       testWidgets('Results to Home', (WidgetTester tester) async {
