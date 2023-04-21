@@ -11,7 +11,7 @@ import 'package:front_end/proto/responses.pb.dart';
 import 'package:grpc/grpc.dart' as grpc;
 
 class Network {
-  static const String _host = "localhost";
+  static const String _host = "benscholar.com";
   static const int _port = 50000;
 
   static final Network _instance = Network._internal();
