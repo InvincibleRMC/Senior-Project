@@ -224,12 +224,12 @@ class DatabaseConnection:
                                 prereq2 = ''
                                 operation = ''
                                 operationfound = False
-                                for c in range(length):
-                                    if (prereq[c] != '|' or prereq[c] != '&') and not operationfound:
-                                        prereq1 += prereq1[c]
-                                    elif (prereq[c] != '|' or prereq[c] != '&') and operationfound:
-                                        prereq2 += prereq2[c]
-                                    elif prereq[c] == '|':
+                                for i in range(length):
+                                    if (prereq[i] != '|' or prereq[i] != '&') and not operationfound:
+                                        prereq1 += prereq1[i]
+                                    elif (prereq[i] != '|' or prereq[i] != '&') and operationfound:
+                                        prereq2 += prereq2[i]
+                                    elif prereq[i] == '|':
                                         operation = 'or'
                                         operationfound = True
                                     else:
@@ -362,12 +362,12 @@ class DatabaseConnection:
                             prereq2 = ''
                             operation = ''
                             operationfound = False
-                            for c in range(length):
-                                if (prereq[c] != '|' or prereq[c] != '&') and not operationfound:
-                                    prereq1 += prereq1[c]
-                                elif (prereq[c] != '|' or prereq[c] != '&') and operationfound:
-                                    prereq2 += prereq2[c]
-                                elif prereq[c] == '|':
+                            for i in range(length):
+                                if (prereq[i] != '|' or prereq[i] != '&') and not operationfound:
+                                    prereq1 += prereq1[i]
+                                elif (prereq[i] != '|' or prereq[i] != '&') and operationfound:
+                                    prereq2 += prereq2[i]
+                                elif prereq[i] == '|':
                                     operation = 'or'
                                     operationfound = True
                                 else:
