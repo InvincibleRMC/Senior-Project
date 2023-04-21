@@ -24,8 +24,8 @@ const ScheduleRequest$json = const {
   '1': 'ScheduleRequest',
   '2': const [
     const {'1': 'school', '3': 1, '4': 1, '5': 9, '10': 'school'},
-    const {'1': 'department', '3': 2, '4': 1, '5': 9, '10': 'department'},
-    const {'1': 'semester', '3': 3, '4': 1, '5': 9, '10': 'semester'},
+    const {'1': 'department', '3': 2, '4': 3, '5': 9, '10': 'department'},
+    const {'1': 'semester', '3': 3, '4': 3, '5': 9, '10': 'semester'},
     const {'1': 'minCredits', '3': 4, '4': 1, '5': 5, '10': 'minCredits'},
     const {'1': 'maxCredits', '3': 5, '4': 1, '5': 5, '10': 'maxCredits'},
     const {'1': 'previousClasses', '3': 6, '4': 3, '5': 11, '6': '.Course', '10': 'previousClasses'},
@@ -37,7 +37,7 @@ const ScheduleRequest$json = const {
 };
 
 /// Descriptor for `ScheduleRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSFgoGc2Nob29sGAEgASgJUgZzY2hvb2wSHgoKZGVwYXJ0bWVudBgCIAEoCVIKZGVwYXJ0bWVudBIaCghzZW1lc3RlchgDIAEoCVIIc2VtZXN0ZXISHgoKbWluQ3JlZGl0cxgEIAEoBVIKbWluQ3JlZGl0cxIeCgptYXhDcmVkaXRzGAUgASgFUgptYXhDcmVkaXRzEjEKD3ByZXZpb3VzQ2xhc3NlcxgGIAMoCzIHLkNvdXJzZVIPcHJldmlvdXNDbGFzc2VzEjMKEHByZWZlcnJlZENsYXNzZXMYByADKAsyBy5Db3Vyc2VSEHByZWZlcnJlZENsYXNzZXMSNwoSdW5wcmVmZXJyZWRDbGFzc2VzGAggAygLMgcuQ291cnNlUhJ1bnByZWZlcnJlZENsYXNzZXMSMgoOcHJlZmVycmVkUHJvZnMYCSADKAsyCi5Qcm9mZXNzb3JSDnByZWZlcnJlZFByb2ZzEjYKEHVucHJlZmZlcmVkUHJvZnMYCiADKAsyCi5Qcm9mZXNzb3JSEHVucHJlZmZlcmVkUHJvZnM=');
+final $typed_data.Uint8List scheduleRequestDescriptor = $convert.base64Decode('Cg9TY2hlZHVsZVJlcXVlc3QSFgoGc2Nob29sGAEgASgJUgZzY2hvb2wSHgoKZGVwYXJ0bWVudBgCIAMoCVIKZGVwYXJ0bWVudBIaCghzZW1lc3RlchgDIAMoCVIIc2VtZXN0ZXISHgoKbWluQ3JlZGl0cxgEIAEoBVIKbWluQ3JlZGl0cxIeCgptYXhDcmVkaXRzGAUgASgFUgptYXhDcmVkaXRzEjEKD3ByZXZpb3VzQ2xhc3NlcxgGIAMoCzIHLkNvdXJzZVIPcHJldmlvdXNDbGFzc2VzEjMKEHByZWZlcnJlZENsYXNzZXMYByADKAsyBy5Db3Vyc2VSEHByZWZlcnJlZENsYXNzZXMSNwoSdW5wcmVmZXJyZWRDbGFzc2VzGAggAygLMgcuQ291cnNlUhJ1bnByZWZlcnJlZENsYXNzZXMSMgoOcHJlZmVycmVkUHJvZnMYCSADKAsyCi5Qcm9mZXNzb3JSDnByZWZlcnJlZFByb2ZzEjYKEHVucHJlZmZlcmVkUHJvZnMYCiADKAsyCi5Qcm9mZXNzb3JSEHVucHJlZmZlcmVkUHJvZnM=');
 @$core.Deprecated('Use majorRequestDescriptor instead')
 const MajorRequest$json = const {
   '1': 'MajorRequest',

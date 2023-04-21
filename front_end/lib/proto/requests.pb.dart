@@ -70,8 +70,8 @@ class NotificationRequest extends $pb.GeneratedMessage {
 class ScheduleRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ScheduleRequest', createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'school')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'department')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'semester')
+    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'department')
+    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'semester')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'minCredits', $pb.PbFieldType.O3, protoName: 'minCredits')
     ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxCredits', $pb.PbFieldType.O3, protoName: 'maxCredits')
     ..pc<$2.Course>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'previousClasses', $pb.PbFieldType.PM, protoName: 'previousClasses', subBuilder: $2.Course.create)
@@ -85,8 +85,8 @@ class ScheduleRequest extends $pb.GeneratedMessage {
   ScheduleRequest._() : super();
   factory ScheduleRequest({
     $core.String? school,
-    $core.String? department,
-    $core.String? semester,
+    $core.Iterable<$core.String>? department,
+    $core.Iterable<$core.String>? semester,
     $core.int? minCredits,
     $core.int? maxCredits,
     $core.Iterable<$2.Course>? previousClasses,
@@ -100,10 +100,10 @@ class ScheduleRequest extends $pb.GeneratedMessage {
       _result.school = school;
     }
     if (department != null) {
-      _result.department = department;
+      _result.department.addAll(department);
     }
     if (semester != null) {
-      _result.semester = semester;
+      _result.semester.addAll(semester);
     }
     if (minCredits != null) {
       _result.minCredits = minCredits;
@@ -159,22 +159,10 @@ class ScheduleRequest extends $pb.GeneratedMessage {
   void clearSchool() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get department => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set department($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasDepartment() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearDepartment() => clearField(2);
+  $core.List<$core.String> get department => $_getList(1);
 
   @$pb.TagNumber(3)
-  $core.String get semester => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set semester($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasSemester() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSemester() => clearField(3);
+  $core.List<$core.String> get semester => $_getList(2);
 
   @$pb.TagNumber(4)
   $core.int get minCredits => $_getIZ(3);
