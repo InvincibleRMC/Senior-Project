@@ -161,9 +161,9 @@ class Network {
 
   List<String> courseToString(List<Course> courseList) {
     return List<String>.generate(
-        courseList.length,
-        (int index) =>
-            '${courseList[index].name} ${courseList[index].semester}');
+        courseList.length, (int index) => courseList[index].name
+        // '${courseList[index].name} ${courseList[index].semester}'
+        );
   }
 
   Map<String, List<String>> getSchedule() {
