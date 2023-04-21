@@ -227,7 +227,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
                 DropdownSearch<String>(
                   key: const Key("drop_down_search_semester"),
                   items: _semesterOptions,
-                  popupProps: const PopupPropsMultiSelection.menu(
+                  popupProps: const PopupProps.menu(
                       showSelectedItems: true, showSearchBox: true),
                   onChanged: (String? sem) => _semester = sem,
                   dropdownDecoratorProps: const DropDownDecoratorProps(
