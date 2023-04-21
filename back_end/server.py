@@ -64,6 +64,8 @@ class DatabaseConnection:
             return record
 
     def select_all_courses(self) -> List[str]:
+        """Returns list of all Courses"""
+
         cur = self.conn.cursor()
         cur.execute("SELECT distinct sub_cat_num_name FROM course")
 
@@ -76,49 +78,23 @@ class DatabaseConnection:
         return listOfCourses
 
     def select_all_profs(self) -> List[str]:
+        """Returns list of all Profs"""
 
         cur = self.conn.cursor()
         cur.execute("SELECT lastname_firstname FROM teacher")
 
-        rows = cur.fetchall()
-        # listOfProfs: List[str] = []
-
-        # for row in rows:
-        #     print(row)
-        #     listOfProfs.append(row)
-
-        # print(listOfProfs)
-        return rows
-
-    # def clear_class_list(self):
-    #     """clears generated class list"""
-    #     self.conn.cursor().execute("DELETE FROM final_class_list").fetchall()
-
-    # def clear_taken_list(self):
-    #     """clears class taken list"""
-    #     self.conn.cursor().execute("DELETE FROM classes_taken").fetchall()
-
-    # def add_taken_classes(self, taken_class_array: List[str]):
-    #     """adds classes taken to class list"""
-    #     cur = self.conn.cursor()
-    #     sql = """SELECT num, sub_cat_num
-    #                    FROM course crs
-    #                    WHERE crs.sub_cat_num = ?"""
-    #     for classes in taken_class_array:
-    #         cur.execute(sql, (classes,))
-    #         sql2 = '''INSERT OR REPLACE INTO classes_taken(num, sub_cat_num) VALUES (?,?)'''
-
-    #         rows = cur.fetchall()
-    #         for row in rows:
-    #             cur.execute(sql2, row)
+        return cur.fetchall()
 
     def add_taken_classes(self, takenClassArray: List[str]):
+        """Adds classes taken"""
+
         cur = self.conn.cursor()
         for classes in takenClassArray:
             sql2 = '''INSERT OR REPLACE INTO classes_taken(sub_cat_num_name) VALUES (?)'''
             cur.execute(sql2, (classes,))
 
     def add_wanted_subjects(self, subjectsArray: List[str]):
+        """Adds wanted subjects"""
 
         cur = self.conn.cursor()
         for subjects in subjectsArray:
@@ -467,6 +443,7 @@ class DatabaseConnection:
                 current_credits = 100
 
     def clear_data(self):
+        """Clears all data added by schedule generation."""
         cur = self.conn.cursor()
         cur.execute('''DELETE FROM subjects''')
         cur.execute('''DELETE FROM classes_taken''')
@@ -474,14 +451,10 @@ class DatabaseConnection:
         cur.execute('''DELETE FROM final_class_list''')
 
     def get_classes(self) -> List[str]:
+        """Returns class schedule."""
         cur = self.conn.cursor()
         cur.execute("""SELECT * FROM final_class_list""")
-        rows = cur.fetchall()
-
-        # print(rows)
-        # for row in rows:
-        #     #sub_cat_num_name_type, sub_cat_num_name, course_time, course_days, title, prof_name
-        return rows
+        return cur.fetchall()
 
 
 class Service(ServiceServicer):
