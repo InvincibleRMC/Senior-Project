@@ -496,3 +496,6 @@ overgeneral-exceptions=BaseException,
 
 [Custom]
 disable=no-name-in-module
+disable=too-many-branches
+disable=too-many-nested-blocks
+disable=too-many-locals

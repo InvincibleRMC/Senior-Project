@@ -225,7 +225,7 @@ class DatabaseConnection:
                                 prereq2 = ''
                                 operation = ''
                                 operationfound = False
-                                for c in length:
+                                for c in range(length):
                                     if (prereq[c] != '|' or prereq[c] != '&') and not operationfound:
                                         prereq1 += prereq1[c]
                                     elif (prereq[c] != '|' or prereq[c] != '&') and operationfound:
@@ -363,7 +363,7 @@ class DatabaseConnection:
                             prereq2 = ''
                             operation = ''
                             operationfound = False
-                            for c in length:
+                            for c in range(length):
                                 if (prereq[c] != '|' or prereq[c] != '&') and not operationfound:
                                     prereq1 += prereq1[c]
                                 elif (prereq[c] != '|' or prereq[c] != '&') and operationfound:
@@ -502,6 +502,8 @@ class Service(ServiceServicer):
 
         courses_from_database: List[str] = self.db_conn.get_classes()
 
+        print(courses_from_database)
+
         courses_converted: List[Course] = []
         for course in courses_from_database:
             courses_converted.append(self.create_course(course[1], semester=course[5]))
@@ -510,7 +512,7 @@ class Service(ServiceServicer):
 
         course_map[next_sem] = CourseList(courses=courses_converted)
 
-        print(course_map)
+        # print(course_map)
         # course_map["spring1"] = CourseList(courses=[self.create_course("bruh211"),
         #                                             self.create_course("yeet221")])
         # course_map["fall2"] = CourseList(courses=[self.create_course("bruh121"),
