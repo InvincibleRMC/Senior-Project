@@ -531,7 +531,7 @@ class Service(ServiceServicer):
 
         courses_converted: List[Course] = []
         for course in courses_from_database:
-            courses_converted.append(self.create_course(course[1]))
+            courses_converted.append(self.create_course(course[1], semester=course[5]))
 
         print("Converted")
 
