@@ -77,13 +77,11 @@ class Network {
         classes: List<Course>.generate(
             className.length, (int index) => Course(name: className[index])));
     await _client?.registerNotifications(req);
-    // TODO: Check result?
-    // return res;
   }
 
-  // TODO:
   void sendScheduleRequest(
-      String major,
+      String school,
+      List<String> department,
       String semester,
       int? minCredit,
       int? maxCredit,
@@ -130,8 +128,9 @@ class Network {
     }
 
     var req = ScheduleRequest(
-        major: Major(name: major),
-        semester: semester,
+        school: school,
+        department: department,
+        semester: [semester],
         minCredits: minCredit,
         maxCredits: maxCredit,
         previousClasses: previousCourse,
@@ -145,12 +144,10 @@ class Network {
   }
 
   List<String> getCourseNames() {
-    // TODO Error handling
     return courseToString(_courses);
   }
 
   List<String> getProfessorNames() {
-    // TODO Error handling
     return List<String>.generate(
         _professors.length,
         (int index) =>
@@ -164,7 +161,10 @@ class Network {
 
   List<String> courseToString(List<Course> courseList) {
     return List<String>.generate(
-        courseList.length, (int index) => courseList[index].name);
+        courseList.length, (int index) => courseList[index].name
+        // TODO
+        // '${courseList[index].name} ${courseList[index].semester}'
+        );
   }
 
   Map<String, List<String>> getSchedule() {
@@ -175,17 +175,12 @@ class Network {
     return schedule;
   }
 
-  @visibleForTesting
-  void setMajors() {
-    _majors = [Major(name: "CS BS")];
+  void clearSchedule() {
+    _schedule = ScheduleResponse();
   }
 
   @visibleForTesting
   void setCourses() {
     _courses = [Course(name: "CSDS 132")];
-  }
-
-  void clearSchedule() {
-    _schedule = ScheduleResponse();
   }
 }

@@ -42,8 +42,8 @@ List<String> _funny = [
 
 List<RotateAnimatedText> _animated = List.generate(
     _funny.length,
-    (int index) =>
-        RotateAnimatedText(_funny[index], textAlign: TextAlign.center));
+    (int index) => RotateAnimatedText(_funny[index],
+        duration: const Duration(seconds: 4), textAlign: TextAlign.center));
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

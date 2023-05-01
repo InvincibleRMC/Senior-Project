@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end/network.dart';
-import 'package:front_end/proto/service.pbgrpc.dart';
 import 'package:front_end/standard_widgets.dart';
 import 'main.dart';
 
@@ -67,7 +66,7 @@ class _ClassReminderPageState extends State<ClassReminderPage> {
                     ElevatedButton(
                       key: const Key("submit_button"),
                       onPressed: () {
-                        if (_selectedClasses.length < 1) {
+                        if (_selectedClasses.isEmpty) {
                           showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(

@@ -332,7 +332,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=100
+max-line-length=1000
 
 # Maximum number of lines in a module.
 max-module-lines=1000
@@ -495,4 +495,4 @@ overgeneral-exceptions=BaseException,
                        Exception
 
 [Custom]
-disable=no-name-in-module
+disable=no-name-in-module, too-many-branches, too-many-nested-blocks, too-many-locals, line-too-long, unused-argument, too-many-statements

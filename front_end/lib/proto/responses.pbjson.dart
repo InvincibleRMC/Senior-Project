@@ -8,16 +8,6 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use courseListDescriptor instead')
-const CourseList$json = const {
-  '1': 'CourseList',
-  '2': const [
-    const {'1': 'courses', '3': 1, '4': 3, '5': 11, '6': '.Course', '10': 'courses'},
-  ],
-};
-
-/// Descriptor for `CourseList`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List courseListDescriptor = $convert.base64Decode('CgpDb3Vyc2VMaXN0EiEKB2NvdXJzZXMYASADKAsyBy5Db3Vyc2VSB2NvdXJzZXM=');
 @$core.Deprecated('Use scheduleResponseDescriptor instead')
 const ScheduleResponse$json = const {
   '1': 'ScheduleResponse',

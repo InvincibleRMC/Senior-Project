@@ -1,5 +1,6 @@
 syntax="proto3";
 
+    // TODO name -> prof_name
 message Course {
    uint32 id = 1 ;
    string name = 2;

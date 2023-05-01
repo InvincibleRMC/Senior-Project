@@ -14,7 +14,6 @@ class SchedulerPage extends StatefulWidget {
 }
 
 class _SchedulerPageState extends State<SchedulerPage> {
-  String? _major;
   final List<String> _semesterOptions = [
     "Fall1",
     "Spring1",
@@ -26,7 +25,14 @@ class _SchedulerPageState extends State<SchedulerPage> {
     "Spring4"
   ];
 
-  final List<String> _departementOptions = [
+  final List<String> _schoolOptions = [
+    "Case School of Engineering",
+    "College of Arts and Sciences",
+    "Jack, Joseph and Morton Mandel School of Applied Social Sciences",
+    "Weatherhead School of Management"
+  ];
+
+  final List<String> _departmentOptions = [
     "CSDS",
     "MATH",
     "EBME",
@@ -161,6 +167,8 @@ class _SchedulerPageState extends State<SchedulerPage> {
   ];
 
   String? _semester;
+  String? _school;
+  List<String>? _dept;
   int? _minCredit;
   int? _maxCredit;
   List<String>? _previousClasses;
@@ -181,23 +189,35 @@ class _SchedulerPageState extends State<SchedulerPage> {
             child: ListView(
               children: <Widget>[
                 DropdownSearch<String>(
-                  key: const Key("drop_down_search_major"),
-                  items: Network().getMajors(),
+                  key: const Key("drop_down_search_school"),
+                  items: _schoolOptions,
                   popupProps: const PopupProps.menu(
                       showSelectedItems: true, showSearchBox: true),
-                  onChanged: (String? major) => _major = major,
+                  onChanged: (String? school) => _school = school,
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
-                      labelText: "Input Major",
+                      labelText: "Input School",
                     ),
                   ),
                 ),
-                DropdownSearch<String>(
-                  key: const Key("drop_down_search_school"),
-                  items: _departementOptions,
-                  popupProps: const PopupProps.menu(
+                // DropdownSearch<String>(
+                //   key: const Key("drop_down_search_major"),
+                //   items: Network().getMajors(),
+                //   popupProps: const PopupProps.menu(
+                //       showSelectedItems: true, showSearchBox: true),
+                //   onChanged: (String? major) => _major = major,
+                //   dropdownDecoratorProps: const DropDownDecoratorProps(
+                //     dropdownSearchDecoration: InputDecoration(
+                //       labelText: "Input Major",
+                //     ),
+                //   ),
+                // ),
+                DropdownSearch<String>.multiSelection(
+                  key: const Key("drop_down_search_department"),
+                  items: _departmentOptions,
+                  popupProps: const PopupPropsMultiSelection.menu(
                       showSelectedItems: true, showSearchBox: true),
-                  onChanged: (String? major) => _major = major,
+                  onChanged: (List<String> dept) => _dept = dept,
                   dropdownDecoratorProps: const DropDownDecoratorProps(
                     dropdownSearchDecoration: InputDecoration(
                       labelText: "Input Department Options",
@@ -207,7 +227,7 @@ class _SchedulerPageState extends State<SchedulerPage> {
                 DropdownSearch<String>(
                   key: const Key("drop_down_search_semester"),
                   items: _semesterOptions,
-                  popupProps: const PopupPropsMultiSelection.menu(
+                  popupProps: const PopupProps.menu(
                       showSelectedItems: true, showSearchBox: true),
                   onChanged: (String? sem) => _semester = sem,
                   dropdownDecoratorProps: const DropDownDecoratorProps(
@@ -320,11 +340,11 @@ class _SchedulerPageState extends State<SchedulerPage> {
                       key: const Key("submit_button"),
                       onPressed: () {
                         // Ensures a Major is chosen
-                        if (_major == null) {
+                        if (_dept == null) {
                           showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Must input major'),
+                              title: const Text('Must input department'),
                               actions: <Widget>[
                                 TextButton(
                                   key: const Key("ok_button"),
@@ -348,9 +368,24 @@ class _SchedulerPageState extends State<SchedulerPage> {
                               ],
                             ),
                           );
+                        } else if (_school == null) {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Must input school'),
+                              actions: <Widget>[
+                                TextButton(
+                                  key: const Key("ok_button"),
+                                  onPressed: () => Navigator.pop(context, 'ok'),
+                                  child: const Text('ok'),
+                                ),
+                              ],
+                            ),
+                          );
                         } else {
                           Network().sendScheduleRequest(
-                              _major!,
+                              _school!,
+                              _dept!,
                               _semester!,
                               _minCredit,
                               _maxCredit,
@@ -359,7 +394,6 @@ class _SchedulerPageState extends State<SchedulerPage> {
                               _unpreferredClasses,
                               _preferredProfessors,
                               _unpreferredProfessors);
-                          // TODO Waiting page?
 
                           Navigator.pushReplacement(
                               context,
